@@ -246,8 +246,21 @@ function Navbar() {
               borderBottom: "1px solid #ccc",
             }}
           >
-            <>
-              <div style={{ float: "right", marginRight: 20 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ marginLeft: 10 }}>
+                <Title style={{ fontFamily: "Raleway" }}>
+                  {items.map((label) => label.label)}
+                </Title>
+              </div>
+
+              <div style={{ marginRight: 20 }}>
                 <Avatar
                   src={user?.avatar}
                   size="medium"
@@ -279,7 +292,7 @@ function Navbar() {
                   />
                 </Tooltip>
               </div>
-            </>
+            </div>
           </Header>
 
           <Content

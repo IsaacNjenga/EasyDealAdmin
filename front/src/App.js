@@ -6,7 +6,10 @@ import Products from "./pages/Products";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import Emails from "./pages/Emails";
+import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
+axios.defaults.withCredentials = true;
 function App() {
   return (
     <Routes>
