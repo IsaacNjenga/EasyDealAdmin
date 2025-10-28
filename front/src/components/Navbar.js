@@ -80,7 +80,7 @@ function Navbar() {
           collapsed={collapsed}
           breakpoint="md"
           onBreakpoint={(broken) => setCollapsed(broken)}
-          width={250}
+          width={300}
           style={{
             padding: 6,
             background:
@@ -111,7 +111,6 @@ function Navbar() {
                       width: collapsed ? "65px" : "105px",
                       height: collapsed ? "65px" : "105px",
                       borderRadius: "50%",
-                      border: "1px solid #fec76f ",
                       transition: "all 0.3s ease-in-out",
                     }}
                   />
