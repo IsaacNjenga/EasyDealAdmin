@@ -40,6 +40,20 @@ const items = [
   getItem("Emails", "/emails", 5, MailOutlined),
 ];
 
+const flattenItems = (arr) =>
+  arr.reduce((acc, item) => {
+    if (item.children) acc.push(...flattenItems(item.children));
+    else acc.push(item);
+    return acc;
+  }, []);
+
+// Find the matching menu item label
+const getTitleFromPath = (path) => {
+  const allItems = flattenItems(items);
+  const found = allItems.find((item) => item.path === path);
+  return found ? found.label : "Dashboard";
+};
+
 function Navbar() {
   const location = useLocation();
   const { logout, user } = useAuth();
@@ -256,7 +270,7 @@ function Navbar() {
             >
               <div style={{ marginLeft: 10 }}>
                 <Title style={{ fontFamily: "Raleway" }}>
-                  {items.map((label) => label.label)}
+                  {getTitleFromPath(current)}
                 </Title>
               </div>
 
