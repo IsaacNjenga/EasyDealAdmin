@@ -120,7 +120,7 @@ function Auth() {
         openNotification(
           "success",
           !isSignIn
-            ? "Your account has been created successfully"
+            ? "Your account has been created successfully. Proceed to login."
             : "Login successful",
           "Success!"
         );

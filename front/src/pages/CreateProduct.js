@@ -213,17 +213,17 @@ function CreateProperty() {
       };
       console.log(values);
 
-      // const res = await axios.post("create-product", values, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
-      // if (res.data.success) {
-      //   openNotification(
-      //     "success",
-      //     "Product created successfully!",
-      //     "Success!"
-      //   );
-      //   navigate("/products");
-      // }
+      const res = await axios.post("create-product", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.success) {
+        openNotification(
+          "success",
+          "Product created successfully!",
+          "Success!"
+        );
+        navigate("/products");
+      }
     } catch (error) {
       console.error(error);
       openNotification(
@@ -277,7 +277,9 @@ function CreateProperty() {
                     <Form.Item
                       name="name"
                       label={<span style={labelStyle}>Product Name</span>}
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Product name is required" },
+                      ]}
                     >
                       <Input
                         style={inputStyle}
@@ -288,7 +290,9 @@ function CreateProperty() {
                     <Form.Item
                       name="type"
                       label={<span style={labelStyle}>Product Type</span>}
-                      rules={[{ required: true }]}
+                      rules={[
+                        { required: true, message: "Product type is required" },
+                      ]}
                     >
                       <Select style={inputStyle} placeholder="Select type">
                         <Option value="Desk">Desk</Option>
@@ -305,6 +309,12 @@ function CreateProperty() {
                       label={
                         <span style={labelStyle}>Product Description</span>
                       }
+                      rules={[
+                        {
+                          required: true,
+                          message: "A description is required",
+                        },
+                      ]}
                     >
                       <TextArea
                         rows={4}
@@ -315,6 +325,12 @@ function CreateProperty() {
                     <Form.Item
                       name="colour"
                       label={<span style={labelStyle}>Available Colors</span>}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Product colour is required",
+                        },
+                      ]}
                       extra="Separate each entry with 'Enter'"
                     >
                       <Select
@@ -329,7 +345,12 @@ function CreateProperty() {
                     <Form.Item
                       name="price"
                       label={<span style={labelStyle}>Price</span>}
-                      rules={[{ required: true }]}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Product price is required",
+                        },
+                      ]}
                     >
                       <Input type="number" style={inputStyle} prefix="KES" />
                     </Form.Item>
@@ -345,6 +366,12 @@ function CreateProperty() {
                     <Form.Item
                       name="stockCount"
                       label={<span style={labelStyle}>Stock Count</span>}
+                      rules={[
+                        {
+                          required: true,
+                          message: "A stock count is required",
+                        },
+                      ]}
                     >
                       <Input type="number" style={inputStyle} />
                     </Form.Item>
@@ -355,6 +382,12 @@ function CreateProperty() {
                     <Form.Item
                       name="category"
                       label={<span style={labelStyle}>Category</span>}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Product category is required",
+                        },
+                      ]}
                     >
                       <Select style={inputStyle} placeholder="Select">
                         <Option value="Living Room Furniture">
@@ -382,6 +415,12 @@ function CreateProperty() {
                       name="available"
                       label={<span style={labelStyle}>Product Available?</span>}
                       valuePropName="checked"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Product availability is required",
+                        },
+                      ]}
                     >
                       <Switch checkedChildren="Yes" unCheckedChildren="No" />
                     </Form.Item>
@@ -425,6 +464,12 @@ function CreateProperty() {
                       name="tags"
                       label={<span style={labelStyle}>Additional Tags</span>}
                       extra="Separate each entry with 'Enter'"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Product tags are required",
+                        },
+                      ]}
                     >
                       <Select
                         mode="tags"
