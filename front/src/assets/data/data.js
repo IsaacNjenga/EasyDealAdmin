@@ -355,3 +355,396 @@ export const shopProducts = [
     discount: 10,
   },
 ];
+
+export const emailData = [
+  {
+    email_address: "alice.johnson@example.com",
+    full_name: "Alice Johnson",
+    read: true,
+    starred: true,
+    message: "Confirming the meeting time for Tuesday at 10 AM.",
+    createdAt: "2025-10-06T09:15:30Z",
+  },
+  {
+    email_address: "bob.smith@example.com",
+    full_name: "Bob Smith",
+    read: false,
+    starred: true,
+    message: "Urgent: Review the attached document before the deadline.",
+    createdAt: "2025-10-06T08:45:10Z",
+  },
+  {
+    email_address: "charlie.brown@example.com",
+    full_name: "Charlie Brown",
+    read: true,
+    starred: true,
+    message: "Thanks for the quick response on the project proposal.",
+    createdAt: "2025-10-06T07:20:55Z",
+  },
+  {
+    email_address: "david.lee@webmail.org",
+    full_name: "David Lee",
+    read: false,
+    starred: false,
+    message: "Question about the budget for Q4 marketing initiative.",
+    createdAt: "2025-10-05T16:30:22Z",
+  },
+  {
+    email_address: "emily.white@company.com",
+    full_name: "Emily White",
+    read: true,
+    starred: false,
+    message: "Follow-up notes from the team synchronization meeting.",
+    createdAt: "2025-10-05T14:10:05Z",
+  },
+  {
+    email_address: "frank.adams@techcorp.net",
+    full_name: "Frank Adams",
+    read: false,
+    starred: true,
+    message: "Invitation: Quarterly software update webinar next week.",
+    createdAt: "2025-10-05T11:55:40Z",
+  },
+  {
+    email_address: "grace.hill@mailservice.co",
+    full_name: "Grace Hill",
+    read: true,
+    starred: true,
+    message: "I've attached the final version of the report as requested.",
+    createdAt: "2025-10-04T18:02:15Z",
+  },
+  {
+    email_address: "henry.king@server.io",
+    full_name: "Henry King",
+    read: false,
+    starred: true,
+    message: "System alert: Your password will expire in 7 days.",
+    createdAt: "2025-10-04T13:40:30Z",
+  },
+  {
+    email_address: "irene.scott@business.com",
+    full_name: "Irene Scott",
+    read: true,
+    starred: false,
+    message: "Confirmation of your recent order #4582-A.",
+    createdAt: "2025-10-04T10:18:50Z",
+  },
+  {
+    email_address: "jack.miller@startup.org",
+    full_name: "Jack Miller",
+    read: false,
+    starred: true,
+    message: "Quick reminder about the upcoming feature freeze deadline.",
+    createdAt: "2025-10-03T21:05:00Z",
+  },
+  {
+    email_address: "kelly.jones@cloudhost.net",
+    full_name: "Kelly Jones",
+    read: true,
+    starred: true,
+    message: "The documentation updates are now live on the server.",
+    createdAt: "2025-10-03T17:35:45Z",
+  },
+  {
+    email_address: "liam.moore@clientlink.co",
+    full_name: "Liam Moore",
+    read: false,
+    starred: false,
+    message: "Feedback needed on the UI/UX mockups by Friday.",
+    createdAt: "2025-10-03T15:00:20Z",
+  },
+  {
+    email_address: "mia.perez@consulting.com",
+    full_name: "Mia Perez",
+    read: true,
+    starred: true,
+    message: "Invoice attached: Services rendered for the month of August.",
+    createdAt: "2025-10-03T11:12:10Z",
+  },
+  {
+    email_address: "nathan.ross@academy.edu",
+    full_name: "Nathan Ross",
+    read: false,
+    starred: true,
+    message: "Regarding your application status for the scholarship program.",
+    createdAt: "2025-10-02T19:25:35Z",
+  },
+  {
+    email_address: "olivia.turner@corpmail.org",
+    full_name: "Olivia Turner",
+    read: true,
+    starred: false,
+    message: "Summary of action items from the leadership retreat.",
+    createdAt: "2025-10-02T16:50:50Z",
+  },
+  {
+    email_address: "peter.ward@finance.net",
+    full_name: "Peter Ward",
+    read: false,
+    starred: true,
+    message: "Heads up: Tax form changes for the current fiscal year.",
+    createdAt: "2025-10-02T14:08:00Z",
+  },
+  {
+    email_address: "quinn.young@community.co",
+    full_name: "Quinn Young",
+    read: true,
+    starred: true,
+    message: "Your request for vacation time has been approved.",
+    createdAt: "2025-10-01T23:30:18Z",
+  },
+  {
+    email_address: "ryan.hall@internship.com",
+    full_name: "Ryan Hall",
+    read: false,
+    starred: false,
+    message: "Introduction to the new team members starting Monday.",
+    createdAt: "2025-10-01T20:15:25Z",
+  },
+  {
+    email_address: "sarah.baker@agency.net",
+    full_name: "Sarah Baker",
+    read: true,
+    starred: true,
+    message: "Draft of the press release for product launch attached.",
+    createdAt: "2025-10-01T15:45:00Z",
+  },
+  {
+    email_address: "thomas.clark@research.org",
+    full_name: "Thomas Clark",
+    read: false,
+    starred: true,
+    message: "Data anomaly detected in Sector 7—please investigate.",
+    createdAt: "2025-09-30T19:00:10Z",
+  },
+  {
+    email_address: "uma.davis@travelers.co",
+    full_name: "Uma Davis",
+    read: true,
+    starred: true,
+    message: "Your flight confirmation and boarding passes are here.",
+    createdAt: "2025-09-30T12:55:30Z",
+  },
+  {
+    email_address: "victor.evans@global.net",
+    full_name: "Victor Evans",
+    read: false,
+    starred: false,
+    message: "Follow-up required on the European market expansion plan.",
+    createdAt: "2025-09-30T09:40:48Z",
+  },
+  {
+    email_address: "wendy.foster@support.com",
+    full_name: "Wendy Foster",
+    read: true,
+    starred: false,
+    message: "Ticket #987-B has been successfully resolved and closed.",
+    createdAt: "2025-09-29T17:25:05Z",
+  },
+];
+
+export const replyData = [
+  {
+    _id: "68ecaae0b9bc4cb59b550689",
+    message: "Test received",
+    original_message: {
+      _id: "68e5e16272f309149c44a613",
+      email_address: "uma.davis@travelers.co",
+      full_name: "Uma Davis",
+      read: true,
+      starred: false,
+      message: "Your flight confirmation and boarding passes are here.",
+      createdAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f415",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+  {
+    _id: "68ecaae0b9bc4cb59b550690",
+    message: "Welcome to our company",
+    original_message: {
+      _id: "68e5e16272f309149c44a614",
+      email_address: "john.doe@company.com",
+      full_name: "John Doe",
+      read: true,
+      starred: false,
+      message: "Please find attached the company handbook.",
+      createdAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f416",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+  {
+    _id: "68ecaae0b9bc4cb59b550691",
+    message: "Follow-up on the project",
+    original_message: {
+      _id: "68e5e16272f309149c44a615",
+      email_address: "jane.doe@company.com",
+      full_name: "Jane Doe",
+      read: true,
+      starred: false,
+      message: "Please find attached the project report.",
+      createdAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f417",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+  {
+    _id: "68ecaae0b9bc4cb59b550692",
+    message: "Meeting on Friday",
+    original_message: {
+      _id: "68e5e16272f309149c44a616",
+      email_address: "bob.smith@company.com",
+      full_name: "Bob Smith",
+      read: true,
+      starred: false,
+      message: "Reminder: Meeting on Friday at 10 AM.",
+      createdAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f418",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+  {
+    _id: "68ecaae0b9bc4cb59b550693",
+    message: "New company policy",
+    original_message: {
+      _id: "68e5e16272f309149c44a617",
+      email_address: "admin@company.com",
+      full_name: "Admin",
+      read: true,
+      starred: false,
+      message: "Please find attached the new company policy.",
+      createdAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f419",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+  {
+    _id: "68ecaae0b9bc4cb59b550694",
+    message: "Team meeting",
+    original_message: {
+      _id: "68e5e16272f309149c44a618",
+      email_address: "john.doe@company.com",
+      full_name: "John Doe",
+      read: true,
+      starred: false,
+      message: "Reminder: Team meeting on Friday at 2 PM.",
+      createdAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f420",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+  {
+    _id: "68ecaae0b9bc4cb59b550695",
+    message: "New employee",
+    original_message: {
+      _id: "68e5e16272f309149c44a619",
+      email_address: "jane.doe@company.com",
+      full_name: "Jane Doe",
+      read: true,
+      starred: false,
+      message: "Please join me in welcoming our new employee, John Smith.",
+      createdAt: {
+        $date: "2025-10-08T03:58:26.907Z",
+      },
+      updatedAt: {
+        $date: "2025-10-08T04:03:12.516Z",
+      },
+      __v: 0,
+    },
+    createdBy: {
+      _id: "68dba3d8f24a6e8df343f421",
+    },
+    createdAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    updatedAt: {
+      $date: "2025-10-13T07:31:44.861Z",
+    },
+    __v: 0,
+  },
+];

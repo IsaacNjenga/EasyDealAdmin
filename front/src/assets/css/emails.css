@@ -1,0 +1,4 @@
+.ant-table-row:hover {
+  cursor: pointer;
+  background-color: #f0f5ff !important;
+}
