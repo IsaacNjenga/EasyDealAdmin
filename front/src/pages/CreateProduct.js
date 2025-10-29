@@ -9,18 +9,14 @@ import {
   Select,
   Switch,
   Image as AntImage,
-  Divider,
-  Typography,
 } from "antd";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Swal from "sweetalert2";
 import axios from "axios";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../contexts/NotificationContext";
 
-const { Title } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -226,7 +222,7 @@ function CreateProperty() {
       //     "Product created successfully!",
       //     "Success!"
       //   );
-      //   navigate("/properties");
+      //   navigate("/products");
       // }
     } catch (error) {
       console.error(error);
@@ -406,7 +402,7 @@ function CreateProperty() {
                       <Select
                         mode="tags"
                         placeholder="E.g. Ships within 1-2 business days"
-                        style={{ ...inputStyle, width: "100%" }}
+                        style={{ ...inputStyle, width: "100%", height: 65 }}
                       />
                     </Form.Item>
                   </Col>
@@ -419,7 +415,7 @@ function CreateProperty() {
                       <Select
                         mode="tags"
                         placeholder="E.g. Clean with a soft, damp cloth"
-                        style={{ ...inputStyle, width: "100%" }}
+                        style={{ ...inputStyle, width: "100%", height: 65 }}
                       />
                     </Form.Item>
                   </Col>
@@ -433,7 +429,7 @@ function CreateProperty() {
                       <Select
                         mode="tags"
                         placeholder="E.g. sofa, leather, modern, comfort"
-                        style={{ ...inputStyle, width: "100%" }}
+                        style={{ ...inputStyle, width: "100%", height: 65 }}
                       />
                     </Form.Item>
                   </Col>

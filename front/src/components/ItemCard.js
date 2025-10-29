@@ -1,16 +1,14 @@
 import React from "react";
 import { Carousel, Button, Typography, Row, Col, Card, Tooltip } from "antd";
-import {
-  DeleteOutlined,
-  EditFilled,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditFilled, EyeOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { useNotification } from "../contexts/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
 function ItemCard({ dataSource, isMobile, viewItem }) {
+  const navigate = useNavigate();
   const openNotification = useNotification();
 
   return (
@@ -152,7 +150,7 @@ function ItemCard({ dataSource, isMobile, viewItem }) {
                           <Button
                             shape="circle"
                             icon={<EditFilled />}
-                            //TODO:onClick={() => viewItem(b)}
+                            onClick={() => navigate(`/update-product/${b._id}`)}
                             style={{
                               background: "white",
                               color: "#333",

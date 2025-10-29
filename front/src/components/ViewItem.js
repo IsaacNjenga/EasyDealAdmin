@@ -14,10 +14,12 @@ import {
   Image,
 } from "antd";
 import { useNotification } from "../contexts/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Paragraph, Text } = Typography;
 
 function ViewItem({ loading, openModal, setOpenModal, content }) {
+  const navigate = useNavigate();
   const openNotification = useNotification();
 
   return (
@@ -137,7 +139,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
                   <Button
                     shape="circle"
                     icon={<EditFilled />}
-                    //TODO:onClick={() => viewItem(b)}
+                    onClick={() => navigate(`/update-product/${content?._id}`)}
                     style={{
                       background: "white",
                       color: "#333",
