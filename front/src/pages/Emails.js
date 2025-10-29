@@ -87,10 +87,10 @@ function Emails() {
       };
     }, [emailData]);
 
-  const viewMessage = async (message, record) => {
+  const viewMessage = async (record) => {
     setLoading(true);
     await updateEmail(record._id, { read: true });
-    setContent(message);
+    setContent(record);
     setOpenModal(true);
     setTimeout(() => {
       setLoading(false);
@@ -99,6 +99,7 @@ function Emails() {
   };
 
   const viewReply = async (message) => {
+    console.log(message);
     setLoading(true);
     setContent(message);
     setOpenReplyModal(true);
@@ -252,8 +253,8 @@ function Emails() {
       title: "",
       key: "original_message",
       render: (record) => (
-        <Text style={{ fontFamily: "Raleway" }}>
-          {record.original_message.message}
+        <Text style={{ fontFamily: "Raleway" }} type="secondary">
+          {record.message}
         </Text>
       ),
     },
@@ -262,7 +263,7 @@ function Emails() {
       key: "createdAt",
       render: (record) => (
         <Text style={{ fontFamily: "Roboto" }}>
-          {format(new Date(record.createdAt.$date), "LLL d")}
+          {format(new Date(record.createdAt), "LLL d")}
         </Text>
       ),
     },
@@ -386,7 +387,6 @@ function Emails() {
           columns={selectedTab === 4 ? replyColumns : baseColumns}
           rowKey="_id"
           pagination={{ pageSize: 10 }}
-          showHeader
           size="small"
           loading={emailsLoading}
           style={{ fontFamily: "Raleway" }}
@@ -396,7 +396,7 @@ function Emails() {
                 // For replies
                 viewReply(record);
               } else {
-                viewMessage(record.message, record);
+                viewMessage(record);
               }
             },
           })}

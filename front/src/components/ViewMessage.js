@@ -13,7 +13,7 @@ import axios from "axios";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Swal from "sweetalert2";
+import { useNotification } from "../contexts/NotificationContext";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -21,6 +21,7 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
   const { token, user } = useAuth();
   const [form] = Form.useForm();
   const [sendLoading, setSendLoading] = useState(false);
+  const openNotification = useNotification();
 
   const handleSubmit = async () => {
     setSendLoading(true);
@@ -55,18 +56,15 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
         ),
       ]);
       if (res.data.success && res2.data.success && res3.data.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Reply sent",
-        });
+        openNotification("success", "Reply sent", "Success!");
       }
     } catch (error) {
       console.log(error);
-      Swal.fire({
-        icon: "warning",
-        title: "Error",
-        text: "An unexpected error occurred. Please try again or call for assistance.",
-      });
+      openNotification(
+        "warning",
+        "An unexpected error occurred. Please try again or call for assistance.",
+        "Error"
+      );
     } finally {
       form.resetFields();
       setSendLoading(false);

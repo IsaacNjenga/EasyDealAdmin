@@ -6,7 +6,6 @@ const { Title, Text, Paragraph } = Typography;
 function ViewReply({ setOpenModal, openModal, loading, content }) {
   const { user } = useAuth();
 
-
   return (
     <Modal
       open={openModal}
@@ -19,6 +18,7 @@ function ViewReply({ setOpenModal, openModal, loading, content }) {
         background: "#f9fafb00",
         borderRadius: 12,
         boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        height: "90vh",
       }}
       footer={null}
     >

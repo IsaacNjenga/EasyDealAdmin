@@ -554,23 +554,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Your flight confirmation and boarding passes are here.",
-      createdAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
+      createdAt: "2025-10-08T03:58:26.907Z",
+
+      updatedAt: "2025-10-08T04:03:12.516Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f415",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
   {
@@ -583,23 +579,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Please find attached the company handbook.",
-      createdAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
+      createdAt: "2025-10-08T04:03:12.516Z",
+
+      updatedAt: "2025-10-08T03:58:26.907Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f416",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
   {
@@ -612,23 +604,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Please find attached the project report.",
-      createdAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
+      createdAt: "2025-10-08T03:58:26.907Z",
+
+      updatedAt: "2025-10-08T04:03:12.516Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f417",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
   {
@@ -641,23 +629,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Reminder: Meeting on Friday at 10 AM.",
-      createdAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
+      createdAt: "2025-10-08T04:03:12.516Z",
+
+      updatedAt: "2025-10-08T03:58:26.907Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f418",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
   {
@@ -670,23 +654,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Please find attached the new company policy.",
-      createdAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
+      createdAt: "2025-10-08T03:58:26.907Z",
+
+      updatedAt: "2025-10-08T04:03:12.516Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f419",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
   {
@@ -699,23 +679,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Reminder: Team meeting on Friday at 2 PM.",
-      createdAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
+      createdAt: "2025-10-08T04:03:12.516Z",
+
+      updatedAt: "2025-10-08T03:58:26.907Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f420",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
   {
@@ -728,23 +704,19 @@ export const replyData = [
       read: true,
       starred: false,
       message: "Please join me in welcoming our new employee, John Smith.",
-      createdAt: {
-        $date: "2025-10-08T03:58:26.907Z",
-      },
-      updatedAt: {
-        $date: "2025-10-08T04:03:12.516Z",
-      },
+      createdAt: "2025-10-08T03:58:26.907Z",
+
+      updatedAt: "2025-10-08T04:03:12.516Z",
+
       __v: 0,
     },
     createdBy: {
       _id: "68dba3d8f24a6e8df343f421",
     },
-    createdAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
-    updatedAt: {
-      $date: "2025-10-13T07:31:44.861Z",
-    },
+    createdAt: "2025-10-13T07:31:44.861Z",
+
+    updatedAt: "2025-10-13T07:31:44.861Z",
+
     __v: 0,
   },
 ];
