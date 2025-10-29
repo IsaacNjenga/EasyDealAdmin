@@ -9,7 +9,6 @@ import {
   Select,
   Switch,
   Image as AntImage,
-  Divider,
 } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -329,7 +328,7 @@ function UpdateProduct() {
         <Button
           danger
           type="primary"
-          onClick={() => navigate("/properties")}
+          onClick={() => navigate("/products")}
           style={{ marginBottom: 20, width: "20%" }}
         >
           Back
