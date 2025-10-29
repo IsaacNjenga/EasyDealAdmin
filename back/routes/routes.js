@@ -5,7 +5,7 @@ import {
   Register,
 } from "../controllers/authController.js";
 import { updateAvatar, deleteAvatar } from "../controllers/userController.js";
-import { protectRoute } from "../middleware/auth.middleware.js";
+import protectRoute from "../middleware/auth.middleware.js";
 import {
   createProduct,
   deleteProduct,
@@ -21,12 +21,12 @@ import {
   readMails,
 } from "../controllers/emailController.js";
 import {
-  replyToEmail,
   createReply,
   fetchReply,
   fetchReplies,
-} from "../controllers/replyController.js";
+} from "../controllers/repliesController.js";
 import { fetchActivities } from "../controllers/activityController.js";
+import { replyToEmail } from "../controllers/clientReplyController.js";
 
 const router = express.Router();
 

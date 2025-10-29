@@ -1,4 +1,4 @@
-import MailsModel from "../models/Mails.js";
+import MailsModel from "../models/Emails.js";
 import { logActivity } from "../utils/logActivity.js";
 
 const createMail = async (req, res) => {
