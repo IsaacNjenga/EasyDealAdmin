@@ -10,7 +10,7 @@ const createProduct = async (req, res) => {
       "Product",
       newProduct._id,
       "created",
-      `New ${newProduct.type} created`,
+      `New product created: ${newProduct.name}`,
       `${newProduct.name} at ${newProduct.price}`,
       "products"
     );
@@ -91,8 +91,8 @@ const updateProduct = async (req, res) => {
       "Product",
       updatedProduct._id,
       "updated",
-      `A Product was updated: ${updatedProduct.type}`,
-      `Priced at ${updatedProduct.price}`,      
+      `A Product was updated: ${updatedProduct.name}`,
+      `Priced at ${updatedProduct.price}`,
       "products"
     );
 
