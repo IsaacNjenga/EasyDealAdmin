@@ -15,7 +15,6 @@ function Products() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(false);
 
-
   const viewItem = (content) => {
     setLoading(true);
     setContent(content);
@@ -48,6 +47,18 @@ function Products() {
           />
         )}
       </div>
+
+      <div style={{ marginTop: 20, marginBottom: 50, textAlign: "center" }}>
+        <Button
+          onClick={handleLoadMore}
+          type="primary"
+          size="large"
+          style={{ fontFamily: "Raleway" }}
+        >
+          Load More
+        </Button>
+      </div>
+      
       <ViewItem
         setOpenModal={setOpenModal}
         openModal={openModal}
