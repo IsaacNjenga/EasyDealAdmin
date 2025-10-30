@@ -54,6 +54,8 @@ function ViewReply({ setOpenModal, openModal, loading, content }) {
                   {content?.original_message?.email_address}
                 </a>
               </div>
+            </div><div>
+              <Text strong>Subject: {content?.original_message.subject}</Text>
             </div>
             <div style={{ marginBottom: 12 }}>
               {content?.original_message?.createdAt && (

@@ -258,6 +258,7 @@ function Navbar() {
               background:
                 "linear-gradient(to left, #ffffffd6 0%, #ffffffff 100%)",
               borderBottom: "1px solid #ccc",
+              height: 80,
             }}
           >
             <div
@@ -266,6 +267,7 @@ function Navbar() {
                 justifyContent: "space-between",
                 alignContent: "center",
                 alignItems: "center",
+                paddingBottom: 20,
               }}
             >
               <div style={{ marginLeft: 10 }}>

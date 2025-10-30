@@ -51,7 +51,7 @@ function ItemCard({ dataSource, isMobile, viewItem }) {
                           <div key={i}>
                             <img
                               src={img}
-                              alt={b._id}
+                              alt={"img"}
                               style={{
                                 width: "100%",
                                 height: "320px",

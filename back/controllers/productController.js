@@ -92,8 +92,7 @@ const updateProduct = async (req, res) => {
       updatedProduct._id,
       "updated",
       `A Product was updated: ${updatedProduct.type}`,
-      `Priced at ${updatedProduct.price}`,
-      "",
+      `Priced at ${updatedProduct.price}`,      
       "products"
     );
 

@@ -120,6 +120,9 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
                 </a>
               </div>
             </div>
+            <div>
+              <Text strong>Subject: {content?.subject}</Text>
+            </div>
             <div style={{ marginBottom: 12 }}>
               {content?.createdAt && (
                 <Text type="secondary">

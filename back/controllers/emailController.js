@@ -11,7 +11,7 @@ const createMail = async (req, res) => {
       newMail._id,
       "created",
       `New mail from ${newMail.full_name}`,
-      `${newMail.email_address} sent a message`,
+      `Subject: ${newMail.subject} `,
       "mail"
     );
 

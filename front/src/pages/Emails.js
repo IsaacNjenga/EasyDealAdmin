@@ -9,7 +9,7 @@ import {
   Typography,
 } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { emailData, replyData } from "../assets/data/data";
+//import { emailData, replyData } from "../assets/data/data";
 import { format } from "date-fns";
 import ViewMessage from "../components/ViewMessage";
 import ViewReply from "../components/ViewReply";
@@ -26,6 +26,7 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import useFetchAllEmails from "../hooks/fetchAllEmails";
+import useFetchAllReplies from "../hooks/fetchAllReplies";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import "../assets/css/emails.css";
@@ -67,7 +68,9 @@ const miniBtns = [
 function Emails() {
   const { token } = useAuth();
   const { emails, emailsLoading, emailsRefresh } = useFetchAllEmails();
-  //const emailData = useMemo(() => (emails ? emails : []), [emails]);
+  const { replies } = useFetchAllReplies();
+  const emailData = useMemo(() => (emails ? emails : []), [emails]);
+  const replyData = useMemo(() => (replies ? replies : []), [replies]);
   const [openModal, setOpenModal] = useState(false);
   const [openReplyModal, setOpenReplyModal] = useState(false);
   const [content, setContent] = useState(null);
@@ -85,7 +88,7 @@ function Emails() {
         starredMessages: emailData?.filter((m) => m.starred),
         repliedMessages: replyData,
       };
-    }, [emailData]);
+    }, [emailData, replyData]);
 
   const viewMessage = async (record) => {
     setLoading(true);
@@ -115,7 +118,7 @@ function Emails() {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
-        console.log("success");
+        //console.log("success");
       }
     } catch (error) {
       console.error("Failed to update mail", error);
@@ -157,10 +160,30 @@ function Emails() {
     },
     {
       title: "",
-      dataIndex: "message",
       key: "message",
-      render: (text) => <Text style={{ fontFamily: "Raleway" }}>{text}</Text>,
+      render: (_, record) => {
+        const subject = record.subject || "(No Subject)";
+        const message = record.message || "";
+
+        return (
+          <div
+            style={{
+              fontFamily: "Raleway",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
+            <span style={{ fontWeight: 600, color: "#202124", marginRight: 4 }}>
+              {subject}
+            </span>
+            <span style={{ color: "#5f6368" }}> - {message}</span>
+          </div>
+        );
+      },
+      width: "50%",
     },
+
     {
       title: "",
       dataIndex: "createdAt",
@@ -251,12 +274,28 @@ function Emails() {
     },
     {
       title: "",
-      key: "original_message",
-      render: (record) => (
-        <Text style={{ fontFamily: "Raleway" }} type="secondary">
-          {record.message}
-        </Text>
-      ),
+      key: "message",
+      render: (_, record) => {
+        const subject = record.original_message.subject || "(No Subject)";
+        const message = record.original_message.message || "";
+
+        return (
+          <div
+            style={{
+              fontFamily: "Raleway",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
+            <span style={{ fontWeight: 600, color: "#202124", marginRight: 4 }}>
+              {subject}
+            </span>
+            <span style={{ color: "#5f6368" }}> - {message}</span>
+          </div>
+        );
+      },
+      width: "50%",
     },
     {
       title: "",

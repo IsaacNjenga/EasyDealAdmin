@@ -16,6 +16,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
+import useFetchProduct from "../hooks/fetchProduct";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -35,36 +36,36 @@ const labelStyle = {
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 const presetKey = process.env.REACT_APP_PRESET_KEY;
 
-const productData = [
-  {
-    _id: 1,
-    name: "Ergonomic Office chair",
-    price: 20000,
-    description: "Lorem Ipsum Lorem ipsum",
-    colour: ["black", "green"],
-    type: "office chair",
-    img: [
-      "https://images.pexels.com/photos/245240/pexels-photo-245240.jpeg",
-      "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-    ],
-    freeShipping: true,
-    discount: 5,
-    available: true,
-    stockCount: 12,
-    material: "Solid wood frame, memory foam headboard",
-    dimensions: "210cm x 160cm x 100cm",
-    rating: 4.7,
-    totalReviews: 126,
-    shippingInformation: [
-      "Ships within 1-2 business days",
-      "Free shipping on all orders",
-      "30-day return policy",
-    ],
-    careGuide:
-      "Use a slightly damp, soft, lint-free cloth for regular dust removal. Always clean in the direction of the grain.",
-    tags: ["bedroom", "ergonomic", "modern", "furniture"],
-  },
-];
+// const productData = [
+//   {
+//     _id: 1,
+//     name: "Ergonomic Office chair",
+//     price: 20000,
+//     description: "Lorem Ipsum Lorem ipsum",
+//     colour: ["black", "green"],
+//     type: "office chair",
+//     img: [
+//       "https://images.pexels.com/photos/245240/pexels-photo-245240.jpeg",
+//       "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+//     ],
+//     freeShipping: true,
+//     discount: 5,
+//     available: true,
+//     stockCount: 12,
+//     material: "Solid wood frame, memory foam headboard",
+//     dimensions: "210cm x 160cm x 100cm",
+//     rating: 4.7,
+//     totalReviews: 126,
+//     shippingInformation: [
+//       "Ships within 1-2 business days",
+//       "Free shipping on all orders",
+//       "30-day return policy",
+//     ],
+//     careGuide:
+//       "Use a slightly damp, soft, lint-free cloth for regular dust removal. Always clean in the direction of the grain.",
+//     tags: ["bedroom", "ergonomic", "modern", "furniture"],
+//   },
+// ];
 
 const ImageSection = ({
   setSelectedImages,
@@ -233,49 +234,20 @@ function UpdateProduct() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
-  //const { productDataLoading, fetchProperty } = useFetchProperty();
-
-  // useEffect(() => {
-  //   fetchProperty(id);
-  // }, [id]);
-
-  // useEffect(() => {
-  //   if (productData[0]) {
-  //     form.setFieldsValue({
-  //       ...productData,
-  //     });
-  //     setSelectedImages(productData.img || []);
-  //   }
-  // }, [productData, form]);
+  const { productData, productDataLoading, fetchProduct } = useFetchProduct();
 
   useEffect(() => {
-    // Simulate fetching one product (like from backend)
-    const product = productData.find((p) => p._id === 1); // or use your id param
+    fetchProduct(id);
+  }, [id]);
 
-    if (product) {
-      // Wait a tick for the form to mount
-      setTimeout(() => {
-        form.setFieldsValue({
-          name: product.name,
-          price: product.price,
-          description: product.description,
-          colour: product.colour,
-          type: product.type,
-          freeShipping: product.freeShipping,
-          discount: product.discount,
-          available: product.available,
-          stockCount: product.stockCount,
-          material: product.material,
-          dimensions: product.dimensions,
-          shippingInformation: product.shippingInformation,
-          careGuide: product.careGuide,
-          tags: product.tags,
-          category: "Living Room Furniture", // or product.category if defined
-        });
-        setSelectedImages(product.img || []);
-      }, 0);
+  useEffect(() => {
+    if (productData) {
+      form.setFieldsValue({
+        ...productData,
+      });
+      setSelectedImages(productData.img || []);
     }
-  }, [form]);
+  }, [productData, form]);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -285,19 +257,19 @@ function UpdateProduct() {
         ...allValues,
         img: selectedImages,
       };
-      console.log(values);
+      // console.log(values);
 
-      // const res = await axios.put(`update-product?id=${id}`, values, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
-      // if (res.data.success) {
-      //   openNotification(
-      //     "success",
-      //     "Product updated successfully!",
-      //     "Success!"
-      //   );
-      //   navigate("/products");
-      // }
+      const res = await axios.put(`update-product?id=${id}`, values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.success) {
+        openNotification(
+          "success",
+          "Product updated successfully!",
+          "Success!"
+        );
+        navigate("/products");
+      }
     } catch (error) {
       console.error(error);
       openNotification(
@@ -312,8 +284,8 @@ function UpdateProduct() {
     }
   };
 
-  // if (productDataLoading)
-  //   return <Spin fullscreen tip="Loading..." size="large" />;
+  if (productDataLoading)
+    return <Spin fullscreen tip="Loading..." size="large" />;
 
   return (
     <>
