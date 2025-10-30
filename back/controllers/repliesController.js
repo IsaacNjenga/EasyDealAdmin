@@ -11,7 +11,7 @@ const createReply = async (req, res) => {
       "reply",
       newReply._id,
       "created",
-      `New reply to an email from ${newReply.original_message.full_name}`,
+      `You have replied to a message from ${newReply.original_message.full_name}`,
       "",
       "replies"
     );

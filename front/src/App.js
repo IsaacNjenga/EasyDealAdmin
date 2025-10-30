@@ -11,7 +11,8 @@ import { Spin } from "antd";
 import Auth from "./pages/Auth";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
-axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
+//axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
+axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
 axios.defaults.withCredentials = true;
 
 function App() {
