@@ -2,7 +2,8 @@ import { Modal, Card, Col, Divider, Row, Typography } from "antd";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useAuth } from "../contexts/AuthContext";
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
+
 function ViewReply({ setOpenModal, openModal, loading, content }) {
   const { user } = useAuth();
 
@@ -54,8 +55,11 @@ function ViewReply({ setOpenModal, openModal, loading, content }) {
                   {content?.original_message?.email_address}
                 </a>
               </div>
-            </div><div>
-              <Text strong>Subject: {content?.original_message.subject}</Text>
+            </div>
+            <div>
+              <Text strong>
+                Subject: {content?.original_message?.subject || "N/A"}
+              </Text>
             </div>
             <div style={{ marginBottom: 12 }}>
               {content?.original_message?.createdAt && (
@@ -73,16 +77,18 @@ function ViewReply({ setOpenModal, openModal, loading, content }) {
               <Text strong style={{ display: "block", marginBottom: 8 }}>
                 Message:
               </Text>
-              <Paragraph
+
+              <p
                 style={{
                   background: "#f5f5f5",
                   padding: "12px 16px",
                   borderRadius: 8,
                   minHeight: 120,
                 }}
-              >
-                {content?.original_message?.message || "No message content"}
-              </Paragraph>
+                dangerouslySetInnerHTML={{
+                  __html: content?.original_message?.message,
+                }}
+              />
             </div>
           </Card>
         </Col>
@@ -107,6 +113,11 @@ function ViewReply({ setOpenModal, openModal, loading, content }) {
                 From:
               </Text>
               <Text>{user.username || "N/A"}</Text>
+            </div>{" "}
+            <div>
+              <Text strong>
+                Subject: {content?.original_message?.subject || "N/A"}
+              </Text>
             </div>
             <div style={{ marginBottom: 12 }}>
               {content?.createdAt && (
@@ -117,22 +128,20 @@ function ViewReply({ setOpenModal, openModal, loading, content }) {
                 </Text>
               )}
             </div>
-
             <Divider style={{ borderColor: "#ccc" }} />
             <div>
               <Text strong style={{ display: "block", marginBottom: 8 }}>
                 Reply:
               </Text>
-              <Paragraph
+              <p
                 style={{
                   background: "#f5f5f5",
                   padding: "12px 16px",
                   borderRadius: 8,
                   minHeight: 120,
                 }}
-              >
-                {content?.message || "No message content"}
-              </Paragraph>
+                dangerouslySetInnerHTML={{ __html: content?.message }}
+              />
             </div>
           </Card>
         </Col>

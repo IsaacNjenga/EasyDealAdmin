@@ -1,19 +1,10 @@
-import {
-  Card,
-  Col,
-  Divider,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Typography,
-  Button,
-} from "antd";
+import { Card, Col, Divider, Form, Modal, Row, Typography, Button } from "antd";
 import axios from "axios";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
+import Editor from "./Editor";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -39,7 +30,7 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
         createdBy: user._id,
       };
 
-      //console.log(allValues);
+      //console.log(replyValues);
       const [res, res2, res3] = await Promise.all([
         axios.post("reply-to-email", mailValues, {
           headers: { Authorization: `Bearer ${token}` },
@@ -121,7 +112,7 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
               </div>
             </div>
             <div>
-              <Text strong>Subject: {content?.subject}</Text>
+              <Text strong>Subject: {content?.subject || "N/A"}</Text>
             </div>
             <div style={{ marginBottom: 12 }}>
               {content?.createdAt && (
@@ -175,36 +166,38 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
               requiredMark={false}
             >
               <Form.Item
-                label="Your Reply (Will go to their email address)"
+                label={
+                  content?.replied_to ? (
+                    <span style={{ color: "red" }}>
+                      This message has already been replied to.
+                    </span>
+                  ) : (
+                    <span style={{ color: "black" }}>
+                      Your reply (will go to their email address)
+                    </span>
+                  )
+                }
                 name="reply"
                 rules={[{ required: true, message: "Please write a reply" }]}
+                valuePropName="value"
+                getValueFromEvent={(content) => content}
               >
-                {content?.replied_to && (
-                  <span style={{ color: "red" }}>
-                    This message has already been replied to.
-                  </span>
-                )}
-                <Input.TextArea
-                  rows={10}
-                  placeholder="Type your reply here..."
-                  style={{
-                    borderRadius: 8,
-                    resize: "none",
-                  }}
-                />
+                {!content?.replied_to && <Editor />}
               </Form.Item>
 
-              <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
-                <Button
-                  type="primary"
-                  size="large"
-                  style={{ borderRadius: 8 }}
-                  loading={sendLoading}
-                  htmlType="submit"
-                >
-                  {sendLoading ? "Sending Reply..." : "Send Reply"}
-                </Button>
-              </Form.Item>
+              {content?.replied_to ? null : (
+                <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    style={{ borderRadius: 8 }}
+                    loading={sendLoading}
+                    htmlType="submit"
+                  >
+                    {sendLoading ? "Sending Reply..." : "Send Reply"}
+                  </Button>
+                </Form.Item>
+              )}
             </Form>
           </Card>
         </Col>
