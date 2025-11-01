@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    order: { type: String, required: true },
+    order: { type: { String }, required: true },
     date: { type: Date, required: true },
     customer: { type: { String }, required: true },
     payment_status: { type: String, required: true },

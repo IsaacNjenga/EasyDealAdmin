@@ -19,6 +19,7 @@ import {
   MenuUnfoldOutlined,
   PlusCircleOutlined,
   PoweroffOutlined,
+  TruckOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../contexts/AuthContext";
 import Swal from "sweetalert2";
@@ -38,6 +39,7 @@ const items = [
     getItem("Create a product", "/create-product", 4, PlusCircleOutlined),
   ]),
   getItem("Emails", "/emails", 5, MailOutlined),
+  getItem("Orders", "/orders", 6, TruckOutlined),
 ];
 
 const flattenItems = (arr) =>
