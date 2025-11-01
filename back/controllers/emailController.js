@@ -23,7 +23,7 @@ const createMail = async (req, res) => {
       .status(500)
       .json({ success: false, message: "Internal server error" });
   }
-};
+}; 
 
 const readMails = async (req, res) => {
   try {
