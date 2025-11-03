@@ -216,7 +216,8 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
 
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Date of Order:</strong>{" "}
-                {format(new Date(content?.date), "PPPP")}
+                10-10-2025
+                {/* {format(new Date(content?.date), "PPPP")} */}
               </Text>
               <Text>
                 <strong>Status:</strong>{" "}
