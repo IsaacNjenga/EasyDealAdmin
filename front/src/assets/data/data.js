@@ -726,35 +726,6 @@ export const ordersData = [
     _id: 131,
     order: [
       {
-        _id: 4,
-        name: "Modern Floor Lamp",
-        price: 9500,
-        description:
-          "A sleek metallic floor lamp with adjustable brightness and minimalist lines.",
-        colour: ["gold", "black"],
-        type: "lamp",
-        category: "Living Room Furniture",
-        img: [
-          "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
-        ],
-        freeShipping: true,
-        available: true,
-        stockCount: 35,
-        material: "Brushed metal and glass",
-        dimensions: "150cm x 35cm",
-        rating: 4.6,
-        totalReviews: 53,
-        shippingInformation: [
-          "Ships within 2-3 business days",
-          "Free shipping available",
-        ],
-        careGuide:
-          "Clean with a microfiber cloth. Avoid using harsh chemicals.",
-        tags: ["lighting", "lamp", "modern", "decor"],
-        discount: 0,
-        quantity: 1,
-      },
-      {
         _id: 1,
         name: "Ergonomic Office chair",
         price: 20000,

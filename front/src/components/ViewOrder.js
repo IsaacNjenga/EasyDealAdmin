@@ -215,10 +215,13 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
               <Divider />
 
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Date of Order:</strong> 10-10-2025
-                {/* {format(new Date(content?.date), "PPPP")} */}
+                <strong>Date of Order:</strong>{" "}
+                {content?.date && !isNaN(new Date(content.date))
+                  ? format(new Date(content.date), "PPPP")
+                  : "N/A"}
               </Text>
-              <Text>
+
+              <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Payment Method:</strong>{" "}
                 <Tag
                   color={getStatusColor(content?.payment_method)}
