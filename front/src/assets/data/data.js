@@ -770,6 +770,7 @@ export const ordersData = [
     delivery_option: "delivery",
     shipping_fee: 500,
     date: "2025-11-03T08:53:31.234Z",
+    status: "delivered",
   },
   {
     _id: 132,
@@ -848,6 +849,7 @@ export const ordersData = [
     delivery_option: "delivery",
     shipping_fee: 500,
     date: "2025-11-03T08:53:31.234Z",
+    status: "pending",
   },
   {
     _id: 133,
@@ -926,6 +928,7 @@ export const ordersData = [
     delivery_option: "delivery",
     shipping_fee: 500,
     date: "2025-11-03T08:53:31.234Z",
+    status: "cancelled",
   },
   {
     _id: 134,
@@ -1004,5 +1007,6 @@ export const ordersData = [
     delivery_option: "delivery",
     shipping_fee: 500,
     date: "2025-11-03T08:53:31.234Z",
+    status: "delivered",
   },
 ];

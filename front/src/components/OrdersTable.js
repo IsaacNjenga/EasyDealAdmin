@@ -90,7 +90,7 @@ const innerColumns = [
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Avatar
             shape="square"
-            size={70}
+            size={55}
             src={product?.img?.[0]}
             alt={product?.name}
             style={{ objectFit: "cover", borderRadius: 8 }}
@@ -132,6 +132,20 @@ const innerColumns = [
       );
     },
   },
+  {
+    title: "Discount on item",
+    key: "discount",
+    render: (_, record) => {
+      const product = record.order[0];
+      return (
+        <Tag
+          style={{ fontFamily: "DM Sans", background: "red", color: "white" }}
+        >
+          {product?.discount ? product.discount.toLocaleString() : "0"}%
+        </Tag>
+      );
+    },
+  },
 ];
 
 const ExpandedRowRender = ({
@@ -159,6 +173,7 @@ const ExpandedRowRender = ({
       columns={innerColumns}
       dataSource={enrichedData}
       pagination={false}
+      size="small"
       rowKey={(item) => item._id}
       onRow={(record) => ({
         onClick: () => {
@@ -202,7 +217,8 @@ const OrdersTable = ({ data }) => {
         }}
         rowKey={(record) => record._id}
         pagination={{ pageSize: 10 }}
-        size="large"
+        size="medium"
+        rowHoverable
         //loading={ordersLoading}
         style={{ fontFamily: "DM Sans" }}
         onRow={(record) => ({
