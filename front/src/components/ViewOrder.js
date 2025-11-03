@@ -23,6 +23,9 @@ const { Title, Text, Paragraph } = Typography;
 
 function ViewOrder({ content, loading, openModal, setOpenModal }) {
   const openNotification = useNotification();
+
+  const order = content?.product;
+  const customer = content?.customer_info;
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "pending":
@@ -82,38 +85,37 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                   overflow: "hidden",
                 }}
               >
-                {(Array.isArray(content?.order?.img)
-                  ? content?.order?.img
-                  : [content?.order?.img]
-                ).map((img, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: "100%",
-                      height: 400,
-                      background: "#fff",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Image
-                      src={img}
-                      alt={content?.order?.name}
-                      height={400}
-                      width={"100%"}
+                {(Array.isArray(order?.img) ? order?.img : [order?.img]).map(
+                  (img, i) => (
+                    <div
+                      key={i}
                       style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        objectFit: "contain",
-                        borderRadius: 12,
+                        width: "100%",
+                        height: 400,
+                        background: "#fff",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
-                      preview={false}
-                    />
-                  </div>
-                ))}
+                    >
+                      <Image
+                        src={img}
+                        alt={order?.name}
+                        height={400}
+                        width={"100%"}
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          objectFit: "contain",
+                          borderRadius: 12,
+                        }}
+                        preview={false}
+                      />
+                    </div>
+                  )
+                )}
               </Carousel>
-              {content?.order?.discount > 0 && (
+              {order?.discount > 0 && (
                 <div
                   style={{
                     position: "absolute",
@@ -136,7 +138,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                       borderRadius: 7,
                     }}
                   >
-                    -{content?.order?.discount}%
+                    -{order?.discount}%
                   </Button>
                 </div>
               )}
@@ -145,40 +147,38 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
             <Divider />
 
             <Title level={2} style={{ fontFamily: "DM Sans", marginBottom: 0 }}>
-              {content?.order?.name}
+              {order?.name}
             </Title>
 
             <Space direction="vertical" size={6}>
               <Title
                 level={3}
-                style={{ fontFamily: "DM Sans", marginBottom: 0 }}
+                type="secondary"
+                style={{ fontFamily: "DM Sans", marginBottom: 0, marginTop: 0 }}
               >
                 KES{" "}
-                {content?.order?.discount > 0 ? (
+                {order?.discount > 0 ? (
                   <>
                     <span
                       style={{ textDecoration: "line-through", opacity: 0.6 }}
                     >
-                      {content?.order?.price.toLocaleString()}
+                      {order?.price.toLocaleString()}
                     </span>{" "}
                     <span style={{ color: "#52c41a" }}>
                       {(
-                        ((100 - content?.order?.discount) *
-                          content?.order?.price) /
+                        ((100 - order?.discount) * order?.price) /
                         100
                       ).toLocaleString()}
                     </span>
                   </>
                 ) : (
-                  <span>{content?.order?.price.toLocaleString()}</span>
+                  <span>{order?.price.toLocaleString()}</span>
                 )}
               </Title>
               <Tag color="blue" style={{ fontFamily: "DM Sans" }}>
-                {content?.order?.type?.toUpperCase()}
+                {order?.type?.toUpperCase()}
               </Tag>
-              <Paragraph type="secondary">
-                {content?.order?.description}
-              </Paragraph>
+              <Paragraph type="secondary">{order?.description}</Paragraph>
             </Space>
           </Card>
         </Col>
@@ -195,16 +195,16 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
           >
             <Space direction="vertical" size="small" style={{ width: "100%" }}>
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Customer:</strong> {content?.customer?.name}
+                <strong>Customer:</strong> {customer?.name}
               </Text>
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Email:</strong> {content?.customer?.email}
+                <strong>Email:</strong> {customer?.email}
               </Text>
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Address:</strong> {content?.customer?.address}
+                <strong>Address:</strong> {customer?.address}
               </Text>
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Phone:</strong> {content?.customer?.phone}
+                <strong>Phone:</strong> {customer?.phone}
               </Text>
               <Text
                 type="secondary"
@@ -215,22 +215,24 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
               <Divider />
 
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Date of Order:</strong>{" "}
-                10-10-2025
+                <strong>Date of Order:</strong> 10-10-2025
                 {/* {format(new Date(content?.date), "PPPP")} */}
               </Text>
               <Text>
-                <strong>Status:</strong>{" "}
+                <strong>Payment Method:</strong>{" "}
                 <Tag
-                  color={getStatusColor(content?.payment_status)}
+                  color={getStatusColor(content?.payment_method)}
                   style={{ fontFamily: "DM Sans" }}
                 >
-                  {content?.payment_status}
+                  {content?.payment_method.charAt(0).toUpperCase() +
+                    content?.payment_method.slice(1)}
                 </Tag>
               </Text>
 
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Delivery:</strong> {content?.delivery_method}
+                <strong>Delivery:</strong>{" "}
+                {content?.delivery_option.charAt(0).toUpperCase() +
+                  content?.delivery_option.slice(1)}
               </Text>
 
               <Text style={{ fontFamily: "DM Sans" }}>
@@ -240,7 +242,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
 
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Additional Instructions:</strong>{" "}
-                {content?.instructions || "N/A"}
+                {customer?.additional_info || "N/A"}
               </Text>
             </Space>
           </Card>
@@ -256,7 +258,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
           >
             <Space size={[2, 3]} wrap>
               <Button
-              type="primary"
+                type="primary"
                 icon={<CheckCircleOutlined />}
                 onClick={() => {
                   console.log("clicked");
@@ -275,7 +277,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                 Mark as Delivered
               </Button>
               <Button
-              type="primary"
+                type="primary"
                 icon={<MailOutlined />}
                 onClick={() => {
                   console.log("clicked");
@@ -289,8 +291,8 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                 Email Customer
               </Button>
               <Button
-              type="primary"
-              danger
+                type="primary"
+                danger
                 icon={<CloseCircleOutlined />}
                 onClick={() => {
                   console.log("clicked");
