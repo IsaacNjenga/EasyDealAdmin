@@ -47,7 +47,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
         height: "90vh",
         overflowY: "auto",
         overflowX: "hidden",
-        background: "#fafafa",
+        background: "transparent",
         margin: 15,
       }}
       style={{
@@ -60,6 +60,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
         {/* Product Section */}
         <Col xs={24} md={14}>
           <Card
+            hoverable
             style={{
               borderRadius: 12,
               boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
@@ -185,6 +186,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
         {/* Order Details Section */}
         <Col xs={24} md={10}>
           <Card
+            hoverable
             title="Order Summary"
             style={{
               borderRadius: 12,
@@ -243,7 +245,14 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
           </Card>
 
           {/* buttons */}
-          <Card style={{ marginTop: 10 }}>
+          <Card
+            hoverable
+            style={{
+              marginTop: 10,
+              borderRadius: 12,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+            }}
+          >
             <Space size={[2, 3]} wrap>
               <Button
                 icon={<CheckCircleOutlined />}
