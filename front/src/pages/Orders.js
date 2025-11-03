@@ -1,9 +1,22 @@
-import { Avatar, Card, Table, Typography } from "antd";
+import { Avatar, Card, Table, Tag, Typography } from "antd";
 import React, { useState } from "react";
 import { ordersData } from "../assets/data/data.js";
 import { formatDistanceToNowStrict } from "date-fns";
 import ViewOrder from "../components/ViewOrder.js";
 const { Text } = Typography;
+
+const getStatusColor = (status) => {
+  switch (status?.toLowerCase()) {
+    case "pending":
+      return "orange";
+    case "delivered":
+      return "green";
+    case "cancelled":
+      return "red";
+    default:
+      return "blue";
+  }
+};
 
 const columns = [
   {
@@ -12,7 +25,7 @@ const columns = [
     key: "order",
     render: (text) => (
       <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-        <Avatar src={text.img[0]} size="105" />
+        <Avatar src={text.img[0]} size="large" />
         <Text style={{ fontFamily: "DM Sans" }}>{text.name}</Text>
       </div>
     ),
@@ -49,7 +62,11 @@ const columns = [
     title: "Payment Status",
     dataIndex: "payment_status",
     key: "payment_status",
-    render: (text) => <Text style={{ fontFamily: "DM Sans" }}>{text}</Text>,
+    render: (text) => (
+      <Tag color={getStatusColor(text)} style={{ fontFamily: "DM Sans" }}>
+        {text}
+      </Tag>
+    ),
   },
   {
     title: "Items",
@@ -181,11 +198,7 @@ function Orders() {
         style={{ width: "100%" }}
         tabList={tabList}
         activeTabKey={activeTabKey}
-        //tabBarExtraContent={<a href="#">More</a>}
         onTabChange={onTabChange}
-        tabProps={{
-          size: "middle",
-        }}
       >
         {contentList[activeTabKey]}
       </Card>

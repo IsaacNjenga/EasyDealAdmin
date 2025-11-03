@@ -256,6 +256,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
           >
             <Space size={[2, 3]} wrap>
               <Button
+              type="primary"
                 icon={<CheckCircleOutlined />}
                 onClick={() => {
                   console.log("clicked");
@@ -274,6 +275,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                 Mark as Delivered
               </Button>
               <Button
+              type="primary"
                 icon={<MailOutlined />}
                 onClick={() => {
                   console.log("clicked");
@@ -287,6 +289,8 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                 Email Customer
               </Button>
               <Button
+              type="primary"
+              danger
                 icon={<CloseCircleOutlined />}
                 onClick={() => {
                   console.log("clicked");
