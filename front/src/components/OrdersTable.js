@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Table, Avatar, Typography, Tag } from "antd";
 import { format, formatDistanceToNowStrict } from "date-fns";
 import ViewOrder from "./ViewOrder.js";
+import "../assets/css/orders.css";
 
 const { Text } = Typography;
 
@@ -174,6 +175,7 @@ const ExpandedRowRender = ({
       dataSource={enrichedData}
       pagination={false}
       size="small"
+      bordered
       rowKey={(item) => item._id}
       onRow={(record) => ({
         onClick: () => {
@@ -181,6 +183,12 @@ const ExpandedRowRender = ({
           console.log(record);
         },
       })}
+      rowClassName={(record) => {
+        if (record.status === "delivered") return "row-delivered";
+        if (record.status === "pending") return "row-pending";
+        if (record.status === "cancelled") return "row-cancelled";
+        return "";
+      }}
     />
   );
 };
@@ -218,8 +226,9 @@ const OrdersTable = ({ data }) => {
         rowKey={(record) => record._id}
         pagination={{ pageSize: 10 }}
         size="medium"
+        bordered
         rowHoverable
-        //loading={ordersLoading}
+        //TODO: loading={ordersLoading}
         style={{ fontFamily: "DM Sans" }}
         onRow={(record) => ({
           onClick: () => {
@@ -230,6 +239,12 @@ const OrdersTable = ({ data }) => {
             }
           },
         })}
+        rowClassName={(record) => {
+          if (record.status === "delivered") return "row-delivered";
+          if (record.status === "pending") return "row-pending";
+          if (record.status === "cancelled") return "row-cancelled";
+          return "";
+        }}
       />
 
       <ViewOrder

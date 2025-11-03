@@ -1,0 +1,9 @@
+.row-delivered {
+  background-color: #e6fff5 !important;
+}
+.row-pending {
+  background-color: #fffbe6 !important;
+}
+.row-cancelled {
+  background-color: #fff1f0 !important;
+}

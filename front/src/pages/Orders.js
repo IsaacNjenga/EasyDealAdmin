@@ -24,7 +24,7 @@ const tabs = [
   {
     key: 2,
     label: "Delivered Orders",
-    color: "blue",
+    color: "green",
     icon: CheckCircleFilled,
     icon2: CheckCircleOutlined,
   },
@@ -94,7 +94,7 @@ const Orders = () => {
             onClick={() => setActiveTabKey(btn.key)}
             style={{
               fontSize: 14,
-              padding: "6px 12px",
+              padding: "10px 14px",
               cursor: "pointer",
               fontFamily: "DM Sans",
               borderRadius: 20,
