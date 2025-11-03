@@ -1,0 +1,72 @@
+import OrderModel from "../models/Orders.js";
+import { logActivity } from "../utils/logActivity.js";
+
+const createOrder = async (req, res) => {
+  try {
+    const newOrder = new OrderModel(req.body);
+
+    //logging the activity
+    await logActivity(
+      "Order",
+      newOrder._id,
+      "created",
+      `New order made: ${newOrder._id}`,
+      `${newOrder.customer_info.name} ordered an item`,
+      "orders"
+    );
+    await newOrder.save();
+    res.status(201).json({ success: true, order: newOrder });
+  } catch (error) {
+    console.error("Error in creating order:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const fetchOrders = async (req, res) => {
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 10;
+  const skip = (page - 1) * limit;
+  try {
+    const orders = await OrderModel.find({})
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+    const totalOrders = await OrderModel.countDocuments();
+    res.status(200).json({
+      success: true,
+      orders,
+      currentPage: page,
+      totalOrders,
+      totalPages: Math.ceil(totalOrders / limit),
+    });
+  } catch (error) {
+    console.error("Error in fetching orders:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const fetchAllOrders = async (req, res) => {
+  try {
+    const orders = await OrderModel.find({}).sort({ createdAt: -1 });
+    res.status(200).json({ success: true, orders });
+  } catch (error) {
+    console.error("Error in fetching orders:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const fetchOrder = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const order = await OrderModel.findById(id);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    console.error("Error in fetching order:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export { createOrder, fetchOrders, fetchOrder, fetchAllOrders };

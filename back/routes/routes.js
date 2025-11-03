@@ -25,6 +25,12 @@ import {
   fetchReply,
   fetchReplies,
 } from "../controllers/repliesController.js";
+import {
+  createOrder,
+  fetchAllOrders,
+  fetchOrder,
+  fetchOrders,
+} from "../controllers/ordersController.js";
 import { fetchActivities } from "../controllers/activityController.js";
 import { replyToEmail } from "../controllers/clientReplyController.js";
 
@@ -58,6 +64,12 @@ router.post("/reply-to-email", protectRoute, replyToEmail);
 router.post("/reply-to-db", protectRoute, createReply);
 router.get("/fetch-replies", protectRoute, fetchReplies);
 router.get("/fetch-reply", protectRoute, fetchReply);
+
+//orders routes
+router.post("/create-order", createOrder);
+router.get("/fetch-orders", protectRoute, fetchOrders);
+router.get("/fetch-all-orders", protectRoute, fetchAllOrders);
+router.get("/fetch-order", protectRoute, fetchOrder);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);
