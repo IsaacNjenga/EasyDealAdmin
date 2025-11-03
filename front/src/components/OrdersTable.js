@@ -80,60 +80,92 @@ const columns = [
   },
 ];
 
-const expandedRowRender = (record) => {
-  const innerColumns = [
-    {
-      title: "Product",
-      key: "product",
-      render: (_, item) => (
+const innerColumns = [
+  {
+    title: "Product",
+    key: "product",
+    render: (_, record) => {
+      const product = record.order[0];
+      return (
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Avatar
             shape="square"
             size={70}
-            src={item.img?.[0]}
-            alt={item.name}
+            src={product?.img?.[0]}
+            alt={product?.name}
             style={{ objectFit: "cover", borderRadius: 8 }}
           />
           <div>
             <Text style={{ fontFamily: "DM Sans", fontWeight: 600 }}>
-              {item.name}
+              {product?.name}
             </Text>
             <br />
             <Text type="secondary" style={{ fontFamily: "DM Sans" }}>
-              {item.type?.charAt(0).toUpperCase() + item.type?.slice(1)}
+              {product?.type?.charAt(0).toUpperCase() + product?.type?.slice(1)}
             </Text>
           </div>
         </div>
-      ),
+      );
     },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-      render: (text) => (
+  },
+  {
+    title: "Quantity",
+    key: "quantity",
+    render: (_, record) => {
+      const product = record.order[0];
+      return (
         <Text style={{ fontFamily: "DM Sans" }}>
-          {text} item{text > 1 ? "s" : ""}
+          {product?.quantity} item{product?.quantity > 1 ? "s" : ""}
         </Text>
-      ),
+      );
     },
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-      render: (price) => (
+  },
+  {
+    title: "Price",
+    key: "price",
+    render: (_, record) => {
+      const product = record.order[0];
+      return (
         <Text style={{ fontFamily: "DM Sans" }}>
-          KES {price?.toLocaleString()}
+          KES {product?.price?.toLocaleString()}
         </Text>
-      ),
+      );
     },
-  ];
+  },
+];
+
+const ExpandedRowRender = ({
+  record,
+  setLoading,
+  setContent,
+  setOpenModal,
+}) => {
+  const viewOrder = (content) => {
+    setLoading(true);
+    setContent(content);
+    setOpenModal(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
+
+  const enrichedData = record?.order.map((item) => ({
+    ...record,
+    order: [item],
+  }));
 
   return (
     <Table
       columns={innerColumns}
-      dataSource={record.order}
+      dataSource={enrichedData}
       pagination={false}
       rowKey={(item) => item._id}
+      onRow={(record) => ({
+        onClick: () => {
+          viewOrder(record);
+          console.log(record);
+        },
+      })}
     />
   );
 };
@@ -158,7 +190,14 @@ const OrdersTable = ({ data }) => {
         columns={columns}
         dataSource={data}
         expandable={{
-          expandedRowRender,
+          expandedRowRender: (record) => (
+            <ExpandedRowRender
+              record={record}
+              setLoading={setLoading}
+              setContent={setContent}
+              setOpenModal={setOpenModal}
+            />
+          ),
           rowExpandable: (record) => record.order && record.order.length > 0,
         }}
         rowKey={(record) => record._id}
@@ -168,7 +207,11 @@ const OrdersTable = ({ data }) => {
         style={{ fontFamily: "DM Sans" }}
         onRow={(record) => ({
           onClick: () => {
-            viewOrder(record);
+            if (record.order.length === 1) {
+              viewOrder(record);
+            } else {
+              // do nothing, as the row is expandable
+            }
           },
         })}
       />

@@ -24,8 +24,9 @@ const { Title, Text, Paragraph } = Typography;
 function ViewOrder({ content, loading, openModal, setOpenModal }) {
   const openNotification = useNotification();
 
-  const order = content?.product;
+  const order = content?.order[0];
   const customer = content?.customer_info;
+
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "pending":
@@ -41,6 +42,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
 
   return (
     <Modal
+      title="Order Details"
       open={openModal}
       onCancel={() => setOpenModal(false)}
       confirmLoading={loading}
@@ -172,7 +174,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                     </span>
                   </>
                 ) : (
-                  <span>{order?.price.toLocaleString()}</span>
+                  <span>{order?.price?.toLocaleString()}</span>
                 )}
               </Title>
               <Tag color="blue" style={{ fontFamily: "DM Sans" }}>
