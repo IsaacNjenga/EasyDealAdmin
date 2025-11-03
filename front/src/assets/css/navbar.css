@@ -8,3 +8,48 @@
   background: linear-gradient(to right, #000000d6 0%, #232527ff 100%) !important;
   margin-left:6px !important;
 }
+
+/* Make scrollbar paper-thin and minimal */
+::-webkit-scrollbar {    
+  height: 2px; /* Use height for horizontal scrolling */
+  width: 4px;  /* Keep this too, for vertical scroll areas */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0);
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0);
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  height: 3px; /* Use height for horizontal scrolling */
+  width: 4px;  /* Keep this too, for vertical scroll areas */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0);
+  border-radius: 1px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+.scroll-container::-webkit-scrollbar-button {
+  display: none;
+}
+

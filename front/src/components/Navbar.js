@@ -279,11 +279,13 @@ function Navbar() {
               </div>
 
               <div style={{ marginRight: 20 }}>
-                <Avatar
-                  src={user?.avatar}
-                  size="medium"
-                  style={{ marginRight: 15 }}
-                />
+                <Tooltip title={user?.username}>
+                  <Avatar
+                    src={user?.avatar}
+                    size="medium"
+                    style={{ marginRight: 15 }}
+                  />
+                </Tooltip>
                 <Tooltip title="Logout">
                   <Button
                     type="primary"
