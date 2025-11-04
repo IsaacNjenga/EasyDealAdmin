@@ -69,4 +69,25 @@ const fetchOrder = async (req, res) => {
   }
 };
 
-export { createOrder, fetchOrders, fetchOrder, fetchAllOrders };
+const orderUpdate = async (req, res) => {
+  const { id } = req.query;
+  const updateData = req.body;
+  try {
+    const updatedOrder = await OrderModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+    if (!updatedOrder) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
+    }
+    return res.status(200).json({ success: true, order: updatedOrder });
+  } catch (error) {
+    console.error("Error in order update:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+export { createOrder, fetchOrders, fetchOrder, fetchAllOrders, orderUpdate };

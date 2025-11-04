@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, Tag } from "antd";
-import { ordersData } from "../assets/data/data.js";
+//import { ordersData } from "../assets/data/data.js";
 import OrdersTable from "../components/OrdersTable.js";
 import {
   CheckCircleOutlined,
@@ -12,6 +12,7 @@ import {
   SwitcherFilled,
   SwitcherOutlined,
 } from "@ant-design/icons";
+import useFetchAllOrders from "../hooks/fetchAllOrders.js";
 
 const tabs = [
   {
@@ -31,7 +32,7 @@ const tabs = [
   {
     key: 3,
     label: "Pending Orders",
-    color: "gold",
+    color: "orange",
     icon: ExclamationCircleFilled,
     icon2: ExclamationCircleOutlined,
   },
@@ -46,27 +47,40 @@ const tabs = [
 
 const Orders = () => {
   const [activeTabKey, setActiveTabKey] = useState(1);
+  const { orders, ordersLoading, ordersRefresh } = useFetchAllOrders();
 
   const renderContent = () => {
     switch (activeTabKey) {
       case 1:
-        return <OrdersTable data={ordersData} />;
+        return (
+          <OrdersTable
+            data={orders}
+            ordersLoading={ordersLoading}
+            ordersRefresh={ordersRefresh}
+          />
+        );
       case 2:
         return (
           <OrdersTable
-            data={ordersData.filter((o) => o.status === "delivered")}
+            data={orders.filter((o) => o.status === "delivered")}
+            ordersLoading={ordersLoading}
+            ordersRefresh={ordersRefresh}
           />
         );
       case 3:
         return (
           <OrdersTable
-            data={ordersData.filter((o) => o.status === "pending")}
+            data={orders.filter((o) => o.status === "pending")}
+            ordersLoading={ordersLoading}
+            ordersRefresh={ordersRefresh}
           />
         );
       case 4:
         return (
           <OrdersTable
-            data={ordersData.filter((o) => o.status === "cancelled")}
+            data={orders.filter((o) => o.status === "cancelled")}
+            ordersLoading={ordersLoading}
+            ordersRefresh={ordersRefresh}
           />
         );
       default:

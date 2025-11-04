@@ -193,7 +193,7 @@ const ExpandedRowRender = ({
   );
 };
 
-const OrdersTable = ({ data }) => {
+const OrdersTable = ({ data, ordersLoading, orderRefresh }) => {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -228,7 +228,7 @@ const OrdersTable = ({ data }) => {
         size="medium"
         bordered
         rowHoverable
-        //TODO: loading={ordersLoading}
+        loading={ordersLoading}
         style={{ fontFamily: "DM Sans" }}
         onRow={(record) => ({
           onClick: () => {

@@ -70,6 +70,7 @@ router.post("/create-order", createOrder);
 router.get("/fetch-orders", protectRoute, fetchOrders);
 router.get("/fetch-all-orders", protectRoute, fetchAllOrders);
 router.get("/fetch-order", protectRoute, fetchOrder);
+router.put("/order-update", protectRoute, orderUpdate);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);

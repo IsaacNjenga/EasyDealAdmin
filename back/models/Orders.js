@@ -5,7 +5,11 @@ const orderSchema = new mongoose.Schema(
     order: { type: [String], required: true },
     date: { type: Date, required: true },
     customer_info: { type: { String }, required: true },
-    status: { type: String, required: true },
+    status: {
+      type: String,
+      enum: ["cancelled", "pending", "delivered"],
+      required: true,
+    },
     payment_method: { type: String, required: true },
     total: { type: Number, required: true },
     items: { type: Number, required: true },
