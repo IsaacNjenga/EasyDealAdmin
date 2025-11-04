@@ -1,6 +1,7 @@
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
+  ExclamationCircleOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 import {
@@ -17,13 +18,17 @@ import {
   Button,
 } from "antd";
 import { format } from "date-fns";
-import { useNotification } from "../contexts/NotificationContext";
 
 const { Title, Text, Paragraph } = Typography;
 
-function ViewOrder({ content, loading, openModal, setOpenModal }) {
-  const openNotification = useNotification();
-
+function ViewOrder({
+  content,
+  loading,
+  openModal,
+  setOpenModal,
+  updateOrder,
+  ordersRefresh,
+}) {
   const order = content?.order[0];
   const customer = content?.customer_info;
   const transaction = content?.transaction_data;
@@ -274,31 +279,55 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
             }}
           >
             <Space size={[2, 3]} wrap>
-              <Button
-                type="primary"
-                icon={<CheckCircleOutlined />}
-                onClick={() => {
-                  console.log("clicked");
-                  openNotification(
-                    "Success",
-                    "Order marked as delivered",
-                    "Done!"
-                  );
-                }}
-                style={{
-                  background: "#52c41a",
-                  color: "whitesmoke",
-                  fontFamily: "DM Sans",
-                }}
-              >
-                Mark as Delivered
-              </Button>
+              {content?.order_status === "delivered" ? (
+                <Button
+                  type="primary"
+                  icon={<ExclamationCircleOutlined />}
+                  onClick={async () => {
+                    const newStatus =
+                      content?.order_status === "delivered"
+                        ? "pending"
+                        : "delivered";
+                    await updateOrder(content?._id, {
+                      order_status: newStatus,
+                    });
+                    ordersRefresh();
+                  }}
+                  style={{
+                    background: "orange",
+                    color: "whitesmoke",
+                    fontFamily: "DM Sans",
+                  }}
+                >
+                  Mark as Pending
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  icon={<CheckCircleOutlined />}
+                  onClick={async () => {
+                    const newStatus =
+                      content?.order_status === "delivered"
+                        ? "pending"
+                        : "delivered";
+                    await updateOrder(content?._id, {
+                      order_status: newStatus,
+                    });
+                    ordersRefresh();
+                  }}
+                  style={{
+                    background: "#52c41a",
+                    color: "whitesmoke",
+                    fontFamily: "DM Sans",
+                  }}
+                >
+                  Mark as Delivered
+                </Button>
+              )}
               <Button
                 type="primary"
                 icon={<MailOutlined />}
-                onClick={() => {
-                  console.log("clicked");
-                }}
+                onClick={{}}
                 style={{
                   background: "#1890ff",
                   color: "whitesmoke",
@@ -311,13 +340,13 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                 type="primary"
                 danger
                 icon={<CloseCircleOutlined />}
-                onClick={() => {
-                  console.log("clicked");
-                  openNotification(
-                    "Success",
-                    "Order has been cancelled successfully",
-                    "Done!"
-                  );
+                onClick={async () => {
+                  const newStatus =
+                    content?.order_status === "cancelled"
+                      ? "pending"
+                      : "cancelled";
+                  await updateOrder(content?._id, { order_status: newStatus });
+                  ordersRefresh();
                 }}
                 style={{
                   background: "#ff4d4f",

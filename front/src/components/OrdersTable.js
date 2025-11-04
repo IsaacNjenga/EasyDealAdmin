@@ -332,7 +332,6 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
         pagination={{ pageSize: 10 }}
         size="medium"
         bordered
-        rowHoverable
         loading={ordersLoading}
         style={{ fontFamily: "DM Sans" }}
         onRow={(record) => ({
@@ -357,6 +356,8 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
         loading={loading}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        updateOrder={updateOrder}
+        ordersRefresh={ordersRefresh}
       />
     </div>
   );
