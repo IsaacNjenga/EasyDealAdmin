@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Card, Tag } from "antd";
-//import { ordersData } from "../assets/data/data.js";
 import OrdersTable from "../components/OrdersTable.js";
 import {
   CheckCircleOutlined,
@@ -13,33 +12,39 @@ import {
   SwitcherOutlined,
 } from "@ant-design/icons";
 import useFetchAllOrders from "../hooks/fetchAllOrders.js";
+//import { ordersData } from "../assets/data/data.js";
 
 const tabs = [
   {
     key: 1,
     label: "All Orders",
     color: "purple",
+    color2: "#cbcbfdff",
     icon: SwitcherFilled,
     icon2: SwitcherOutlined,
   },
+
   {
     key: 2,
-    label: "Delivered Orders",
-    color: "green",
-    icon: CheckCircleFilled,
-    icon2: CheckCircleOutlined,
+    label: "Pending Orders",
+    color: "orange",
+    color2: "#f7eebe",
+    icon: ExclamationCircleFilled,
+    icon2: ExclamationCircleOutlined,
   },
   {
     key: 3,
-    label: "Pending Orders",
-    color: "orange",
-    icon: ExclamationCircleFilled,
-    icon2: ExclamationCircleOutlined,
+    label: "Delivered Orders",
+    color: "green",
+    color2: "#cff8e8",
+    icon: CheckCircleFilled,
+    icon2: CheckCircleOutlined,
   },
   {
     key: 4,
     label: "Cancelled Orders",
     color: "red",
+    color2: "#fad2cf",
     icon: CloseCircleFilled,
     icon2: CloseCircleOutlined,
   },
@@ -48,6 +53,9 @@ const tabs = [
 const Orders = () => {
   const [activeTabKey, setActiveTabKey] = useState(1);
   const { orders, ordersLoading, ordersRefresh } = useFetchAllOrders();
+  // const orders = ordersData;
+  // const ordersLoading = false;
+  // const ordersRefresh = () => {};
 
   const renderContent = () => {
     switch (activeTabKey) {
@@ -62,7 +70,7 @@ const Orders = () => {
       case 2:
         return (
           <OrdersTable
-            data={orders.filter((o) => o.status === "delivered")}
+            data={orders.filter((o) => o.order_status === "pending")}
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
@@ -70,7 +78,7 @@ const Orders = () => {
       case 3:
         return (
           <OrdersTable
-            data={orders.filter((o) => o.status === "pending")}
+            data={orders.filter((o) => o.order_status === "delivered")}
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
@@ -78,7 +86,7 @@ const Orders = () => {
       case 4:
         return (
           <OrdersTable
-            data={orders.filter((o) => o.status === "cancelled")}
+            data={orders.filter((o) => o.order_status === "cancelled")}
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
@@ -90,7 +98,6 @@ const Orders = () => {
 
   return (
     <>
-      {/* ✅ Tag Tabs */}
       <div
         style={{
           display: "flex",
@@ -113,7 +120,7 @@ const Orders = () => {
               fontFamily: "DM Sans",
               borderRadius: 20,
               transition: "0.2s",
-              background: activeTabKey === btn.key ? btn.color : "#f0f0f0",
+              background: activeTabKey === btn.key ? btn.color : btn.color2,
               color: activeTabKey === btn.key ? "white" : "#333",
             }}
           >

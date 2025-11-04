@@ -26,6 +26,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
 
   const order = content?.order[0];
   const customer = content?.customer_info;
+  const transaction = content?.transaction_data;
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -197,7 +198,7 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
           >
             <Space direction="vertical" size="small" style={{ width: "100%" }}>
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Customer:</strong> {customer?.name}
+                <strong>Customer:</strong> {customer?.full_name}
               </Text>
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Email:</strong> {customer?.email}
@@ -215,14 +216,28 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                 <u>View delivery location</u>
               </Text>
               <Divider />
-
+              <Text>
+                <strong>Confirmation Code:</strong>{" "}
+                {transaction?.confirmation_code}
+              </Text>
+              <Text>
+                <strong>Order Tracking Id:</strong>{" "}
+                {transaction?.order_tracking_id}
+              </Text>
+              <Text>
+                <strong>Payment Status:</strong>{" "}
+                {transaction?.payment_status_description}
+              </Text>
+              <Text>
+                <strong>Payment Account:</strong> {transaction?.payment_account}
+              </Text>
+              <Divider />
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Date of Order:</strong>{" "}
                 {content?.date && !isNaN(new Date(content.date))
                   ? format(new Date(content.date), "PPPP")
                   : "N/A"}
               </Text>
-
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Payment Method:</strong>{" "}
                 <Tag
@@ -233,18 +248,15 @@ function ViewOrder({ content, loading, openModal, setOpenModal }) {
                     content?.payment_method.slice(1)}
                 </Tag>
               </Text>
-
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Delivery:</strong>{" "}
+                <strong>Delivery Option:</strong>{" "}
                 {content?.delivery_option.charAt(0).toUpperCase() +
                   content?.delivery_option.slice(1)}
               </Text>
-
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Amount Paid:</strong> KES{" "}
                 {content?.total?.toLocaleString()}
               </Text>
-
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Additional Instructions:</strong>{" "}
                 {customer?.additional_info || "N/A"}

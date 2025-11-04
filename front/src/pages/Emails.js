@@ -30,6 +30,7 @@ import useFetchAllReplies from "../hooks/fetchAllReplies";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import "../assets/css/emails.css";
+import { useNotification } from "../contexts/NotificationContext";
 
 const { Title, Text } = Typography;
 const { Search } = Input;
@@ -69,6 +70,7 @@ function Emails() {
   const { token } = useAuth();
   const { emails, emailsLoading, emailsRefresh } = useFetchAllEmails();
   const { replies } = useFetchAllReplies();
+  const openNotification = useNotification();
   const emailData = useMemo(() => (emails ? emails : []), [emails]);
   const replyData = useMemo(() => (replies ? replies : []), [replies]);
   const [openModal, setOpenModal] = useState(false);
@@ -119,9 +121,15 @@ function Emails() {
       });
       if (res.data.success) {
         //console.log("success");
+        openNotification("success", "", "Done!");
       }
     } catch (error) {
       console.error("Failed to update mail", error);
+      openNotification(
+        "error",
+        "Failed to update order. Try again",
+        "There was an error"
+      );
     }
   };
 
@@ -310,7 +318,7 @@ function Emails() {
 
   useEffect(() => {
     emailsRefresh();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTab]);
 
   const getFilteredData = () => {

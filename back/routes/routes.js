@@ -30,6 +30,7 @@ import {
   fetchAllOrders,
   fetchOrder,
   fetchOrders,
+  orderUpdate,
 } from "../controllers/ordersController.js";
 import { fetchActivities } from "../controllers/activityController.js";
 import { replyToEmail } from "../controllers/clientReplyController.js";
