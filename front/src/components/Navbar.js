@@ -13,6 +13,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import logo from "../assets/icons/office-chair.png";
 import {
   AppstoreOutlined,
+  BellOutlined,
   HomeOutlined,
   MailOutlined,
   MenuFoldOutlined,
@@ -40,6 +41,7 @@ const items = [
   ]),
   getItem("Emails", "/emails", 5, MailOutlined),
   getItem("Orders", "/orders", 6, TruckOutlined),
+  getItem("Activity", "/activity", 7, BellOutlined),
 ];
 
 const flattenItems = (arr) =>

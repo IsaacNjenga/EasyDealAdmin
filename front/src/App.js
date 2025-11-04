@@ -11,6 +11,7 @@ import { Spin } from "antd";
 import Auth from "./pages/Auth";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Orders from "./pages/Orders";
+import Activity from "./pages/Activity";
 
 axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
 //axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
@@ -42,6 +43,7 @@ function App() {
             <Route path="update-product/:id" element={<UpdateProduct />} />
             <Route path="emails" element={<Emails />} />
             <Route path="orders" element={<Orders />} />
+            <Route path="activity" element={<Activity />} />
           </Route>
         </Routes>
       )}

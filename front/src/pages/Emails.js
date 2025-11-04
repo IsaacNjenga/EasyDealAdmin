@@ -406,11 +406,13 @@ function Emails() {
               onClick={() => setSelectedTab(btn.key)}
               style={{
                 fontSize: 14,
-                padding: "6px 10px",
+                padding: "10px 14px",
                 cursor: "pointer",
-                fontFamily: "Roboto",
+                fontFamily: "DM Sans",
                 background: selectedTab === btn.key ? btn.color : "",
                 color: selectedTab === btn.key ? "white" : "",
+                borderRadius: 20,
+                transition: "all 0.2s ease-in-out",
               }}
             >
               {selectedTab === btn.key ? <btn.icon /> : <btn.icon2 />}

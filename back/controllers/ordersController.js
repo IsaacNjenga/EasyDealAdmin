@@ -7,11 +7,11 @@ const createOrder = async (req, res) => {
 
     //logging the activity
     await logActivity(
-      "Order",
+      "order",
       newOrder._id,
       "created",
-      `New order made: ${newOrder._id}`,
-      `${newOrder.customer_info.name} ordered an item`,
+      `New order made!`,
+      `An item has been ordered`,
       "orders"
     );
     await newOrder.save();
