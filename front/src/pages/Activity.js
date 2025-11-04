@@ -1,6 +1,6 @@
 import React from "react";
 import useFetchActivity from "../hooks/fetchActivity";
-import { Table, Typography } from "antd";
+import { Button, Table, Typography } from "antd";
 import { format, formatDistanceToNowStrict } from "date-fns";
 
 const { Text } = Typography;
@@ -47,6 +47,7 @@ function Activity() {
 
   return (
     <div>
+      <Button onClick={activitiesRefresh}>Refresh</Button>
       <Table
         columns={columns}
         dataSource={activities}

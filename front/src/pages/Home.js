@@ -155,9 +155,9 @@ function Home() {
             ) : (
               <List
                 itemLayout="horizontal"
-                dataSource={activities.filter(
-                  (activity) => activity.type === "mail"
-                )}
+                dataSource={activities
+                  .filter((activity) => activity.type === "mail")
+                  .slice(-3)}
                 renderItem={(item) => (
                   <List.Item>
                     <List.Item.Meta
@@ -180,7 +180,7 @@ function Home() {
             <div
               style={{
                 display: "grid",
-                gap: 12,
+                gap: 4,
                 gridTemplateColumns: "1fr 1fr",
               }}
             >

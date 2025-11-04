@@ -134,6 +134,7 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [activeDropdownId, setActiveDropdownId] = useState(null);
+  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
 
   const updateOrder = async (id, updateData) => {
     try {
@@ -315,41 +316,53 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
   return (
     <div>
       <Table
-        columns={columns}
-        dataSource={data}
-        expandable={{
-          expandedRowRender: (record) => (
-            <ExpandedRowRender
-              record={record}
-              setLoading={setLoading}
-              setContent={setContent}
-              setOpenModal={setOpenModal}
-            />
-          ),
-          rowExpandable: (record) => record.order && record.order.length > 0,
-        }}
-        rowKey={(record) => record._id}
-        pagination={{ pageSize: 10 }}
-        size="medium"
-        bordered
-        loading={ordersLoading}
-        style={{ fontFamily: "DM Sans" }}
-        onRow={(record) => ({
-          onClick: () => {
-            if (record.order.length === 1) {
-              viewOrder(record);
-            } else {
-              // do nothing, as the row is expandable
-            }
-          },
-        })}
-        rowClassName={(record) => {
-          if (record.order_status === "delivered") return "row-delivered";
-          if (record.order_status === "pending") return "row-pending";
-          if (record.order_status === "cancelled") return "row-cancelled";
-          return "";
-        }}
+  columns={columns}
+  dataSource={data}
+  expandable={{
+    expandedRowRender: (record) => (
+      <ExpandedRowRender
+        record={record}
+        setLoading={setLoading}
+        setContent={setContent}
+        setOpenModal={setOpenModal}
       />
+    ),
+    rowExpandable: (record) => record.order && record.order.length > 0,
+    expandedRowKeys,
+    onExpand: (expanded, record) => {
+      if (expanded) {
+        setExpandedRowKeys([record._id]); // only one expanded at a time
+      } else {
+        setExpandedRowKeys([]);
+      }
+    },
+  }}
+  rowKey={(record) => record._id}
+  pagination={{ pageSize: 10 }}
+  size="medium"
+  bordered
+  loading={ordersLoading}
+  style={{ fontFamily: "DM Sans" }}
+  onRow={(record) => ({
+    onClick: () => {
+      if (record.order.length === 1) {
+        // Open modal if there's only one item
+        viewOrder(record);
+      } else if (record.order.length > 1) {
+        // Expand the row instead
+        const isExpanded = expandedRowKeys.includes(record._id);
+        setExpandedRowKeys(isExpanded ? [] : [record._id]);
+      }
+    },
+  })}
+  rowClassName={(record) => {
+    if (record.order_status === "delivered") return "row-delivered";
+    if (record.order_status === "pending") return "row-pending";
+    if (record.order_status === "cancelled") return "row-cancelled";
+    return "";
+  }}
+/>
+
 
       <ViewOrder
         content={content}

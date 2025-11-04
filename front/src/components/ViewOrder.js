@@ -18,6 +18,7 @@ import {
   Button,
 } from "antd";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -32,6 +33,7 @@ function ViewOrder({
   const order = content?.order[0];
   const customer = content?.customer_info;
   const transaction = content?.transaction_data;
+  const navigate = useNavigate();
 
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -217,6 +219,11 @@ function ViewOrder({
               <Text
                 type="secondary"
                 style={{ cursor: "pointer", fontFamily: "DM Sans" }}
+                onClick={() =>
+                  navigate(
+                    `/location?lat=${customer?.coordinates.lat}&lng=${customer?.coordinates.lng}`
+                  )
+                }
               >
                 <u>View delivery location</u>
               </Text>
