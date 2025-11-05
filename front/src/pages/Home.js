@@ -233,7 +233,7 @@ function Home() {
               alignItems: "center",
             }}
           >
-            <Spin size="large" />
+            <Spin size="small" />
           </div>
         ) : (
           <Timeline

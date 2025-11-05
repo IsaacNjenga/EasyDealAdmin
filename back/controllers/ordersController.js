@@ -96,7 +96,7 @@ const clientOrderUpdate = async (req, res) => {
   try {
     const updatedOrder = await OrderModel.findOneAndUpdate(
       { orderTrackingId: tracking_id },
-      updateData,
+      { transaction_data: updateData },
       {
         new: true,
       }
