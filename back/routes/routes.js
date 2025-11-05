@@ -36,6 +36,10 @@ import {
 } from "../controllers/ordersController.js";
 import { fetchActivities } from "../controllers/activityController.js";
 import { replyToEmail } from "../controllers/clientReplyController.js";
+import {
+  draftNewsletter,
+  fetchNewsletter,
+} from "../controllers/newsletterController.js";
 
 const router = express.Router();
 
@@ -76,6 +80,10 @@ router.get("/fetch-all-orders", protectRoute, fetchAllOrders);
 router.get("/fetch-order", protectRoute, fetchOrder);
 router.put("/order-update", protectRoute, orderUpdate);
 router.put("/client-order-update", clientOrderUpdate);
+
+//newsletter routes
+router.post("/draft-newsletter", protectRoute, draftNewsletter);
+router.get("/fetch-newsletter", protectRoute, fetchNewsletter);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);
