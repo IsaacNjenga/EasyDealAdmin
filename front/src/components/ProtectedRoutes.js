@@ -98,6 +98,7 @@ function ProtectedRoutes({ children }) {
         "Session Error!"
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, isAuthenticated, logout, openNotification]);
 
   if (!isAuthenticated || !token) {
