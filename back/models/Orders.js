@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema(
     items: { type: Number, required: true },
     delivery_option: { type: String, required: true },
     shipping_fee: { type: Number },
+    orderTrackingId: { type: String },
     transaction_data: { type: Object },
   },
   { collection: "orders", timestamps: true }

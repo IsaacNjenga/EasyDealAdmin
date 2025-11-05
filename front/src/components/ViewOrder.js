@@ -205,7 +205,8 @@ function ViewOrder({
           >
             <Space direction="vertical" size="small" style={{ width: "100%" }}>
               <Text style={{ fontFamily: "DM Sans" }}>
-                <strong>Customer:</strong> {customer?.full_name}
+                <strong>Customer:</strong> {customer?.first_name}{" "}
+                {customer?.last_name}
               </Text>
               <Text style={{ fontFamily: "DM Sans" }}>
                 <strong>Email:</strong> {customer?.email}
