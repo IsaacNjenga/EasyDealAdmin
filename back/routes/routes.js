@@ -26,6 +26,7 @@ import {
   fetchReplies,
 } from "../controllers/repliesController.js";
 import {
+  clientOrderUpdate,
   createOrder,
   fetchAllOrders,
   fetchOrder,
@@ -72,6 +73,7 @@ router.get("/fetch-orders", protectRoute, fetchOrders);
 router.get("/fetch-all-orders", protectRoute, fetchAllOrders);
 router.get("/fetch-order", protectRoute, fetchOrder);
 router.put("/order-update", protectRoute, orderUpdate);
+router.put("/client-order-update", clientOrderUpdate);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);

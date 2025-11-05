@@ -90,4 +90,36 @@ const orderUpdate = async (req, res) => {
   }
 };
 
-export { createOrder, fetchOrders, fetchOrder, fetchAllOrders, orderUpdate };
+const clientOrderUpdate = async (req, res) => {
+  const { tracking_id } = req.query;
+  const updateData = req.body;
+  try {
+    const updatedOrder = await OrderModel.findOneAndUpdate(
+      { orderTrackingId: tracking_id },
+      updateData,
+      {
+        new: true,
+      }
+    );
+    if (!updatedOrder) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
+    }
+    return res.status(200).json({ success: true, order: updatedOrder });
+  } catch (error) {
+    console.error("Error in order update:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+export {
+  createOrder,
+  fetchOrders,
+  fetchOrder,
+  fetchAllOrders,
+  orderUpdate,
+  clientOrderUpdate,
+};
