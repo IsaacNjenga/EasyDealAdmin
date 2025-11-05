@@ -20,6 +20,7 @@ import {
   MenuUnfoldOutlined,
   PlusCircleOutlined,
   PoweroffOutlined,
+  PushpinOutlined,
   TruckOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../contexts/AuthContext";
@@ -42,6 +43,7 @@ const items = [
   getItem("Emails", "/emails", 5, MailOutlined),
   getItem("Orders", "/orders", 6, TruckOutlined),
   getItem("Activity", "/activity", 7, BellOutlined),
+  getItem("Subscribers", "/subscribers", 8, PushpinOutlined),
 ];
 
 const flattenItems = (arr) =>

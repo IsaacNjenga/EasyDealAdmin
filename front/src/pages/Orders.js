@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, Tag } from "antd";
+import { Card, Input, Tag } from "antd";
 import OrdersTable from "../components/OrdersTable.js";
 import {
   CheckCircleOutlined,
@@ -13,6 +13,8 @@ import {
 } from "@ant-design/icons";
 import useFetchAllOrders from "../hooks/fetchAllOrders.js";
 //import { ordersData } from "../assets/data/data.js";
+
+const { Search } = Input;
 
 const tabs = [
   {
@@ -53,16 +55,16 @@ const tabs = [
 const Orders = () => {
   const [activeTabKey, setActiveTabKey] = useState(1);
   const { orders, ordersLoading, ordersRefresh } = useFetchAllOrders();
-  // const orders = ordersData;
-  // const ordersLoading = false;
-  // const ordersRefresh = () => {};
+  const [loading, setLoading] = useState(false);
+  const [order, setOrder] = useState([]);
+  const [searchValue, setSearchValue] = useState(null);
 
   const renderContent = () => {
     switch (activeTabKey) {
       case 1:
         return (
           <OrdersTable
-            data={orders}
+            data={searchValue ? order : orders}
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
@@ -70,7 +72,11 @@ const Orders = () => {
       case 2:
         return (
           <OrdersTable
-            data={orders.filter((o) => o.order_status === "pending")}
+            data={
+              searchValue
+                ? order.filter((o) => o.order_status === "pending")
+                : orders.filter((o) => o.order_status === "pending")
+            }
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
@@ -78,7 +84,11 @@ const Orders = () => {
       case 3:
         return (
           <OrdersTable
-            data={orders.filter((o) => o.order_status === "delivered")}
+            data={
+              searchValue
+                ? order.filter((o) => o.order_status === "delivered")
+                : orders.filter((o) => o.order_status === "delivered")
+            }
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
@@ -86,13 +96,55 @@ const Orders = () => {
       case 4:
         return (
           <OrdersTable
-            data={orders.filter((o) => o.order_status === "cancelled")}
+            data={
+              searchValue
+                ? order.filter((o) => o.order_status === "cancelled")
+                : orders.filter((o) => o.order_status === "cancelled")
+            }
             ordersLoading={ordersLoading}
             ordersRefresh={ordersRefresh}
           />
         );
       default:
         return null;
+    }
+  };
+
+  const handleSearch = (e) => {
+    setLoading(true);
+    try {
+      const value = e.target.value.toLowerCase().trim();
+      setSearchValue(value);
+      if (!value) {
+        setOrder([]);
+        return;
+      }
+
+      const filteredSearchData = orders.filter((item) => {
+        // Combine searchable text
+        const textToSearch = [
+          item._id,
+          item.total?.toString(),
+          item.customer_info?.first_name,
+          item.customer_info?.last_name,
+          item.customer_info?.email,
+          item.payment_method,
+          item.delivery_option,
+          item.order_status,
+          ...(item.order?.map((p) => `${p.name} ${p.type}`) || []),
+        ]
+          .filter(Boolean)
+          .join(" ") // combine all fields
+          .toLowerCase();
+
+        return textToSearch.includes(value);
+      });
+
+      setOrder(filteredSearchData);
+    } catch (error) {
+      console.warn("Search error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,6 +180,17 @@ const Orders = () => {
             <span style={{ marginLeft: 6 }}>{btn.label}</span>
           </Tag>
         ))}
+      </div>
+
+      <div style={{ marginTop: 20 }}>
+        <Search
+          placeholder="Search orders..."
+          size="large"
+          loading={loading}
+          enterButton
+          onChange={handleSearch}
+          style={{ width: "100%", height: 50 }}
+        />
       </div>
 
       <Card style={{ width: "100%" }}>{renderContent()}</Card>

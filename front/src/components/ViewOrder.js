@@ -2,7 +2,6 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
-  MailOutlined,
 } from "@ant-design/icons";
 import {
   Carousel,
@@ -286,7 +285,7 @@ function ViewOrder({
               boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
             }}
           >
-            <Space size={[2, 3]} wrap>
+            <Space size={[3, 3]} wrap>
               {content?.order_status === "delivered" ? (
                 <Button
                   type="primary"
@@ -332,18 +331,6 @@ function ViewOrder({
                   Mark as Delivered
                 </Button>
               )}
-              <Button
-                type="primary"
-                icon={<MailOutlined />}
-                onClick={{}}
-                style={{
-                  background: "#1890ff",
-                  color: "whitesmoke",
-                  fontFamily: "DM Sans",
-                }}
-              >
-                Email Customer
-              </Button>
               <Button
                 type="primary"
                 danger

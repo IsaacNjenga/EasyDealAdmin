@@ -13,9 +13,10 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import Orders from "./pages/Orders";
 import Activity from "./pages/Activity";
 import Location from "./pages/Location";
+import Subscribers from "./pages/Subscribers";
 
-//axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
-axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
+axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
+//axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Route path="orders" element={<Orders />} />
             <Route path="activity" element={<Activity />} />
             <Route path="location" element={<Location />} />
+            <Route path="subscribers" element={<Subscribers />} />
           </Route>
         </Routes>
       )}
