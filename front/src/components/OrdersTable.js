@@ -110,7 +110,7 @@ const ExpandedRowRender = ({
       pagination={false}
       size="small"
       bordered
-      rowKey={(item) => item._id}
+      rowKey={(item, i) => `${item._id}-${item.order[0]?._id || i}`}
       onRow={(record) => ({
         onClick: () => {
           viewOrder(record);
@@ -138,14 +138,11 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
 
   const updateOrder = async (id, updateData) => {
     try {
-      const res = await axios.put(`order-update?id=${id}`, updateData, {
+      await axios.put(`order-update?id=${id}`, updateData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.data.success) {
-        openNotification("success", "", "Done!");
-      }
     } catch (error) {
-      console.error("Failed to update mail", error);
+      console.error("Failed to update order", error);
       openNotification(
         "error",
         "Failed to update order. Try again",
@@ -156,21 +153,23 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
 
   const handleMenuClick = async (e, record) => {
     const { key } = e;
-    setActiveDropdownId(null); // close after click
+    setActiveDropdownId(null);
+
+    let newStatus = record.order_status;
 
     if (key === "toggle-delivered") {
-      // If already delivered → revert to pending
-      const newStatus =
-        record.order_status === "delivered" ? "pending" : "delivered";
-      await updateOrder(record._id, { order_status: newStatus });
+      newStatus = record.order_status === "delivered" ? "pending" : "delivered";
     } else if (key === "toggle-cancel") {
-      // If already cancelled → revert to pending
-      const newStatus =
-        record.order_status === "cancelled" ? "pending" : "cancelled";
-      await updateOrder(record._id, { order_status: newStatus });
+      newStatus = record.order_status === "cancelled" ? "pending" : "cancelled";
     }
 
-    ordersRefresh(); // refresh the list
+    try {
+      await updateOrder(record._id, { order_status: newStatus });
+      openNotification("success", "", `Order marked as ${newStatus}`);
+      ordersRefresh();
+    } catch (err) {
+      openNotification("error", "", "Failed to update order status");
+    }
   };
 
   const viewOrder = (content) => {
@@ -295,7 +294,9 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
                 key: "toggle-cancel",
               },
             ],
-            onClick: (e) => handleMenuClick(e, record),
+            onClick: (e) => {
+              handleMenuClick(e, record);
+            },
           }}
           trigger={["click"]}
           open={activeDropdownId === record._id}
@@ -325,6 +326,9 @@ const OrdersTable = ({ data, ordersLoading, ordersRefresh }) => {
               setLoading={setLoading}
               setContent={setContent}
               setOpenModal={setOpenModal}
+              handleMenuClick={handleMenuClick}
+              activeDropdownId={activeDropdownId}
+              setActiveDropdownId={setActiveDropdownId}
             />
           ),
           rowExpandable: (record) => record.order && record.order.length > 0,

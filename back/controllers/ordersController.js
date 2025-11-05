@@ -92,11 +92,10 @@ const orderUpdate = async (req, res) => {
 
 const clientOrderUpdate = async (req, res) => {
   const { tracking_id } = req.query;
-  const updateData = req.body;
   try {
     const updatedOrder = await OrderModel.findOneAndUpdate(
       { orderTrackingId: tracking_id },
-      { transaction_data: updateData },
+      { transaction_data: { ...req.body } },
       {
         new: true,
       }
