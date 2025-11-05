@@ -22,6 +22,7 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
         to: content.email_address,
         message: values.reply,
         name: content.full_name,
+        subject: content?.subject,
       };
 
       const replyValues = {
@@ -184,20 +185,21 @@ function ViewMessage({ setOpenModal, openModal, loading, content }) {
               >
                 {!content?.replied_to && <Editor />}
               </Form.Item>
-
-              {content?.replied_to ? null : (
-                <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
-                  <Button
-                    type="primary"
-                    size="large"
-                    style={{ borderRadius: 8 }}
-                    loading={sendLoading}
-                    htmlType="submit"
-                  >
-                    {sendLoading ? "Sending Reply..." : "Send Reply"}
-                  </Button>
-                </Form.Item>
-              )}
+              <div>
+                {content?.replied_to ? null : (
+                  <Form.Item style={{ textAlign: "right", marginBottom: 0 }}>
+                    <Button
+                      type="primary"
+                      size="large"
+                      style={{ borderRadius: 8 }}
+                      loading={sendLoading}
+                      htmlType="submit"
+                    >
+                      {sendLoading ? "Sending Reply..." : "Send Reply"}
+                    </Button>
+                  </Form.Item>
+                )}
+              </div>
             </Form>
           </Card>
         </Col>

@@ -17,21 +17,20 @@ const transporter = nodemailer.createTransport({
 });
 
 const replyToEmail = async (req, res) => {
-  const { to, message, name } = req.body;
+  const { to, message, name, subject } = req.body;
 
   try {
     const mailOptions = {
       from: user,
       to,
-      subject: `Response from Sekani Properties`,
-      text: `Hi ${name},\n\n${message}\n\nBest regards,\nThe Sekani Properties Team`,
+      subject: `Re: ${subject}`,
+      text: `Hi ${name},\n\n${message}\n\nBest regards,\nEasyDeal Furnitures`,
       html: `
     <div style="
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
       background-color: #f9fafb;
       padding: 30px 0;
       color: #333;
-      text-align: center;
     ">
       <div style="
         background-color: #ffffff;
@@ -43,20 +42,20 @@ const replyToEmail = async (req, res) => {
         padding: 30px;
       ">
         <h2 style="color: #1d4ed8; margin-bottom: 10px;">Hello ${name},</h2>
-        <p style="font-size: 16px; line-height: 1.7; text-align: left;">
+        <span>
           ${message}
-        </p>
+        </span>
         <p style="margin-top: 30px; font-size: 14px; color: #555; text-align: left;">
           Best regards,<br/>
-          <strong>Sekani Properties Team.</strong><br/><br/>
-          <a href="https://sekani-properties.vercel.app" 
+          <strong>EasyDeal Furnitures.</strong><br/><br/>
+          <a href="https://easy-deal-furnitures.vercel.app/" 
              style="color: #1d4ed8; text-decoration: none;">
             Visit our website
           </a>
         </p>
       </div>
       <footer style="margin-top: 20px; font-size: 12px; color: #999;">
-        © ${new Date().getFullYear()} Sekani Properties. All rights reserved.
+        © ${new Date().getFullYear()} EasyDeal Furnitures. All rights reserved.
       </footer>
     </div>
   `,

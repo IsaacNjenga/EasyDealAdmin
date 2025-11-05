@@ -30,6 +30,7 @@ function Editor({ value = "", onChange }) {
       onChange={handleChange}
       modules={modules}
       placeholder="Write your message here..."
+      style={{ height: "30vh" }}
     />
   );
 }
