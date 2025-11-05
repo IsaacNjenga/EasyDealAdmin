@@ -5,8 +5,22 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: "15m",
   });
+};
+
+const generateTokens = (user) => {
+  const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "15m",
+  });
+
+  const refreshToken = jwt.sign(
+    { userId: user._id },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: "30m" }
+  );
+
+  return { accessToken, refreshToken };
 };
 
 const Register = async (req, res) => {
@@ -73,11 +87,16 @@ const Login = async (req, res) => {
       return res.status(400).json({ message: "Password is invalid" });
     }
 
-    const token = generateToken(user._id);
+    const { accessToken, refreshToken } = generateTokens(user);
+    user.refreshToken = refreshToken; // store in DB to track invalidations
+    await user.save();
+
+    //const token = generateToken(user._id);
 
     res.status(200).json({
       success: true,
-      token,
+      token: accessToken,
+      refreshToken,
       user: {
         _id: user._id,
         username: user.username,
@@ -92,6 +111,55 @@ const Login = async (req, res) => {
   }
 };
 
+const refreshMyToken = async (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken)
+    return res
+      .status(401)
+      .json({ success: false, message: "Refresh token required" });
+
+  try {
+    // Verify token signature
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+
+    // Ensure token matches one stored in DB
+    const user = await UserModel.findById(decoded.userId);
+    if (!user || user.refreshToken !== refreshToken) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Invalid refresh token" });
+    }
+
+    // Generate new tokens
+    const newAccessToken = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const newRefreshToken = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_REFRESH_SECRET,
+      { expiresIn: "30m" }
+    );
+
+    // Update stored refresh token
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    res.json({
+      success: true,
+      token: newAccessToken,
+      refreshToken: newRefreshToken,
+    });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(403)
+      .json({ success: false, message: "Invalid or expired refresh token" });
+  }
+};
+
 const ChangePassword = async (req, res) => {};
 
-export { Register, Login, ChangePassword };
+export { Register, Login, ChangePassword, refreshMyToken };

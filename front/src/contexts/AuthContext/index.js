@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -24,12 +25,13 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  function login(userData, userToken) {
+  function login(userData, userToken, refreshToken) {
     setUser(userData);
     setToken(userToken);
     setIsAuthenticated(true);
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", userToken);
+    localStorage.setItem("refreshToken", refreshToken);
   }
 
   function logout() {
@@ -40,6 +42,25 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
   }
 
+  const refreshToken = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) return null;
+
+      const res = await axios.post("refresh-token", { refreshToken });
+
+      if (res.data.success) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+        return res.data.token;
+      }
+
+      return null;
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
   const values = {
     user,
     token,
@@ -47,6 +68,7 @@ export function AuthProvider({ children }) {
     loading,
     login,
     logout,
+    refreshToken,
   };
 
   return (

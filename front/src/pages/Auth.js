@@ -114,7 +114,7 @@ function Auth() {
         payload
       );
 
-      const { success, token, user } = res.data;
+      const { success, token, user, refreshToken } = res.data;
 
       if (success) {
         openNotification(
@@ -130,7 +130,7 @@ function Auth() {
           return;
         }
 
-        login(user, token);
+        login(user, token, refreshToken);
       }
     } catch (error) {
       console.log(error);

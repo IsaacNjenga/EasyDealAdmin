@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
     // firstName: { type: String, default: "" },
     // lastName: { type: String, default: "" },
     avatar: { type: String, default: "" },
+    refreshToken: { type: String, default: "" },
   },
   { colletion: "users", timestamps: true }
 );

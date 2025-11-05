@@ -2,6 +2,7 @@ import express from "express";
 import {
   ChangePassword,
   Login,
+  refreshMyToken,
   Register,
 } from "../controllers/authController.js";
 import { updateAvatar, deleteAvatar } from "../controllers/userController.js";
@@ -42,6 +43,7 @@ const router = express.Router();
 router.post("/sign-up", Register);
 router.post("/sign-in", Login);
 router.post("/change-password", ChangePassword);
+router.post("/refresh-token", refreshMyToken);
 
 //user routes
 router.put("/change-avatar", updateAvatar);
