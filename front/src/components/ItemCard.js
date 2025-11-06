@@ -1,14 +1,22 @@
-import React from "react";
 import { Carousel, Button, Typography, Row, Col, Card, Tooltip } from "antd";
 import { DeleteOutlined, EditFilled, EyeOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { useNotification } from "../contexts/NotificationContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 
 const { Title, Text } = Typography;
 
-function ItemCard({ dataSource, isMobile, viewItem }) {
+function ItemCard({
+  dataSource,
+  isMobile,
+  viewItem,
+  setLoading,
+  productsRefresh,
+}) {
   const navigate = useNavigate();
+  const { token } = useAuth();
   const openNotification = useNotification();
 
   return (
@@ -130,12 +138,35 @@ function ItemCard({ dataSource, isMobile, viewItem }) {
                         <Tooltip title={"Delete"} placement="right">
                           <Button
                             shape="circle"
-                            onClick={() => {
-                              openNotification(
-                                "success",
-                                "An item has been deleted successfully",
-                                "Done!"
-                              );
+                            onClick={async () => {
+                              setLoading(true);
+                              try {
+                                const res = await axios.delete(
+                                  `delete-product?id=${b._id}`,
+                                  {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                );
+                                if (res.data.success) {
+                                  openNotification(
+                                    "success",
+                                    "An item has been deleted successfully",
+                                    "Deleted!"
+                                  );
+                                  productsRefresh();
+                                }
+                              } catch (error) {
+                                console.log(error);
+                                openNotification(
+                                  "error",
+                                  "This item could not be deleted",
+                                  "Failed!"
+                                );
+                              } finally {
+                                setLoading(false);
+                              }
                             }}
                             icon={<DeleteOutlined />}
                             style={{

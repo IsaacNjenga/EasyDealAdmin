@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Spin, Tooltip } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
-// import axios from "axios";
-// import { useAuth } from "../contexts/AuthContext";
+import { PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
 //import { shopProducts } from "../assets/data/data";
 import ItemCard from "../components/ItemCard";
 import ViewItem from "../components/ViewItem";
 import useFetchAllProducts from "../hooks/fetchAllProducts";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const { products, productsLoading, productsRefresh, handleLoadMore } =
     useFetchAllProducts();
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,9 +22,25 @@ function Products() {
     setTimeout(() => setLoading(false), 100);
   };
 
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", marginTop: 50 }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+        <Tooltip title="Add a product">
+          <Button
+            onClick={() => navigate("/create-product")}
+            type="primary"
+            icon={<PlusCircleOutlined />}
+            style={{ background: "green" }}
+          />
+        </Tooltip>
         <Tooltip title="Refresh">
           <Button
             onClick={productsRefresh}
@@ -44,6 +60,8 @@ function Products() {
             dataSource={products}
             isMobile={false}
             viewItem={viewItem}
+            setLoading={setLoading}
+            productsRefresh={productsRefresh}
           />
         )}
       </div>
@@ -58,7 +76,7 @@ function Products() {
           Load More
         </Button>
       </div>
-      
+
       <ViewItem
         setOpenModal={setOpenModal}
         openModal={openModal}

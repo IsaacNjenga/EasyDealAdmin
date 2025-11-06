@@ -39,6 +39,7 @@ import { replyToEmail } from "../controllers/clientReplyController.js";
 import {
   draftNewsletter,
   fetchNewsletter,
+  sendNewsletter,
 } from "../controllers/newsletterController.js";
 
 const router = express.Router();
@@ -59,7 +60,7 @@ router.get("/fetch-product", protectRoute, fetchProduct);
 router.get("/fetch-all-products", protectRoute, fetchProducts);
 router.get("/fetch-available-products", protectRoute, fetchAvailableProducts);
 router.put("/update-product", protectRoute, updateProduct);
-router.delete("/delete-product", protectRoute, deleteProduct);
+router.delete("/delete-product", deleteProduct);
 
 //mail routes
 router.post("/create-mail", createMail);
@@ -84,6 +85,7 @@ router.put("/client-order-update", clientOrderUpdate);
 //newsletter routes
 router.post("/draft-newsletter", protectRoute, draftNewsletter);
 router.get("/fetch-newsletter", protectRoute, fetchNewsletter);
+router.post("/send-newsletter", protectRoute, sendNewsletter);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);

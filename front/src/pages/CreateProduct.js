@@ -295,9 +295,10 @@ function CreateProperty() {
                       ]}
                     >
                       <Select style={inputStyle} placeholder="Select type">
-                        <Option value="Desk">Desk</Option>
-                        <Option value="Chair">Chair</Option>
+                        <Option value="Office Desk">Office Desk</Option>
+                        <Option value="Office Chair">Office Chair</Option>
                         <Option value="Bed">Bed</Option>
+                        <Option value="Sofa">Sofa</Option>
                       </Select>
                     </Form.Item>
                   </Col>
@@ -360,7 +361,7 @@ function CreateProperty() {
                       label={<span style={labelStyle}>Discount on item?</span>}
                       extra="Leave blank if not applicable"
                     >
-                      <Input type="number" style={inputStyle} suffix="%" />
+                      <Input type="number" style={inputStyle} suffix="%" min={0} max={99}/>
                     </Form.Item>
 
                     <Form.Item
@@ -395,6 +396,9 @@ function CreateProperty() {
                         </Option>
                         <Option value="Kitchen Furniture">
                           Kitchen Furniture
+                        </Option>
+                        <Option value="Office Furniture">
+                          Office Furniture
                         </Option>
                       </Select>
                     </Form.Item>

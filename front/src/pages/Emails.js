@@ -121,7 +121,6 @@ function Emails() {
       });
       if (res.data.success) {
         //console.log("success");
-        openNotification("success", "", "Done!");
       }
     } catch (error) {
       console.error("Failed to update mail", error);

@@ -1,0 +1,96 @@
+.ql-editor {
+  font-family: "DM Sans", sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Grid for product cards */
+.ql-editor .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Individual product card */
+.ql-editor .product-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ql-editor .product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Image styling */
+.ql-editor  img {
+  width: 180px; height: 180px; object-fit: cover; display: block; margin: 0 auto;
+}
+
+/* Info section */
+.ql-editor .product-info {
+  padding: 10px 12px;
+}
+
+.ql-editor .product-info h3 {
+  font-size: 16px;
+  margin: 6px 0;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ql-editor .product-info p {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  margin: 0 0 10px 0;
+}
+
+/* Link button */
+.ql-editor .product-info a {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #007BFF;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.ql-editor .product-info a:hover {
+  background-color: #0056b3;
+}
+
+
+.ql-insertProduct{
+  background: #007bff;}
+
+  .ql-previewNewsletter{
+    background: #dc3545;
+  }
+
+.ql-insertProduct,
+.ql-previewNewsletter {
+  color: black !important;
+  border-radius: 4px;
+  padding: 4px 10px;
+  margin-left: 8px;
+  font-size: 16px;
+  border: none;
+}
+
+.ql-insertProduct:hover,
+.ql-previewNewsletter:hover {
+  background: #0056b3;
+}
+

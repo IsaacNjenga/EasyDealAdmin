@@ -123,7 +123,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
                       openNotification(
                         "success",
                         "An item has been deleted successfully",
-                        "Done!"
+                        "Deleted!"
                       );
                     }}
                     icon={<DeleteOutlined />}

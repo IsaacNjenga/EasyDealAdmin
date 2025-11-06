@@ -43,7 +43,7 @@ const items = [
   getItem("Emails", "/emails", 5, MailOutlined),
   getItem("Orders", "/orders", 6, TruckOutlined),
   getItem("Activity", "/activity", 7, BellOutlined),
-  getItem("Subscribers", "/subscribers", 8, PushpinOutlined),
+  getItem("Newsletter", "/newsletter", 8, PushpinOutlined),
 ];
 
 const flattenItems = (arr) =>
