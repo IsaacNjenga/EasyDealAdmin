@@ -96,15 +96,15 @@ const fetchNewsletter = async (req, res) => {
 
 const sendNewsletter = async (req, res) => {
   try {
-    const { htmlContent } = req.body;
+    const { subject, content } = req.body;
 
-    if (!htmlContent) {
+    if (!content) {
       return res
         .status(400)
         .json({ success: false, message: "Missing content" });
     }
 
-    const inlinedHTML = juice.inlineContent(htmlContent, newsletterCSS);
+    const inlinedHTML = juice.inlineContent(content, newsletterCSS);
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -117,7 +117,7 @@ const sendNewsletter = async (req, res) => {
     await transporter.sendMail({
       from: user,
       to: "njengaisaac789@gmail.com",
-      subject: "TODO:subject",
+      subject: subject,
       html: inlinedHTML,
     });
 

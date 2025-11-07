@@ -4,8 +4,9 @@ import "../assets/css/quill.css";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
-import { Button } from "antd";
+import { Button, Card, Form, Input } from "antd";
 import NewsletterEditor from "../components/NewsletterEditor";
+import DOMPurify from "dompurify";
 
 function Subscribers() {
   const [value, setValue] = useState("");
@@ -15,22 +16,27 @@ function Subscribers() {
   const [htmlContent, setHtmlContent] = useState("");
   const openNotification = useNotification();
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const sendNewsletter = async () => {
-    if (!htmlContent)
-      return openNotification(
-        "error",
-        "No content has been posted",
-        "Failed to send!"
-      );
+    if (quillRef.current) {
+      const editor = quillRef.current.getEditor();
+      const latestHTML = DOMPurify.sanitize(editor.root.innerHTML);
+      setHtmlContent(latestHTML);
+    }
+
+    if (!htmlContent.trim()) {
+      return openNotification("error", "Newsletter content is empty", "Empty!");
+    }
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        "send-newsletter",
-        { htmlContent: htmlContent },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const formValues = await form.validateFields();
+      const values = { ...formValues, content: htmlContent };
+      // console.log(values);
+      const res = await axios.post("send-newsletter", values, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (res.data.success) {
         console.log("Sending newsletter...");
         openNotification("success", "Newsletter sent successfully!", "Sent!");
@@ -44,46 +50,60 @@ function Subscribers() {
       );
     } finally {
       setLoading(false);
+      form.resetFields();
     }
   };
 
   return (
     <div style={{ padding: "20px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: "10px",
-          gap: "10px",
-        }}
-      >
-        <Button
-          onClick={sendNewsletter}
-          loading={loading}
-          disabled={htmlContent === "" ? true : false}
-          style={{
-            backgroundColor: "#28A745",
-            color: "white",
-            padding: "8px 16px",
-            borderRadius: "4px",
-            border: "none",
-            cursor: "pointer",
-          }}
+      <Card>
+        <Form
+          form={form}
+          layout="vertical"
+          requiredMark={false}
+          onFinish={sendNewsletter}
         >
-          {loading ? "Sending..." : "Send Newsletter"}
-        </Button>
-      </div>
-
-      <div>
-        <NewsletterEditor
-          quillRef={quillRef}
-          value={value}
-          setValue={setValue}
-          products={products}
-          htmlContent={htmlContent}
-          setHtmlContent={setHtmlContent}
-        />
-      </div>
+          <Form.Item
+            label={
+              <span style={{ fontFamily: "DM Sans" }}>
+                <strong>Subject</strong>
+              </span>
+            }
+            name="subject"
+            rules={[
+              { required: true, message: "An email subject is required" },
+            ]}
+          >
+            <Input style={{ height: 40 }} />
+          </Form.Item>
+          <NewsletterEditor
+            quillRef={quillRef}
+            value={value}
+            setValue={setValue}
+            products={products}
+            productsLoading={productsLoading}
+            setHtmlContent={setHtmlContent}
+          />
+          <Form.Item style={{ textAlign: "right", marginTop: 10 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              size="large"
+              style={{
+                backgroundColor: "#28A745",
+                color: "white",
+                padding: "8px 16px",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {loading ? "Sending..." : "Send Newsletter"}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 }

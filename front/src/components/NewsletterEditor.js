@@ -191,7 +191,7 @@ function NewsletterEditor({
           </button>
         </Tooltip>
 
-        <Tooltip title="View Newsletter">
+        <Tooltip title="Preview Newsletter">
           <button className="ql-previewNewsletter">
             <EyeOutlined />
           </button>
@@ -205,9 +205,8 @@ function NewsletterEditor({
         value={value}
         onChange={(content, delta, source, editor) => {
           setValue(content);
-          if (editor && editor.root) {
-            setHtmlContent(editor.root.innerHTML);
-          }
+          const html = editor?.root?.innerHTML || content;
+          setHtmlContent(DOMPurify.sanitize(html));
         }}
         modules={modules}
         placeholder="Write your message here..."
