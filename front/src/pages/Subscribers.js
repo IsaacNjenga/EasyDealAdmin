@@ -1,12 +1,13 @@
 import { useState, useRef } from "react";
 import useFetchAvailableProducts from "../hooks/fetchAvailableProducts";
-import "../assets/css/quill.css";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
 import { Button, Card, Form, Input } from "antd";
 import NewsletterEditor from "../components/NewsletterEditor";
 import DOMPurify from "dompurify";
+
+//import chair1 from "../assets/icons/office-chair.png";
 
 function Subscribers() {
   const [value, setValue] = useState("");
