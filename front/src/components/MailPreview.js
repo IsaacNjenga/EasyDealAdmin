@@ -258,33 +258,44 @@ const RenderFooter = () => (
     </div>
   </Footer>
 );
-function MailPreview({ htmlContent, heading, subheading, ctaText }) {
-  const data = [
-    {
-      key: 1,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-      name: "Ergonomic Office Chair",
-      price: 10000,
-    },
-    {
-      key: 2,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-      name: "Ergonomic Office Chair",
-      price: 10000,
-    },
-    {
-      key: 3,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-      name: "Ergonomic Office Chair",
-      price: 10000,
-    },
-    {
-      key: 4,
-      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-      name: "Ergonomic Office Chair",
-      price: 10000,
-    },
-  ];
+function MailPreview({ selectedProducts, heading, subheading, ctaText }) {
+  const productsToShow =
+    selectedProducts && selectedProducts.length > 0
+      ? selectedProducts
+      : [
+          {
+            key: 1,
+            img: [
+              "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+            ],
+            name: "Ergonomic Office Chair",
+            price: 10000,
+          },
+          {
+            key: 2,
+            img: [
+              "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+            ],
+            name: "Ergonomic Office Chair",
+            price: 10000,
+          },
+          {
+            key: 3,
+            img: [
+              "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+            ],
+            name: "Ergonomic Office Chair",
+            price: 10000,
+          },
+          {
+            key: 4,
+            img: [
+              "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+            ],
+            name: "Ergonomic Office Chair",
+            price: 10000,
+          },
+        ];
   return (
     <div>
       <Title level={4} style={{ textAlign: "center" }}>
@@ -303,10 +314,10 @@ function MailPreview({ htmlContent, heading, subheading, ctaText }) {
           </Title>
         </div>
         <div style={{ textAlign: "center", marginBottom: 20 }}>
-          <Text>{subheading}</Text>
+          <Text style={{ color: "#fff" }}>{subheading}</Text>
         </div>
         <Row gutter={[24, 24]}>
-          {data.map((d) => (
+          {productsToShow.map((d) => (
             <Col sm={12} md={12} key={d.key}>
               <div
                 style={{
@@ -335,7 +346,7 @@ function MailPreview({ htmlContent, heading, subheading, ctaText }) {
                   }}
                 >
                   <img
-                    src={d.img}
+                    src={d.img?.[0]}
                     alt="img"
                     style={{
                       height: "100%",
