@@ -134,7 +134,7 @@ export const injectedStyles = `
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 32px;
-  margin: 32px auto;
+  margin: 32px 28px;
   max-width: 1200px;
 }
 
