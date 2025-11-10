@@ -1,26 +1,44 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import Swal from "sweetalert2";
 import DOMPurify from "dompurify";
 import { Tooltip } from "antd";
-import { EyeOutlined, FolderAddFilled, ShoppingCartOutlined } from "@ant-design/icons";
+import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import "../assets/css/quill.css";
 
-// ------------------------------
-// Templates
-// ------------------------------
+export const generateNewsletterHeaderHTML = () => `
+  <header class="ed-header">
+    <div class="ed-header-content">
+      <div class="ed-header-brand">
+        <img src="https://res.cloudinary.com/dinsdfwod/image/upload/v1762518131/office-chair_rkrf3x.png" alt="EasyDeal Logo" class="ed-header-logo"/>
+        <div class="ed-header-text">
+          <h1>EasyDeal Furnitures</h1>
+          <p>QUALITY FURNITURE FOR YOUR SPACE</p>
+        </div>
+      </div>
+      <a class="ed-header-cta" href="https://easy-deal-furnitures.vercel.app/shop" target="_blank" rel="noopener">Shop Now</a>
+    </div>
+  </header>
+`;
+
 export const generateProductCardHTML = (product) => `
   <div class="ed-product-card">
-    <img src="${product.img?.[0] ?? ""}" alt="${product.name}" class="ed-product-img" />
+    <div class="ed-product-img-wrapper">
+      <img src="${product.img?.[0] ?? ""}" alt="${
+  product.name
+}" class="ed-product-img" />
+    </div>
     <div class="ed-product-info">
       <h3 class="ed-product-title">${product.name}</h3>
-      <p class="ed-product-price">KES ${product.price?.toLocaleString() ?? ""}</p>
+      <p class="ed-product-price">KES ${
+        product.price?.toLocaleString() ?? ""
+      }</p>
       <a class="ed-product-cta" href="https://easy-deal-furnitures.vercel.app/shop" target="_blank" rel="noopener">View Product</a>
     </div>
   </div>
 `;
 
-/* Footer kept separate so you can insert or preview-with-footer */
 export const generateNewsletterFooterHTML = () => `
   <footer class="ed-newsletter-footer">
     <div class="ed-footer-top">
@@ -56,71 +74,422 @@ export const generateNewsletterFooterHTML = () => `
   </footer>
 `;
 
-// ------------------------------
-// Scoped CSS (injected into HEAD)
-// ------------------------------
 const injectedStyles = `
-/* Scoped newsletter styles (use ed- prefix to avoid collisions) */
+/* Scoped newsletter styles */
 
+/* Header Styles */
+.ed-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 24px 40px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid #fea549;
+  margin-bottom: 32px;
+}
+
+.ed-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.ed-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ed-header-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 4px 16px rgba(254, 165, 73, 0.4);
+}
+
+.ed-header-text h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fea549, #ffcc80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.ed-header-text p {
+  margin: 4px 0 0 0;
+  color: #cbd5e1;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+
+.ed-header-cta {
+  display: inline-block;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #fea549, #ffcc80);
+  color: #0f172a;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(254, 165, 73, 0.3);
+}
+
+/* Product Grid & Cards */
 .ed-product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 16px;
-  margin: 16px 0;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px;
+  margin: 32px auto;
+  max-width: 1200px;
 }
 
 .ed-product-card {
   background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
+  border-radius: 20px;
   overflow: hidden;
   text-align: center;
-  transition: transform .18s ease, box-shadow .18s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
-.ed-product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+.ed-product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0ea5a4, #fea549);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
 
-.ed-product-img {
-  width: 100%;
-  height: 160px;
+.ed-product-card:hover::before {
+  transform: scaleX(1);
+}
+
+.ed-product-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(14, 165, 164, 0.2);
+}
+
+.ed-product-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 300px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ed-product-img {      
+    height: 100%;
+    width: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.ed-product-card:hover .ed-product-img {
+  transform: scale(1.1);
+}
+
+.ed-product-info {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ed-product-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.02em;
+}
+
+.ed-product-price {
+  font-weight: 700;
+  font-size: 24px;
+  background: linear-gradient(135deg, #0ea5a4, #0c8988);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 8px 0 16px 0;
+}
+
+.ed-product-cta {
+  display: inline-block;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #0ea5a4, #0c8988);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(14, 165, 164, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.ed-product-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.ed-product-cta:hover::before {
+  left: 100%;
+}
+
+.ed-product-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 165, 164, 0.4);
+}
+
+/* Footer */
+.ed-newsletter-footer {
+      background: linear-gradient(135deg, #0f172a 0%, #090e15 100%);
+            color: #fff;
+            padding: 48px 40px;
+            margin: 48px auto 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+}
+
+.ed-newsletter-footer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(254, 165, 73, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ed-footer-top {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.ed-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ed-footer-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 8px 24px rgba(254, 165, 73, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.ed-footer-logo:hover {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.ed-footer-brand-title {
+  margin: 0;
+  background: linear-gradient(135deg, #fea549, #ffcc80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ed-footer-showroom {
+  text-align: right;
+}
+
+.ed-footer-showroom h3 {
+  margin: 0 0 12px 0;
+  color: #fea549;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.ed-footer-showroom p {
+  margin: 6px 0;
+  color: #cbd5e1;
+  font-size: 15px;
+}
+
+.ed-footer-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  margin: 32px 0;
+}
+
+.ed-footer-bottom {
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.ed-footer-social h3,
+.ed-footer-contact p {
+  margin: 0 0 16px 0;
+  color: #fea549;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ed-footer-contact ul {
+  list-style: none;
+  color: #cbd5e1;
+}
+
+.ed-footer-contact li {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.ed-social-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.ed-social-icons a {
+  transition: transform 0.3s ease;
   display: block;
 }
 
-.ed-product-info { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.ed-social-icons a:hover {
+  transform: translateY(-4px);
+}
 
-.ed-product-title { font-size: 16px; margin: 6px 0; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ed-product-price { font-weight: 700; color: #0ea5a4; margin: 6px 0 12px 0; }
-.ed-product-cta { display:inline-block; padding:8px 12px; background:#0ea5a4; color:#fff; text-decoration:none; border-radius:6px; font-weight:600; }
+.ed-social-icons img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fea549, #ffcc80);
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(254, 165, 73, 0.3);
+  transition: all 0.3s ease;
+}
 
-/* Footer (scoped) */
-.ed-newsletter-footer { background: #0f172a; color: #fff; padding: 28px; border-radius: 8px; margin-top: 24px; }
-.ed-footer-top { display:flex; gap:20px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
-.ed-footer-brand { display:flex; align-items:center; gap:12px; }
-.ed-footer-logo { width:56px; height:56px; object-fit:cover; border-radius:50%; }
-.ed-footer-brand-title { margin:0; color:#fea549; font-size:20px; }
+.ed-social-icons a:hover img {
+  box-shadow: 0 6px 20px rgba(254, 165, 73, 0.5);
+  transform: scale(1.1);
+}
 
-.ed-footer-showroom h3 { margin:0 0 6px 0; color:#fea549; }
-.ed-footer-divider { border:none; height:1px; background:rgba(255,255,255,0.08); margin:18px 0; }
-.ed-footer-bottom { display:flex; gap:18px; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; }
-.ed-footer-social h3, .ed-footer-contact p { margin:0 0 8px 0; color:#e2e8f0; }
-.ed-social-icons { display:flex; gap:10px; align-items:center; }
-.ed-social-icons img { width:32px; height:32px; object-fit:contain; border-radius:6px; background:#fea549; padding:6px; }
-
-/* small screens */
-@media(max-width:720px){
-  .ed-product-img { height: 140px; }
-  .ed-footer-top { flex-direction:column; align-items:center; text-align:center; }
-  .ed-footer-bottom { flex-direction:column; gap:12px; }
+@media(max-width: 720px) {
+  .ed-header {
+    padding: 20px 16px;
+  }
+  .ed-header-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .ed-header-text h1 {
+    font-size: 20px;
+  }
+  .ed-product-grid { 
+    gap: 20px; 
+    grid-template-columns: 1fr;
+  }
+  .ed-product-img-wrapper { 
+    height: 180px; 
+  }
+  .ed-newsletter-footer { 
+    padding: 32px 24px; 
+  }
+  .ed-footer-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .ed-footer-showroom { 
+    text-align: center; 
+  }
+  .ed-footer-bottom {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+  .ed-social-icons { 
+    justify-content: center; 
+  }
 }
 `;
 
-// ------------------------------
-// Component
-// ------------------------------
+// Additional CSS specifically for Quill editor to make images more manageable
+const quillEditorStyles = `
+/* Make images in Quill editor more manageable */
+.ql-editor .ed-product-img-wrapper {
+  cursor: move;
+  user-select: none;
+  margin: 8px 0;
+}
+
+.ql-editor img {
+  pointer-events: none;
+  max-width: 100%;
+  height: auto !important;
+}
+
+.ql-editor .ed-product-card {
+  cursor: pointer;
+  user-select: none;
+  margin: 16px 0;
+}
+
+.ql-editor .ed-product-grid {
+  margin: 16px 0;
+}
+
+/* Make header/footer in editor easier to manage */
+.ql-editor .ed-header,
+.ql-editor .ed-newsletter-footer {
+  cursor: pointer;
+  user-select: none;
+  margin: 16px 0;
+}
+`;
+
 function NewsletterEditor({
   setValue,
   value,
@@ -128,24 +497,22 @@ function NewsletterEditor({
   products,
   setHtmlContent,
 }) {
-  // inject styles once
   useEffect(() => {
     if (!document.getElementById("ed-newsletter-styles")) {
       const s = document.createElement("style");
       s.id = "ed-newsletter-styles";
-      s.innerHTML = injectedStyles;
+      s.innerHTML = injectedStyles + quillEditorStyles;
       document.head.appendChild(s);
     }
-    return () => {
-      // keep styles while component mounts; optional: remove when unmounting
-    };
   }, []);
 
-  // Insert product into an existing .ed-product-grid if present,
-  // otherwise create a new grid container and insert the card inside it.
   async function handleInsertProduct() {
     if (!products || products.length === 0) {
-      Swal.fire("No Products", "There are no products available to insert.", "info");
+      Swal.fire({
+        icon: "info",
+        title: "No Products",
+        text: "There are no products available to insert.",
+      });
       return;
     }
 
@@ -159,132 +526,182 @@ function NewsletterEditor({
       inputPlaceholder: "Choose a product to insert",
       showCancelButton: true,
       confirmButtonText: "Insert",
+      confirmButtonColor: "#0ea5a4",
     });
 
     if (!productId) return;
 
     const product = products.find((p) => p._id === productId);
+    if (!product) return;
+
     const editor = quillRef.current?.getEditor();
     if (!editor) return;
 
-    // Try to locate an existing grid in the editor DOM
     const root = editor.root;
     const existingGrid = root.querySelector(".ed-product-grid");
-
     const cardHTML = DOMPurify.sanitize(generateProductCardHTML(product));
 
     if (existingGrid) {
-      // append inside the existing grid
-      // insert after the last child of that grid
       existingGrid.insertAdjacentHTML("beforeend", cardHTML);
-      // update quill contents with DOM's modified HTML
       const newHtml = root.innerHTML;
-      editor.setContents([]); // clear then set to newHtml safely
       editor.clipboard.dangerouslyPasteHTML(0, newHtml);
     } else {
-      // create a new grid container and insert at current selection
       const gridWrapper = `<div class="ed-product-grid">${cardHTML}</div>`;
       const range = editor.getSelection(true) || { index: editor.getLength() };
       editor.clipboard.dangerouslyPasteHTML(range.index, gridWrapper);
     }
+
+    Swal.fire({
+      icon: "success",
+      title: "Product Added!",
+      text: `${product.name} has been added to your newsletter.`,
+      timer: 200,
+      showConfirmButton: false,
+    });
   }
 
-  // Insert footer explicitly into editor (if you want to keep it permanent)
-  const handleInsertFooter = () => {
-    const editor = quillRef.current?.getEditor();
-    if (!editor) return;
-    const root = editor.root;
-    if (root.querySelector(".ed-newsletter-footer")) {
-      Swal.fire("Footer present", "The footer is already in the document.", "info");
-      return;
-    }
-    const footerHTML = DOMPurify.sanitize(generateNewsletterFooterHTML());
-    // append at the end
-    editor.clipboard.dangerouslyPasteHTML(editor.getLength(), footerHTML);
-  };
-
-  // Preview: sanitize editor value, ensure footer in preview HTML (but don't modify editor)
+  // Enhanced preview
   const handlePreview = () => {
-    const clean = DOMPurify.sanitize(value || "");
-    if (!clean.trim()) {
-      Swal.fire("Empty Newsletter", "Please add some content first!", "warning");
+    const sanitizedContent = DOMPurify.sanitize(value);
+
+    if (!sanitizedContent.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Newsletter",
+        text: "Please add some content first!",
+      });
       return;
     }
 
-    // add footer to preview if not already present in the content
-    const finalHtml = clean.includes("ed-newsletter-footer")
-      ? clean
-      : clean + DOMPurify.sanitize(generateNewsletterFooterHTML());
+    const headerHTML = generateNewsletterHeaderHTML();
+    const footerHTML = generateNewsletterFooterHTML();
+
+    const previewHTML = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Newsletter Preview</title>
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffa34a 0%, #ffa34a 100%);
+            min-height: 100vh;
+          }
+          ${injectedStyles}
+        </style>
+      </head>
+      <body>
+        ${headerHTML}
+        <div style="padding: 0 20px 40px;">
+          <div class="ql-editor" style="max-width: 1200px; margin: 0 auto;">
+            ${sanitizedContent}
+          </div>
+        </div>
+        ${footerHTML}
+      </body>
+      </html>
+    `;
 
     Swal.fire({
       title: "📧 Newsletter Preview",
       html: `
-        <div style="max-height:70vh;overflow:auto;padding:16px;background:#f3f4f6;border-radius:12px;">
-          <div class="ql-editor" style="max-width:900px;margin:auto;background:white;padding:24px;border-radius:8px;">
-            ${finalHtml}
-          </div>
+        <div style="max-height:75vh; overflow:auto; background:#f5f7fa; border-radius:12px; padding: 16px;">
+          <iframe 
+            srcdoc="${previewHTML.replace(/"/g, "&quot;")}" 
+            style="width:100%; min-height:600px; border:none; border-radius:8px; background:white;"
+            sandbox="allow-same-origin"
+          ></iframe>
         </div>
       `,
-      width: "90%",
+      width: "95%",
       showCancelButton: true,
       cancelButtonText: "Close",
-      didOpen: () => {
-        // inject the injectedStyles into the modal content as well in case some email clients override
-        const modal = document.querySelector(".swal2-html-container");
-        if (modal && !modal.querySelector("#ed-inline-styles")) {
-          const styleEl = document.createElement("style");
-          styleEl.id = "ed-inline-styles";
-          styleEl.innerHTML = injectedStyles;
-          modal.prepend(styleEl);
-        }
-      },
+      confirmButtonText: "Looks Good!",
+      confirmButtonColor: "#0ea5a4",
     });
   };
 
-  // Quill modules — toolbar container id and handler names must match button classes ql-insertProduct, ql-previewNewsletter, ql-insertFooter
+  // Quill toolbar configuration
   const modules = {
     toolbar: {
       container: "#custom-toolbar",
       handlers: {
         insertProduct: handleInsertProduct,
         previewNewsletter: handlePreview,
-        insertFooter: handleInsertFooter,
       },
     },
   };
 
   return (
-    <>
-      <div id="custom-toolbar" style={{ marginBottom: 8 }}>
+    <div
+      style={{ background: "#f9fafb", padding: "20px", borderRadius: "12px" }}
+    >
+      <div
+        id="custom-toolbar"
+        style={{
+          marginBottom: 12,
+          background: "white",
+          padding: "12px",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+        }}
+      >
+        {/* Text Formatting */}
         <select className="ql-header" defaultValue="">
-          <option value="1" />
-          <option value="2" />
-          <option value="3" />
-          <option value="" />
+          <option value="1">Heading 1</option>
+          <option value="2">Heading 2</option>
+          <option value="3">Heading 3</option>
+          <option value="">Normal</option>
         </select>
 
-        <button className="ql-bold" />
-        <button className="ql-italic" />
-        <button className="ql-underline" />
-        <button className="ql-list" value="ordered" />
-        <button className="ql-list" value="bullet" />
-        <button className="ql-clean" />
+        <button className="ql-bold" title="Bold" />
+        <button className="ql-italic" title="Italic" />
+        <button className="ql-underline" title="Underline" />
 
-        <Tooltip title="Insert product" placement="bottom">
-          <button className="ql-insertProduct" type="button" aria-label="Insert product" style={{ marginLeft: 8 }}>
-            <ShoppingCartOutlined />
+        <button className="ql-list" value="ordered" title="Numbered List" />
+        <button className="ql-list" value="bullet" title="Bullet List" />
+
+        <button className="ql-align" value="" title="Align Left" />
+        <button className="ql-align" value="center" title="Align Center" />
+        <button className="ql-align" value="right" title="Align Right" />
+
+        <button className="ql-clean" title="Clear Formatting" />
+
+        {/* Custom Buttons */}
+        <span
+          style={{
+            borderLeft: "1px solid #ccc",
+            margin: "0 8px",
+            height: "20px",
+            display: "inline-block",
+          }}
+        ></span>
+
+        <Tooltip title="Insert product card" placement="bottom">
+          <button
+            className="ql-insertProduct"
+            type="button"
+            aria-label="Insert product"
+            style={{ marginLeft: 6 }}
+          >
+            <ShoppingCartOutlined style={{ fontSize: "14px" }} />
           </button>
         </Tooltip>
 
         <Tooltip title="Preview newsletter" placement="bottom">
-          <button className="ql-previewNewsletter" type="button" aria-label="Preview newsletter" style={{ marginLeft: 6 }}>
-            <EyeOutlined />
-          </button>
-        </Tooltip>
-
-        <Tooltip title="Insert footer (permanent)" placement="bottom">
-          <button className="ql-insertFooter" type="button" aria-label="Insert footer" style={{ marginLeft: 6 }}>
-            <FolderAddFilled />
+          <button
+            className="ql-previewNewsletter"
+            type="button"
+            aria-label="Preview newsletter"
+            style={{
+              marginLeft: 6,
+              color: "#0ea5a4",
+            }}
+          >
+            <EyeOutlined style={{ fontSize: "16px" }} />
           </button>
         </Tooltip>
       </div>
@@ -295,15 +712,19 @@ function NewsletterEditor({
         value={value}
         onChange={(content, delta, source, editor) => {
           setValue(content);
-          // safe read of editor root HTML
           const html = editor?.root?.innerHTML ?? content;
           setHtmlContent(DOMPurify.sanitize(html));
         }}
         modules={modules}
-        placeholder="Write your newsletter here..."
-        style={{ height: "70vh", background: "white", borderRadius: 6 }}
+        placeholder="Start writing your newsletter here..."
+        style={{
+          height: "65vh",
+          background: "white",
+          borderRadius: 8,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+        }}
       />
-    </>
+    </div>
   );
 }
 
