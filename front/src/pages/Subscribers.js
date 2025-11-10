@@ -17,6 +17,7 @@ import {
 import MailPreview from "../components/MailPreview";
 
 const { Title } = Typography;
+const { Option } = Select;
 
 function Subscribers() {
   const { token } = useAuth();
@@ -65,7 +66,6 @@ function Subscribers() {
   return (
     <div style={{ padding: "20px" }}>
       <Row gutter={[24, 24]}>
-        {/* ===== LEFT: FORM ===== */}
         <Col span={12}>
           <Title level={4} style={{ textAlign: "center" }}>
             Edit Your Newsletter
@@ -84,7 +84,10 @@ function Subscribers() {
                   { required: true, message: "An email subject is required" },
                 ]}
               >
-                <Input style={{ height: 40 }} placeholder="e.g. Our New Arrivals!" />
+                <Input
+                  style={{ height: 40 }}
+                  placeholder="e.g. Our New Arrivals!"
+                />
               </Form.Item>
 
               <Form.Item label={<strong>Heading</strong>} name="heading">
@@ -115,37 +118,57 @@ function Subscribers() {
               </Form.Item>
 
               {/* Product Selector */}
-              <Form.Item label={<strong>Select Products</strong>}>
+              <Form.Item
+                label={
+                  <span>
+                    <strong>Select Products</strong>
+                  </span>
+                }
+                name="selectedProducts"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select at least one product",
+                  },
+                ]}
+              >
                 <Select
-                  labelInValue
                   showSearch
-                  mode="multiple"
-                  placeholder="Select products to include"
-                  onChange={(values) => {
-                    const selected = values.map((v) =>
-                      products.find((p) => p._id === v.value)
-                    );
-                    setSelectedProducts(selected);
-                  }}
-                  notFoundContent={fetching ? <Spin size="small" /> : "No results found"}
+                  placeholder="Search and select a product"
+                  optionFilterProp="children"
                   style={{ width: "100%" }}
-                  optionRender={(option) => (
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      {option.data?.img?.[0] && (
+                  onChange={(values, options) => {
+                    setSelectedProducts(options.map((o) => o.data));
+                  }}
+                  filterOption={(input, option) =>
+                    option?.label?.toLowerCase().includes(input.toLowerCase())
+                  }
+                  optionLabelProp="label"
+                >
+                  {products.map((product) => (
+                    <Option
+                      key={product._id}
+                      value={product._id}
+                      label={product.name}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
                         <Avatar
-                          src={option.data.img[0]}
-                          style={{ marginRight: 8 }}
+                          src={product.images?.[0]}
+                          alt={product.name}
+                          shape="square"
+                          size={40}
                         />
-                      )}
-                      {option.data.name}
-                    </div>
-                  )}
-                  options={products.map((p) => ({
-                    label: p.name,
-                    value: p._id,
-                    data: p,
-                  }))}
-                />
+                        <span>{product.name}</span>
+                      </div>
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
 
               <Form.Item style={{ textAlign: "right", marginTop: 10 }}>

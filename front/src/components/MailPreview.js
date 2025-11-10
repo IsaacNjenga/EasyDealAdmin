@@ -279,22 +279,7 @@ function MailPreview({ selectedProducts, heading, subheading, ctaText }) {
             name: "Ergonomic Office Chair",
             price: 10000,
           },
-          {
-            key: 3,
-            img: [
-              "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-            ],
-            name: "Ergonomic Office Chair",
-            price: 10000,
-          },
-          {
-            key: 4,
-            img: [
-              "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
-            ],
-            name: "Ergonomic Office Chair",
-            price: 10000,
-          },
+          
         ];
   return (
     <div>
@@ -397,8 +382,8 @@ function MailPreview({ selectedProducts, heading, subheading, ctaText }) {
                       fontWeight: 700,
                       fontSize: 16,
                       background: "linear-gradient(135deg, #0ea5a4, #0c8988)",
-                      webkitBackgroundClip: "text",
-                      webkitTextFillColor: "transparent",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
                       margin: 0,
                     }}
