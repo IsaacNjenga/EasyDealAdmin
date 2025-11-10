@@ -13,12 +13,28 @@
 
   
 
-  .ql-editor .ed-product-img {
-  height: 300px;
-  width: 300px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
+  .ql-editor h3 {
+  
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            color: #1e293b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: -0.02em;
 }
 
+ .ql-editor p {
+            font-weight: 700;
+            font-size: 24px;
+            background: linear-gradient(135deg, #0ea5a4, #0c8988);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
 
+        .ql-editor a  {
+            display: none;
+        }
