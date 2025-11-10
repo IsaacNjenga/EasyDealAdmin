@@ -239,3 +239,14 @@ ${footerHTML}
 }
 
 export default NewsletterEditor;
+
+
+
+              // <NewsletterEditor
+              //   quillRef={quillRef}
+              //   value={value}
+              //   setValue={setValue}
+              //   products={products}
+              //   productsLoading={productsLoading}
+              //   setHtmlContent={setHtmlContent}
+              // />

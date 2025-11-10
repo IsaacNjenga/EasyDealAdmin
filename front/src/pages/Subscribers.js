@@ -3,12 +3,12 @@ import useFetchAvailableProducts from "../hooks/fetchAvailableProducts";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
-import { Button, Card, Col, Form, Input, Row } from "antd";
+import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 import NewsletterEditor from "../components/NewsletterEditor";
 import DOMPurify from "dompurify";
 import MailPreview from "../components/MailPreview";
 
-//import chair1 from "../assets/icons/office-chair.png";
+const { Title } = Typography;
 
 function Subscribers() {
   const [value, setValue] = useState("");
@@ -18,6 +18,9 @@ function Subscribers() {
   const [htmlContent, setHtmlContent] = useState("");
   const openNotification = useNotification();
   const [loading, setLoading] = useState(false);
+  const [heading, setHeading] = useState("");
+  const [subheading, setSubheading] = useState("");
+  const [ctaText, setCtaText] = useState("");
   const [form] = Form.useForm();
 
   const sendNewsletter = async () => {
@@ -60,6 +63,9 @@ function Subscribers() {
     <div style={{ padding: "20px" }}>
       <Row gutter={[24, 24]}>
         <Col span={12}>
+          <Title level={4} style={{ textAlign: "center" }}>
+            Edit Your Newsletter
+          </Title>
           <Card>
             <Form
               form={form}
@@ -70,7 +76,7 @@ function Subscribers() {
               <Form.Item
                 label={
                   <span style={{ fontFamily: "DM Sans" }}>
-                    <strong>Subject</strong>
+                    <strong>Email Subject</strong>
                   </span>
                 }
                 name="subject"
@@ -80,14 +86,40 @@ function Subscribers() {
               >
                 <Input style={{ height: 40 }} />
               </Form.Item>
-              <NewsletterEditor
-                quillRef={quillRef}
-                value={value}
-                setValue={setValue}
-                products={products}
-                productsLoading={productsLoading}
-                setHtmlContent={setHtmlContent}
-              />
+
+              <Form.Item
+                label={
+                  <span>
+                    <strong>Heading</strong>
+                  </span>
+                }
+                name="heading"
+              >
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span>
+                    <strong>Sub heading</strong>
+                  </span>
+                }
+                name="sub-heading"
+              >
+                <Input style={{ height: 40 }} />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span>
+                    <strong>Call To Action</strong>
+                  </span>
+                }
+                name="ctaText"
+              >
+                <Input style={{ height: 40 }} placeholder="E.g. come get it" />
+              </Form.Item>
+
               <Form.Item style={{ textAlign: "right", marginTop: 10 }}>
                 <Button
                   type="primary"
@@ -110,7 +142,12 @@ function Subscribers() {
           </Card>
         </Col>
         <Col span={12}>
-          <MailPreview htmlContent={htmlContent} />
+          <MailPreview
+            htmlContent={htmlContent}
+            heading={"Heading here"}
+            subheading={"Sub heading here"}
+            ctaText={"CTA here"}
+          />
         </Col>
       </Row>
     </div>

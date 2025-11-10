@@ -258,10 +258,38 @@ const RenderFooter = () => (
     </div>
   </Footer>
 );
-function MailPreview({ htmlContent }) {
+function MailPreview({ htmlContent, heading, subheading, ctaText }) {
+  const data = [
+    {
+      key: 1,
+      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+      name: "Ergonomic Office Chair",
+      price: 10000,
+    },
+    {
+      key: 2,
+      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+      name: "Ergonomic Office Chair",
+      price: 10000,
+    },
+    {
+      key: 3,
+      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+      name: "Ergonomic Office Chair",
+      price: 10000,
+    },
+    {
+      key: 4,
+      img: "https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg",
+      name: "Ergonomic Office Chair",
+      price: 10000,
+    },
+  ];
   return (
     <div>
-      <Title style={{ textAlign: "center" }}>Newsletter Preview</Title>
+      <Title level={4} style={{ textAlign: "center" }}>
+        Newsletter Preview
+      </Title>
       <RenderHeader />
       <div
         style={{
@@ -269,101 +297,136 @@ function MailPreview({ htmlContent }) {
           background: "linear-gradient(135deg, #fea549, #ffcc80)",
         }}
       >
+        <div>
+          <Title level={3} style={{ textAlign: "center" }}>
+            {heading}
+          </Title>
+        </div>
+        <div style={{ textAlign: "center", marginBottom: 20 }}>
+          <Text>{subheading}</Text>
+        </div>
         <Row gutter={[24, 24]}>
-          <Col sm={24} md={12}>
-            <div style={{ background: "#FFF" }}>
+          {data.map((d) => (
+            <Col sm={12} md={12} key={d.key}>
               <div
                 style={{
-                  position: "relative",
-                  overflow: "hidden",
-                  height: "250px",
-                  background:
-                    "linear-gradient(135deg, #f8f9fa, #e9ecef); position: relative",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  background: "#FFF",
+                  transition: "all 0.3s ease-in-out",
+                  borderRadius: 20,
                 }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform =
+                    "translateY(-1px) scale(1.03)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scaleX(1)")
+                }
               >
-                <img
-                  src="https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg"
-                  alt="Ergonomic Chair"
+                <div
                   style={{
-                    height: "100%",
-                    width: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    transition: "transform 0.3s ease",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  padding: "24px",
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  gap: "12px",
-                  textAlign: "center",
-                }}
-              >
-                <Title
-                  level={3}
-                  style={{
-                    fontSize: 20,
-                    fontWeight: 600,
-                    margin: 0,
-                    color: "#1e293b",
-                    whiteSpace: "nowrap",
+                    position: "relative",
                     overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    textAlign: "center",
+                    height: "200px",
+                    background:
+                      "linear-gradient(135deg, #f8f9fa, #e9ecef); position: relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  Ergonomic Chair
-                </Title>
-                <Text
-                  type="secondary"
-                  style={{
-                    fontWeight: 700,
-                    fontSize: 16,
-                    background: "linear-gradient(135deg, #0ea5a4, #0c8988)",
-                    webkitBackgroundClip: "text",
-                    webkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    margin: 0,
-                  }}
-                >
-                  KES 20,000
-                </Text>
-                <Button
-                  style={{
-                    background: "linear-gradient(135deg, #0ea5a4, #0c8988)",
-                    boxShadow: "0 4px 15px rgba(14, 165, 164, 0.3)",
-                    borderRadius: "12px",
-                    fontWeight: 600,
-                    transition: "all 0.3s ease",
-                    margin: 0,
-                    textAlign: "center",
-                  }}
-                >
-                  <a
-                    href="https://easy-deal-furnitures.vercel.app/shop"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <img
+                    src={d.img}
+                    alt="img"
                     style={{
-                      padding: "10px 14px",
-                      color: "#fff",
-                      textDecoration: "none",
+                      height: "100%",
+                      width: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                      transition: "all 0.3s ease",
+                      borderTopLeftRadius: 20,
+                      borderTopRightRadius: 20,
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.1)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
+                  />
+                </div>
+                <div
+                  style={{
+                    padding: "24px",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    gap: "12px",
+                    textAlign: "center",
+                  }}
+                >
+                  <Title
+                    level={3}
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 600,
+                      margin: 0,
+                      color: "#1e293b",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      textAlign: "center",
                     }}
                   >
-                    View Product
-                  </a>
-                </Button>
+                    {d.name}
+                  </Title>
+                  <Text
+                    type="secondary"
+                    style={{
+                      fontWeight: 700,
+                      fontSize: 16,
+                      background: "linear-gradient(135deg, #0ea5a4, #0c8988)",
+                      webkitBackgroundClip: "text",
+                      webkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      margin: 0,
+                    }}
+                  >
+                    KES. {d.price.toLocaleString()}
+                  </Text>
+                  <Button
+                    style={{
+                      background: "linear-gradient(135deg, #0ea5a4, #0c8988)",
+                      boxShadow: "0 4px 15px rgba(14, 165, 164, 0.3)",
+                      borderRadius: "12px",
+                      fontWeight: 600,
+                      transition: "all 0.3s ease",
+                      margin: 0,
+                      textAlign: "center",
+                      borderColor: "transparent",
+                    }}
+                  >
+                    <a
+                      href="https://easy-deal-furnitures.vercel.app/shop"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        padding: "10px 14px",
+                        color: "#fff",
+                        textDecoration: "none",
+                      }}
+                    >
+                      View Product
+                    </a>
+                  </Button>
+                </div>
               </div>
-            </div>
-          </Col>
+            </Col>
+          ))}
         </Row>
+        <div style={{ textAlign: "center", margin: 20 }}>
+          <Button>{ctaText}</Button>
+        </div>
       </div>
       <RenderFooter />
     </div>
