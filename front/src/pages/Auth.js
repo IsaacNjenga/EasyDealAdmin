@@ -135,8 +135,11 @@ function Auth() {
     } catch (error) {
       console.log(error);
       const errorMessage =
-        error.response && error.response.data && error.response.data.error
-          ? error.response.data.error
+        error.response &&
+        error.response.data &&
+        error.response.data.error &&
+        error.response.data.message
+          ? error.response.data.message
           : "An unexpected error occurred. Please try again later.";
 
       openNotification("warning", errorMessage, "Error");

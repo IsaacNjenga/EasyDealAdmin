@@ -10,14 +10,21 @@ import {
   Input,
   Row,
   Typography,
-  Spin,
   Select,
   Avatar,
 } from "antd";
 import MailPreview from "../components/MailPreview";
+import axios from "axios";
 
 const { Title } = Typography;
 const { Option } = Select;
+
+const RenderSelectedItem = (value, option) => (
+  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <Avatar src={option.image} alt="img" shape="square" size={32} />
+    <span style={{ fontWeight: 500 }}>{option.label}</span>
+  </div>
+);
 
 function Subscribers() {
   const { token } = useAuth();
@@ -26,7 +33,6 @@ function Subscribers() {
 
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [fetching, setFetching] = useState(false);
 
   // Live state
   const [heading, setHeading] = useState("");
@@ -44,23 +50,30 @@ function Subscribers() {
         heading,
         subheading,
         ctaText,
-        products: selectedProducts,
+        selectedProducts,
       };
 
-      console.log("Newsletter data:", payload);
+      //console.log("Newsletter data:", payload);
 
-      // Example API call:
-      // await axios.post("/send-newsletter", payload, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
+      const res = await axios.post("/send-newsletter", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      openNotification("success", "Newsletter sent successfully!", "Sent!");
+      if (res.data.success) {
+        openNotification("success", "Newsletter sent successfully!", "Sent!");
+      }
     } catch (err) {
       console.error(err);
       openNotification("error", "Failed to send newsletter", "Error!");
     } finally {
       setLoading(false);
     }
+  };
+
+  // Handle product selection
+  const handleProductChange = (selectedIds) => {
+    const selected = products.filter((p) => selectedIds.includes(p._id));
+    setSelectedProducts(selected);
   };
 
   return (
@@ -90,7 +103,16 @@ function Subscribers() {
                 />
               </Form.Item>
 
-              <Form.Item label={<strong>Heading</strong>} name="heading">
+              <Form.Item
+                label={<strong>Heading</strong>}
+                name="heading"
+                rules={[
+                  {
+                    required: true,
+                    message: "A heading is required for the email",
+                  },
+                ]}
+              >
                 <Input
                   style={{ height: 40 }}
                   placeholder="e.g. Discover our latest collection"
@@ -99,7 +121,13 @@ function Subscribers() {
                 />
               </Form.Item>
 
-              <Form.Item label={<strong>Sub Heading</strong>} name="subheading">
+              <Form.Item
+                label={<strong>Sub Heading</strong>}
+                name="subheading"
+                rules={[
+                  { required: true, message: "An subheading is required" },
+                ]}
+              >
                 <Input
                   style={{ height: 40 }}
                   placeholder="e.g. Stylish comfort for your home"
@@ -108,10 +136,19 @@ function Subscribers() {
                 />
               </Form.Item>
 
-              <Form.Item label={<strong>Call To Action</strong>} name="ctaText">
+              <Form.Item
+                label={<strong>Call To Action</strong>}
+                name="ctaText"
+                rules={[
+                  {
+                    required: true,
+                    message: "A call to action text is required",
+                  },
+                ]}
+              >
                 <Input
                   style={{ height: 40 }}
-                  placeholder="e.g. Shop Now"
+                  placeholder="e.g. Come shop with us!"
                   value={ctaText}
                   onChange={(e) => setCtaText(e.target.value)}
                 />
@@ -133,36 +170,43 @@ function Subscribers() {
                 ]}
               >
                 <Select
+                  mode="multiple"
                   showSearch
-                  placeholder="Search and select a product"
+                  placeholder="Search and select products"
                   optionFilterProp="children"
-                  style={{ width: "100%" }}
-                  onChange={(values, options) => {
-                    setSelectedProducts(options.map((o) => o.data));
-                  }}
+                  style={{ width: "100%", height: 60 }}
+                  onChange={handleProductChange}
                   filterOption={(input, option) =>
-                    option?.label?.toLowerCase().includes(input.toLowerCase())
+                    option?.children?.props?.children?.[1]?.props?.children
+                      ?.toLowerCase()
+                      .includes(input.toLowerCase())
                   }
+                  loading={productsLoading}
                   optionLabelProp="label"
+                  labelRender={({ value, label, image }) =>
+                    RenderSelectedItem(value, { label, image })
+                  }
                 >
                   {products.map((product) => (
                     <Option
                       key={product._id}
                       value={product._id}
                       label={product.name}
+                      image={product.img?.[0]}
                     >
                       <div
                         style={{
                           display: "flex",
                           alignItems: "center",
                           gap: "10px",
+                          height: 60,
                         }}
                       >
                         <Avatar
-                          src={product.images?.[0]}
+                          src={product.img?.[0]}
                           alt={product.name}
                           shape="square"
-                          size={40}
+                          size={50}
                         />
                         <span>{product.name}</span>
                       </div>

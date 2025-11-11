@@ -1,5 +1,6 @@
 import { Button, Layout, Divider, Typography, Row, Col } from "antd";
 import logo from "../assets/icons/office-chair.png";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 const { Header, Footer } = Layout;
@@ -279,7 +280,6 @@ function MailPreview({ selectedProducts, heading, subheading, ctaText }) {
             name: "Ergonomic Office Chair",
             price: 10000,
           },
-          
         ];
   return (
     <div>
@@ -421,7 +421,21 @@ function MailPreview({ selectedProducts, heading, subheading, ctaText }) {
           ))}
         </Row>
         <div style={{ textAlign: "center", margin: 20 }}>
-          <Button>{ctaText}</Button>
+          <Button
+            icon={
+              <ShoppingCartOutlined style={{ fontSize: 20, fontWeight: 600 }} />
+            }
+            iconPosition="end"
+            style={{
+              background: "black",
+              border: "none",
+              color: "white",
+              padding: "16px 20px",
+              fontWeight: 600,
+            }}
+          >
+            {ctaText}
+          </Button>
         </div>
       </div>
       <RenderFooter />
