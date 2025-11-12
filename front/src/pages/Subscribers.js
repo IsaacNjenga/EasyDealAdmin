@@ -37,9 +37,14 @@ function Subscribers() {
   const [loading, setLoading] = useState(false);
 
   // Live state
+  
+  // eslint-disable-next-line no-unused-vars
   const [heading, setHeading] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [subheading, setSubheading] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [ctaText, setCtaText] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   useEffect(() => {
@@ -53,6 +58,7 @@ function Subscribers() {
         selectedProducts: draft.selectedProducts.map((p) => p._id || p.id),
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only run once on mount
 
   // Update draft whenever form values change
