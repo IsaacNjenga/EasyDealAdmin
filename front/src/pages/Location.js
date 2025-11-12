@@ -10,8 +10,8 @@ function Location() {
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
 
-  console.log("Latitude:", lat);
-  console.log("Longitude:", lng);
+  // console.log("Latitude:", lat);
+  // console.log("Longitude:", lng);
 
   return (
     <div>

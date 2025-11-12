@@ -52,8 +52,8 @@ router.put("/delete-avatar", deleteAvatar);
 
 //product routes
 router.post("/create-product", protectRoute, createProduct);
-router.get("/fetch-product", protectRoute, fetchProduct);
-router.get("/fetch-all-products", protectRoute, fetchProducts);
+router.get("/fetch-product", fetchProduct);
+router.get("/fetch-all-products", fetchProducts);
 router.get("/fetch-available-products", protectRoute, fetchAvailableProducts);
 router.put("/update-product", protectRoute, updateProduct);
 router.delete("/delete-product", deleteProduct);
