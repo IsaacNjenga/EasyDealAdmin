@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetchAvailableProducts from "../hooks/fetchAvailableProducts";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
@@ -15,6 +15,7 @@ import {
 } from "antd";
 import MailPreview from "../components/MailPreview";
 import axios from "axios";
+import { useNewsletter } from "../contexts/NewsletterContext";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -28,6 +29,7 @@ const RenderSelectedItem = (value, option) => (
 
 function Subscribers() {
   const { token } = useAuth();
+  const { draft, setDraft, clearDraft } = useNewsletter();
   const { products, productsLoading } = useFetchAvailableProducts();
   const openNotification = useNotification();
 
@@ -40,6 +42,27 @@ function Subscribers() {
   const [ctaText, setCtaText] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
 
+  useEffect(() => {
+    if (draft) {
+      // Set form fields
+      form.setFieldsValue({
+        subject: draft.subject,
+        heading: draft.heading,
+        subheading: draft.subheading,
+        ctaText: draft.ctaText,
+        selectedProducts: draft.selectedProducts.map((p) => p._id || p.id),
+      });
+    }
+  }, []); // Only run once on mount
+
+  // Update draft whenever form values change
+  const handleFieldChange = (field, value) => {
+    setDraft((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
   const sendNewsletter = async () => {
     try {
       setLoading(true);
@@ -47,10 +70,10 @@ function Subscribers() {
 
       const payload = {
         subject: values.subject,
-        heading,
-        subheading,
-        ctaText,
-        selectedProducts,
+        heading: values.heading || draft.heading,
+        subheading: values.subheading || draft.subheading,
+        ctaText: values.ctaText || draft.ctaText,
+        selectedProducts: draft.selectedProducts,
       };
 
       //console.log("Newsletter data:", payload);
@@ -61,6 +84,8 @@ function Subscribers() {
 
       if (res.data.success) {
         openNotification("success", "Newsletter sent successfully!", "Sent!");
+        clearDraft();
+        form.resetFields();
       }
     } catch (err) {
       console.error(err);
@@ -73,7 +98,8 @@ function Subscribers() {
   // Handle product selection
   const handleProductChange = (selectedIds) => {
     const selected = products.filter((p) => selectedIds.includes(p._id));
-    setSelectedProducts(selected);
+    //setSelectedProducts(selected);
+    handleFieldChange("selectedProducts", selected);
   };
 
   return (
@@ -100,6 +126,7 @@ function Subscribers() {
                 <Input
                   style={{ height: 40 }}
                   placeholder="e.g. Our New Arrivals!"
+                  onChange={(e) => handleFieldChange("subject", e.target.value)}
                 />
               </Form.Item>
 
@@ -117,7 +144,7 @@ function Subscribers() {
                   style={{ height: 40 }}
                   placeholder="e.g. Discover our latest collection"
                   value={heading}
-                  onChange={(e) => setHeading(e.target.value)}
+                  onChange={(e) => handleFieldChange("heading", e.target.value)}
                 />
               </Form.Item>
 
@@ -132,7 +159,9 @@ function Subscribers() {
                   style={{ height: 40 }}
                   placeholder="e.g. Stylish comfort for your home"
                   value={subheading}
-                  onChange={(e) => setSubheading(e.target.value)}
+                  onChange={(e) =>
+                    handleFieldChange("subheading", e.target.value)
+                  }
                 />
               </Form.Item>
 
@@ -150,7 +179,7 @@ function Subscribers() {
                   style={{ height: 40 }}
                   placeholder="e.g. Come shop with us!"
                   value={ctaText}
-                  onChange={(e) => setCtaText(e.target.value)}
+                  onChange={(e) => handleFieldChange("ctaText", e.target.value)}
                 />
               </Form.Item>
 

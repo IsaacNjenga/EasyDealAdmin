@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { NewsletterProvider } from "./contexts/NewsletterContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <BrowserRouter>
       <AuthProvider>
         <NotificationProvider>
-          <App />
+          <NewsletterProvider>
+            <App />
+          </NewsletterProvider>
         </NotificationProvider>
       </AuthProvider>
     </BrowserRouter>

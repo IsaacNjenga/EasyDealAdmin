@@ -15,8 +15,8 @@ import Activity from "./pages/Activity";
 import Location from "./pages/Location";
 import Subscribers from "./pages/Subscribers";
 
-axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
-//axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
+//axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
+axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
 axios.defaults.withCredentials = true;
 
 function App() {
