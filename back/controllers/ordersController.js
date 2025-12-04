@@ -1,7 +1,9 @@
+import { connectDB } from "../config/db.js";
 import OrderModel from "../models/Orders.js";
 import { logActivity } from "../utils/logActivity.js";
 
 const createOrder = async (req, res) => {
+  await connectDB();
   try {
     const newOrder = new OrderModel(req.body);
 
@@ -23,6 +25,7 @@ const createOrder = async (req, res) => {
 };
 
 const fetchOrders = async (req, res) => {
+  await connectDB();
   const page = req.query.page || 1;
   const limit = req.query.limit || 10;
   const skip = (page - 1) * limit;
@@ -46,6 +49,7 @@ const fetchOrders = async (req, res) => {
 };
 
 const fetchAllOrders = async (req, res) => {
+  await connectDB();
   try {
     const orders = await OrderModel.find({}).sort({ createdAt: -1 });
     res.status(200).json({ success: true, orders });
@@ -56,6 +60,7 @@ const fetchAllOrders = async (req, res) => {
 };
 
 const fetchOrder = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const order = await OrderModel.findById(id);
@@ -70,6 +75,7 @@ const fetchOrder = async (req, res) => {
 };
 
 const orderUpdate = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   const updateData = req.body;
   try {
@@ -91,6 +97,7 @@ const orderUpdate = async (req, res) => {
 };
 
 const clientOrderUpdate = async (req, res) => {
+  await connectDB();
   const { tracking_id } = req.query;
   try {
     const updatedOrder = await OrderModel.findOneAndUpdate(

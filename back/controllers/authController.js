@@ -1,4 +1,5 @@
 import UserModel from "../models/User.js";
+import { connectDB } from "../config/db.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -24,6 +25,7 @@ const generateTokens = (user) => {
 };
 
 const Register = async (req, res) => {
+  await connectDB();
   try {
     const { email, username, password } = req.body;
     if (!email || !username || !password) {
@@ -72,6 +74,7 @@ const Register = async (req, res) => {
 };
 
 const Login = async (req, res) => {
+  await connectDB();
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -112,6 +115,7 @@ const Login = async (req, res) => {
 };
 
 const refreshMyToken = async (req, res) => {
+  await connectDB();
   const { refreshToken } = req.body;
   if (!refreshToken)
     return res

@@ -1,7 +1,9 @@
+import { connectDB } from "../config/db.js";
 import MailsModel from "../models/Emails.js";
 import { logActivity } from "../utils/logActivity.js";
 
 const createMail = async (req, res) => {
+  await connectDB();
   try {
     const newMail = new MailsModel(req.body);
 
@@ -26,6 +28,7 @@ const createMail = async (req, res) => {
 }; 
 
 const readMails = async (req, res) => {
+  await connectDB();
   try {
     const mails = await MailsModel.find({}).sort({ createdAt: -1 });
     return res.status(200).json({ success: true, mails });
@@ -38,6 +41,7 @@ const readMails = async (req, res) => {
 };
 
 const readMail = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const mail = await MailsModel.findById(id);
@@ -56,6 +60,7 @@ const readMail = async (req, res) => {
 };
 
 const emailUpdate = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   const updateData = req.body;
   try {
@@ -76,6 +81,7 @@ const emailUpdate = async (req, res) => {
   }
 };
 const emailRead = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const mail = await MailsModel.findById(id);
@@ -91,6 +97,7 @@ const emailRead = async (req, res) => {
 };
 
 const emailStarred = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const mail = await MailsModel.findById(id);
@@ -110,6 +117,7 @@ const emailStarred = async (req, res) => {
   }
 };
 const updateMail = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const mail = await MailsModel.findById(id);
@@ -131,6 +139,7 @@ const updateMail = async (req, res) => {
 };
 
 const deleteMail = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const mail = await MailsModel.findById(id);

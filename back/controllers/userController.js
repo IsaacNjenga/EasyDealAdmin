@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import cloudinary from "../config/cloudinary.js";
 import UserModel from "../models/User.js";
+import { connectDB } from "../config/db.js";
 
 const updateUser = async (req, res) => {
   try {
@@ -11,6 +12,7 @@ const updateUser = async (req, res) => {
 };
 
 const updateAvatar = async (req, res) => {
+  await connectDB();
   const { image, id } = req.body;
   const userId = new mongoose.Types.ObjectId(id);
 
@@ -48,6 +50,7 @@ const updateAvatar = async (req, res) => {
 };
 
 const deleteAvatar = async (req, res) => {
+  await connectDB();
   const { id } = req.body;
   const userId = new mongoose.Types.ObjectId(id);
 

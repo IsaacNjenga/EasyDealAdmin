@@ -1,7 +1,9 @@
+import { connectDB } from "../config/db.js";
 import ProductsModel from "../models/Products.js";
 import { logActivity } from "../utils/logActivity.js";
 
 const createProduct = async (req, res) => {
+  await connectDB();
   try {
     const newProduct = new ProductsModel(req.body);
 
@@ -24,6 +26,7 @@ const createProduct = async (req, res) => {
 };
 
 const fetchProduct = async (req, res) => {
+  await connectDB();
   const { id } = req.query;
   try {
     const product = await ProductsModel.findById(id);
@@ -38,6 +41,7 @@ const fetchProduct = async (req, res) => {
 };
 
 const fetchProducts = async (req, res) => {
+  await connectDB();
   const page = req.query.page || 1;
   const limit = req.query.limit || 8;
   const skip = (page - 1) * limit;
@@ -64,6 +68,7 @@ const fetchProducts = async (req, res) => {
 };
 
 const fetchAvailableProducts = async (req, res) => {
+  await connectDB();
   try {
     const availableProduct = await ProductsModel.find({
       available: "true",
@@ -78,6 +83,7 @@ const fetchAvailableProducts = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
+  await connectDB();
   try {
     const { id } = req.query;
     const updatedProduct = await ProductsModel.findByIdAndUpdate(id, req.body, {
@@ -104,6 +110,7 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
+  await connectDB();
   try {
     const { id } = req.query;
     const deletedProduct = await ProductsModel.findByIdAndDelete(id);

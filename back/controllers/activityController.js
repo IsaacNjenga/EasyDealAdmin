@@ -1,6 +1,8 @@
+import { connectDB } from "../config/db.js";
 import ActivityModel from "../models/Activity.js";
 
 const fetchActivities = async (req, res) => {
+  await connectDB();
   try {
     const activities = await ActivityModel.find({})
       .sort({ createdAt: -1 })
