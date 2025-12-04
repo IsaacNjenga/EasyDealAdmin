@@ -114,7 +114,7 @@ const ExpandedRowRender = ({
       onRow={(record) => ({
         onClick: () => {
           viewOrder(record);
-          console.log(record);
+          //console.log(record);
         },
       })}
       rowClassName={(record) => {

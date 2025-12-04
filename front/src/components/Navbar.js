@@ -70,12 +70,6 @@ function Navbar() {
     setCurrent(e.key);
   };
 
-  // const navItems = [
-  //   { label: "Dashboard", path: "/", icon: AppstoreOutlined },
-  //   { label: "Properties", path: "/properties", icon: HomeOutlined },
-  //   { label: "Analytics", path: "/analytics", icon: CustomerServiceFilled },
-  // ];
-
   return (
     <>
       <FloatButton

@@ -15,8 +15,8 @@ import Activity from "./pages/Activity";
 import Location from "./pages/Location";
 import Subscribers from "./pages/Subscribers";
 
-//axios.defaults.baseURL = "http://localhost:3001/EasyAdmin";
-axios.defaults.baseURL = "https://easy-deal-admin-server.vercel.app/EasyAdmin";
+//axios.defaults.baseURL = process.env.REACT_APP_DEV_API_URL;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 axios.defaults.withCredentials = true;
 
 function App() {

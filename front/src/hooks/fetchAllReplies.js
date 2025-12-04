@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Swal from "sweetalert2";
 import axios from "axios";
 import { useNotification } from "../contexts/NotificationContext";
 
@@ -35,6 +34,7 @@ function useFetchAllReplies() {
 
   useEffect(() => {
     fetchReplies();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshKey]);
 
   return {
