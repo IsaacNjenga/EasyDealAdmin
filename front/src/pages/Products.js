@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Button, Spin, Tooltip } from "antd";
+import { Button, Input, Spin, Tooltip } from "antd";
 import { PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
 //import { shopProducts } from "../assets/data/data";
 import ItemCard from "../components/ItemCard";
 import ViewItem from "../components/ViewItem";
 import useFetchAllProducts from "../hooks/fetchAllProducts";
 import { useNavigate } from "react-router-dom";
+
+const { Search } = Input;
 
 function Products() {
   const { products, productsLoading, productsRefresh, handleLoadMore } =
@@ -32,22 +34,42 @@ function Products() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
-        <Tooltip title="Add a product">
-          <Button
-            onClick={() => navigate("/create-product")}
-            type="primary"
-            icon={<PlusCircleOutlined />}
-            style={{ background: "green" }}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: "0 23px",
+        }}
+      >
+        <div>
+          <Search
+            placeholder="Search products..."
+            size="large"
+            loading={loading}
+            enterButton
+            //onChange={onSearchChange}
+            allowClear
+            style={{ width: 600, height: 50 }}
           />
-        </Tooltip>
-        <Tooltip title="Refresh">
-          <Button
-            onClick={productsRefresh}
-            type="primary"
-            icon={<ReloadOutlined />}
-          />
-        </Tooltip>
+        </div>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+          <Tooltip title="Add a product">
+            <Button
+              onClick={() => navigate("/create-product")}
+              type="primary"
+              icon={<PlusCircleOutlined />}
+              style={{ background: "green" }}
+            />
+          </Tooltip>
+          <Tooltip title="Refresh">
+            <Button
+              onClick={productsRefresh}
+              type="primary"
+              icon={<ReloadOutlined />}
+            />
+          </Tooltip>
+        </div>
       </div>
 
       <div>

@@ -125,7 +125,6 @@ function Auth() {
           left: "50%",
           transform: "translate(-50%, -50%)",
           margin: "10px 0",
-          borderRadius: 20,
           border: "none",
         }}
       >
@@ -133,8 +132,9 @@ function Auth() {
           style={{
             margin: 0,
             border: "none",
+            background: "transparent",
+            borderRadius: 20,
           }}
-          bodyStyle={{ padding: 0 }}
         >
           <div
             style={{
@@ -143,6 +143,8 @@ function Auth() {
               padding: 0,
               margin: 0,
               border: "none",
+              background: "transparent",
+            borderRadius: 20,
             }}
           >
             <div
@@ -151,6 +153,8 @@ function Auth() {
                 width: 400,
                 height: 500,
                 border: "none",
+                borderTopLeftRadius: 20,
+                borderBottomLeftRadius: 20,
               }}
             ></div>
             <div
@@ -160,6 +164,8 @@ function Auth() {
                 width: 500,
                 height: 500,
                 border: "none",
+                borderTopRightRadius: 20,
+                borderBottomRightRadius: 20,
               }}
             >
               <Card style={{ ...cardStyle, width: "auto" }}>

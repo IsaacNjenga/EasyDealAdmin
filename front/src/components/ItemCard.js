@@ -23,7 +23,7 @@ function ItemCard({
     <div style={{ margin: 10, padding: 15 }}>
       <Row gutter={[24, 24]}>
         {dataSource.map((b) => (
-          <Col key={b._id} xs={24} sm={12} md={6}>
+          <Col key={b._id} xs={24} sm={12} md={8}>
             <motion.div
               whileHover="hover"
               initial="rest"
