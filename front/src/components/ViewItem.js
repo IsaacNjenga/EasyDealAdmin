@@ -39,7 +39,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
       centered
       onCancel={() => setOpenModal(false)}
       confirmLoading={loading}
-      width={1100}
+      width={1200}
       style={{ top: 10 }}
       closeIcon={
         <CloseOutlined
@@ -53,11 +53,11 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
         />
       }
       styles={{
-        mask: { backdropFilter: "blur(3px)" },
+        mask: { backdropFilter: "blur(2px)" },
         content: {
           background: "linear-gradient(135deg, #1b1b27, #242437 100%)",
           border: "none",
-          borderRadius: 20,
+          borderRadius: 12,
           overflow: "hidden",
           padding: 0,
         },

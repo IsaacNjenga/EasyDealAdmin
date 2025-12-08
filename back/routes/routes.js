@@ -34,6 +34,14 @@ import {
   fetchOrders,
   orderUpdate,
 } from "../controllers/ordersController.js";
+import {
+  createAnalytics,
+  decrementLikes,
+  incrementLikes,
+  incrementViews,
+  updateAnalytics,
+  topAnalytics,
+} from "../controllers/analyticsController.js";
 import { fetchActivities } from "../controllers/activityController.js";
 import { replyToEmail } from "../controllers/clientReplyController.js";
 import { sendNewsletter } from "../controllers/newsletterController.js";
@@ -80,6 +88,14 @@ router.put("/client-order-update", clientOrderUpdate);
 
 //newsletter routes
 router.post("/send-newsletter", protectRoute, sendNewsletter);
+
+// analytics route
+router.post("/create-analytics", createAnalytics);
+router.post("/analytics/views/:productId", incrementViews);
+router.post("/analytics/like/:productId", incrementLikes);
+router.post("/analytics/unlike/:productId", decrementLikes);
+router.put("/update-analytic", updateAnalytics);
+router.get("/top-analytics", protectRoute, topAnalytics);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);

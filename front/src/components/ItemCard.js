@@ -1,5 +1,11 @@
 import { Carousel, Button, Typography, Row, Col, Card, Tooltip } from "antd";
-import { DeleteOutlined, EditFilled, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditFilled,
+  EyeFilled,
+  EyeOutlined,
+  HeartFilled,
+} from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { useNotification } from "../contexts/NotificationContext";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +24,7 @@ function ItemCard({
   const navigate = useNavigate();
   const { token } = useAuth();
   const openNotification = useNotification();
+
 
   return (
     <div style={{ margin: 10, padding: 15 }}>
@@ -202,6 +209,46 @@ function ItemCard({
                               boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
                             }}
                           />
+                        </Tooltip>
+                      </div>
+
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-end",
+                          gap: 10,
+                        }}
+                      >
+                        <Tooltip title="Likes">
+                          <Button
+                            type="primary"
+                            icon={<HeartFilled />}
+                            style={{
+                              background: "white",
+                              color: "#333",
+                              border: "none",
+                              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                              borderRadius: 20,
+                            }}
+                          >
+                            20
+                          </Button>
+                        </Tooltip>
+                        <Tooltip title="Clicks">
+                          <Button
+                            type="primary"
+                            icon={<EyeFilled />}
+                            style={{
+                              background: "white",
+                              color: "#333",
+                              border: "none",
+                              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                              borderRadius: 20,
+                            }}
+                          >
+                            20
+                          </Button>
                         </Tooltip>
                       </div>
 
