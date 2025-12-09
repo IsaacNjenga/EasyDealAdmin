@@ -48,6 +48,7 @@ import { sendNewsletter } from "../controllers/newsletterController.js";
 import {
   clientLogin,
   clientRegister,
+  firebaseGoogleLogin,
 } from "../controllers/clientController.js";
 
 const router = express.Router();
