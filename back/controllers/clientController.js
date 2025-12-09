@@ -52,7 +52,7 @@ const firebaseGoogleLogin = async (req, res) => {
   }
 };
 
-const Register = async (req, res) => {
+const clientRegister = async (req, res) => {
   await connectDB();
   try {
     const { email, name, password } = req.body;
@@ -101,7 +101,7 @@ const Register = async (req, res) => {
   }
 };
 
-const Login = async (req, res) => {
+const clientLogin = async (req, res) => {
   await connectDB();
   try {
     const { email, password } = req.body;
@@ -140,4 +140,4 @@ const Login = async (req, res) => {
   }
 };
 
-export { firebaseGoogleLogin, Register, Login };
+export { firebaseGoogleLogin, clientRegister, clientLogin };

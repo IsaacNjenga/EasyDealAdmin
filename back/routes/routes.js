@@ -45,6 +45,10 @@ import {
 import { fetchActivities } from "../controllers/activityController.js";
 import { replyToEmail } from "../controllers/clientReplyController.js";
 import { sendNewsletter } from "../controllers/newsletterController.js";
+import {
+  clientLogin,
+  clientRegister,
+} from "../controllers/clientController.js";
 
 const router = express.Router();
 
@@ -53,6 +57,11 @@ router.post("/sign-up", Register);
 router.post("/sign-in", Login);
 router.post("/change-password", ChangePassword);
 router.post("/refresh-token", refreshMyToken);
+
+//client auth routes
+router.post("/client-sign-up", clientRegister);
+router.post("/client-sign-in", clientLogin);
+router.post("/firebase-google-login", firebaseGoogleLogin);
 
 //user routes
 router.put("/change-avatar", updateAvatar);
