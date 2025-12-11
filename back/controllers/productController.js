@@ -1,6 +1,7 @@
 import { connectDB } from "../config/db.js";
 import ProductsModel from "../models/Products.js";
 import { logActivity } from "../utils/logActivity.js";
+import mongoose from "mongoose";
 
 const createProduct = async (req, res) => {
   await connectDB();
