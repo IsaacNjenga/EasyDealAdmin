@@ -62,8 +62,8 @@ const fetchProduct = async (req, res) => {
 
 const fetchProducts = async (req, res) => {
   await connectDB();
-  const page = req.query.page || 1;
-  const limit = req.query.limit || 8;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 12;
   const skip = (page - 1) * limit;
 
   try {
