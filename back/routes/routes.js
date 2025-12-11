@@ -52,6 +52,12 @@ import {
   clientRegister,
   firebaseGoogleLogin,
 } from "../controllers/clientController.js";
+import {
+  createReview,
+  deleteReview,
+  fetchReviews,
+  updateReview,
+} from "../controllers/reviewsController.js";
 
 const router = express.Router();
 
@@ -101,7 +107,13 @@ router.put("/client-order-update", clientOrderUpdate);
 //newsletter routes
 router.post("/send-newsletter", protectRoute, sendNewsletter);
 
-// analytics route
+//reviews routes
+router.post("/create-review", createReview);
+router.get("/fetch-reviews", fetchReviews);
+router.put("/update-review", updateReview);
+router.delete("/delete-review", deleteReview);
+
+//analytics route
 router.post("/create-analytics", createAnalytics);
 router.post("/analytics/views/:productId", incrementViews);
 router.post("/analytics/like/:productId", incrementLikes);

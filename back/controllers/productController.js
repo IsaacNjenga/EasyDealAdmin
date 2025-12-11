@@ -29,7 +29,27 @@ const fetchProduct = async (req, res) => {
   await connectDB();
   const { id } = req.query;
   try {
-    const product = await ProductsModel.findById(id);
+    const product = await ProductsModel.aggregate([
+      {
+        $match: { _id: new mongoose.Types.ObjectId(id) },
+      },
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "productId",
+          as: "reviews",
+        },
+      },
+      {
+        $lookup: {
+          from: "analytics",
+          localField: "_id",
+          foreignField: "productId",
+          as: "analytics",
+        },
+      },
+    ]);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -47,10 +67,36 @@ const fetchProducts = async (req, res) => {
   const skip = (page - 1) * limit;
 
   try {
-    const products = await ProductsModel.find({})
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
+    const products = await ProductsModel.aggregate([
+      { $sort: { createdAt: -1 } },
+      { $skip: { skip } },
+      { $limit: { limit } },
+
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "productId",
+          as: "reviews",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "analytics",
+          localField: "_id",
+          foreignField: "productId",
+          as: "analytics",
+        },
+      },
+
+      // OPTIONAL: sort reviews newest first
+      {
+        $addFields: {
+          reviews: { $reverseArray: "$reviews" },
+        },
+      },
+    ]);
 
     const totalProducts = await ProductsModel.countDocuments();
 
