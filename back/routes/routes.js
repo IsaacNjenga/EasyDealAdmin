@@ -41,6 +41,8 @@ import {
   incrementViews,
   updateAnalytics,
   topAnalytics,
+  incrementCart,
+  decrementCart,
 } from "../controllers/analyticsController.js";
 import { fetchActivities } from "../controllers/activityController.js";
 import { replyToEmail } from "../controllers/clientReplyController.js";
@@ -104,6 +106,8 @@ router.post("/create-analytics", createAnalytics);
 router.post("/analytics/views/:productId", incrementViews);
 router.post("/analytics/like/:productId", incrementLikes);
 router.post("/analytics/unlike/:productId", decrementLikes);
+router.post("/analytics/add-to-cart/:productId", incrementCart);
+router.post("/analytics/remove-from-cart/:productId", decrementCart);
 router.put("/update-analytic", updateAnalytics);
 router.get("/top-analytics", protectRoute, topAnalytics);
 

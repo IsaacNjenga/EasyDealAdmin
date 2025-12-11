@@ -11,6 +11,7 @@ const clientSchema = mongoose.Schema(
       favourites: { type: Number, default: 0 },
       reviews: { type: Number, default: 0 },
       viewings: { type: Number, default: 0 },
+      cart: { type: Number, default: 0 },
     },
     favourites: {
       type: [mongoose.Schema.Types.ObjectId],
@@ -20,6 +21,11 @@ const clientSchema = mongoose.Schema(
     reviews: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "reviews",
+      default: [],
+    },
+    cart: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "products",
       default: [],
     },
   },

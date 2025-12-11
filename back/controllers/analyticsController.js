@@ -58,6 +58,28 @@ const incrementLikes = async (req, res) => {
   }
 };
 
+const incrementCart = async (req, res) => {
+  await connectDB();
+
+  const { productId } = req.params;
+  const { email } = req.query;
+  try {
+    await ClientModel.findOneAndUpdate(
+      { email },
+      {
+        $addToSet: { cart: productId },
+        $inc: { "stats.cart": 1 },
+      },
+      { new: true }
+    );
+
+    res.sendStatus(204);
+  } catch (error) {
+    console.error("Error in cart incrementing:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const decrementLikes = async (req, res) => {
   await connectDB();
   const { productId } = req.params;
@@ -81,6 +103,28 @@ const decrementLikes = async (req, res) => {
     res.sendStatus(204);
   } catch (error) {
     console.error("Error in likes incrementing:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const decrementCart = async (req, res) => {
+  await connectDB();
+
+  const { productId } = req.params;
+  const { email } = req.query;
+  try {
+    await ClientModel.findOneAndUpdate(
+      { email },
+      {
+        $addToSet: { cart: productId },
+        $inc: { "stats.cart": -1 },
+      },
+      { new: true }
+    );
+
+    res.sendStatus(204);
+  } catch (error) {
+    console.error("Error in cart incrementing:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -152,5 +196,7 @@ export {
   incrementViews,
   incrementLikes,
   decrementLikes,
+  decrementCart,
+  incrementCart,
   topAnalytics,
 };
