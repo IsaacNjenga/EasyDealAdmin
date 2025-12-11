@@ -69,8 +69,8 @@ const fetchProducts = async (req, res) => {
   try {
     const products = await ProductsModel.aggregate([
       { $sort: { createdAt: -1 } },
-      { $skip: { skip } },
-      { $limit: { limit } },
+      { $skip: skip },
+      { $limit: limit },
 
       {
         $lookup: {
