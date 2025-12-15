@@ -140,4 +140,36 @@ const clientLogin = async (req, res) => {
   }
 };
 
-export { firebaseGoogleLogin, clientRegister, clientLogin };
+const fetchClients = async (req, res) => {
+  await connectDB();
+  try {
+    const clients = await ClientModel.find({}).select("-password");
+    res.status(200).json({ success: true, clients: clients });
+  } catch (error) {
+    console.error("Error in fetching clients:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const fetchClient = async (req, res) => {
+  await connectDB();
+  const { email } = req.query;
+  try {
+    const client = await ClientModel.find({ email });
+    if (!client) {
+      return res.status(404).json({ message: "Client not found" });
+    }
+    res.status(200).json({ success: true, client: client });
+  } catch (error) {
+    console.error("Error in fetching client:", error);
+    return res.status(500).json({ message: "Error Fetching Client" });
+  }
+};
+
+export {
+  firebaseGoogleLogin,
+  clientRegister,
+  clientLogin,
+  fetchClient,
+  fetchClients,
+};

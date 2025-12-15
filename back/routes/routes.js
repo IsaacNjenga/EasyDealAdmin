@@ -50,6 +50,8 @@ import { sendNewsletter } from "../controllers/newsletterController.js";
 import {
   clientLogin,
   clientRegister,
+  fetchClient,
+  fetchClients,
   firebaseGoogleLogin,
 } from "../controllers/clientController.js";
 import {
@@ -71,6 +73,8 @@ router.post("/refresh-token", refreshMyToken);
 router.post("/client-sign-up", clientRegister);
 router.post("/client-sign-in", clientLogin);
 router.post("/firebase-google-login", firebaseGoogleLogin);
+router.get("/fetch-clients",  fetchClients);
+router.get("/fetch-client", fetchClient);
 
 //user routes
 router.put("/change-avatar", updateAvatar);
