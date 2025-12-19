@@ -155,7 +155,9 @@ const fetchClient = async (req, res) => {
   await connectDB();
   const { email } = req.query;
   try {
-    const client = await ClientModel.find({ email });
+    const client = await ClientModel.findOne({ email }).populate(
+      "favourites reviews cart"
+    );
     if (!client) {
       return res.status(404).json({ message: "Client not found" });
     }
