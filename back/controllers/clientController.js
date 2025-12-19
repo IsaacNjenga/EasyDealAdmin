@@ -212,6 +212,16 @@ const fetchClientDetails = async (req, res) => {
           localField: "reviews",
           foreignField: "_id",
           as: "reviews",
+          pipeline: [
+            {
+              $lookup: {
+                from: "products",
+                localField: "productId",
+                foreignField: "_id",
+                as: "productId",
+              },
+            },
+          ],
         },
       },
     ]);
