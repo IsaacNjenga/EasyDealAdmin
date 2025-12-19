@@ -102,7 +102,6 @@ const clientRegister = async (req, res) => {
 };
 
 const clientLogin = async (req, res) => {
-  await connectDB();
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -155,9 +154,9 @@ const fetchClient = async (req, res) => {
   await connectDB();
   const { email } = req.query;
   try {
-    const client = await ClientModel.findOne({ email }).populate(
-      "favourites reviews cart"
-    );
+    const client = await ClientModel.findOne({ email })
+      .populate("favourites reviews cart")
+      .select("-passwords");
     if (!client) {
       return res.status(404).json({ message: "Client not found" });
     }
@@ -168,10 +167,70 @@ const fetchClient = async (req, res) => {
   }
 };
 
+const fetchClientDetails = async (req, res) => {
+  await connectDB();
+  const { email } = req.query;
+  try {
+    const clientDetails = await ClientModel.aggregate([
+      { $match: { email } },
+      {
+        $lookup: {
+          from: "cart",
+          localField: "cart",
+          foreignField: "_id",
+          as: "cart",
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "favourites",
+          foreignField: "_id",
+          as: "favourites",
+          pipeline: [
+            // Now inside favourites pipeline, lookup analytics
+            {
+              $lookup: {
+                from: "analytics",
+                localField: "_id",
+                foreignField: "productId",
+                as: "analytics",
+              },
+            },
+            // optional: add calculated totals
+            {
+              $addFields: {
+                totalViews: { $sum: "$analytics.views" },
+              },
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "reviews",
+          foreignField: "_id",
+          as: "reviews",
+        },
+      },
+    ]);
+    res
+      .status(200)
+      .json({ success: true, clientDetails: clientDetails[0] || null });
+  } catch (error) {
+    console.error("Error when fetching client details:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
 export {
   firebaseGoogleLogin,
   clientRegister,
   clientLogin,
   fetchClient,
   fetchClients,
+  fetchClientDetails,
 };

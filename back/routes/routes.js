@@ -53,6 +53,7 @@ import {
   fetchClient,
   fetchClients,
   firebaseGoogleLogin,
+  fetchClientDetails,
 } from "../controllers/clientController.js";
 import {
   createReview,
@@ -73,8 +74,9 @@ router.post("/refresh-token", refreshMyToken);
 router.post("/client-sign-up", clientRegister);
 router.post("/client-sign-in", clientLogin);
 router.post("/firebase-google-login", firebaseGoogleLogin);
-router.get("/fetch-clients",  fetchClients);
-router.get("/fetch-client", fetchClient);
+router.get("/fetch-clients", fetchClients);
+//router.get("/fetch-client", fetchClient);
+router.get("/fetch-client", fetchClientDetails);
 
 //user routes
 router.put("/change-avatar", updateAvatar);
