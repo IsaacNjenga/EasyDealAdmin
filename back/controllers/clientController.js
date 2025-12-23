@@ -8,14 +8,13 @@ dotenv.config();
 
 const generateTokens = (user) => {
   const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "3d",
+    expiresIn: "4d",
   });
 
   return { accessToken };
 };
 
 const firebaseGoogleLogin = async (req, res) => {
-  await connectDB();
   try {
     const { idToken } = req.body;
     if (!idToken) return res.status(400).json({ error: "Missing idToken" });
@@ -27,7 +26,7 @@ const firebaseGoogleLogin = async (req, res) => {
     //find user in DB
     let user = await ClientModel.findOne({ email });
     if (!user) {
-      user = await UserModel.create({
+      user = await ClientModel.create({
         firebaseUid: uid,
         email,
         name,
@@ -53,7 +52,6 @@ const firebaseGoogleLogin = async (req, res) => {
 };
 
 const clientRegister = async (req, res) => {
-  await connectDB();
   try {
     const { email, name, password } = req.body;
     if (!email || !name || !password) {
