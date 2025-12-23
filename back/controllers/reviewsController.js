@@ -5,14 +5,14 @@ import { logActivity } from "../utils/logActivity.js";
 
 const createReview = async (req, res) => {
   await connectDB();
-  const { email, propertyId } = req.body;
+  const { email, productId } = req.body;
 
   try {
-    const existingReview = await ReviewsModel.findOne({ email, propertyId });
+    const existingReview = await ReviewsModel.findOne({ email, productId });
 
     if (existingReview) {
       return res.status(400).json({
-        message: "You have already submitted a review for this property.",
+        message: "You have already submitted a review for this product.",
       });
     }
 
