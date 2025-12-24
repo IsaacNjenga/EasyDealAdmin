@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Avatar,
   Button,
+  ConfigProvider,
   Divider,
   FloatButton,
   Layout,
@@ -12,13 +13,13 @@ import {
 import { Link, Outlet, useLocation } from "react-router-dom";
 import logo from "../assets/icons/office-chair.png";
 import {
+  AppstoreAddOutlined,
   AppstoreOutlined,
   BellOutlined,
   HomeOutlined,
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  PlusCircleOutlined,
   PoweroffOutlined,
   PushpinOutlined,
   TruckOutlined,
@@ -35,10 +36,10 @@ function getItem(label, path, key, icon, children) {
 }
 
 const items = [
-  getItem("Dashboard", "/", 1, AppstoreOutlined),
-  getItem("Products", "", 2, HomeOutlined, [
-    getItem("View products", "/products", 3, HomeOutlined),
-    getItem("Create a product", "/create-product", 4, PlusCircleOutlined),
+  getItem("Dashboard", "/", 1, HomeOutlined),
+  getItem("Products", "", 2, AppstoreOutlined, [
+    getItem("View products", "/products", 3, AppstoreOutlined),
+    getItem("Create a product", "/create-product", 4, AppstoreAddOutlined),
   ]),
   getItem("Emails", "/emails", 5, MailOutlined),
   getItem("Orders", "/orders", 6, TruckOutlined),
@@ -178,77 +179,90 @@ function Navbar() {
                 }}
               ></div>
             </div>
-
-            <Menu
-              theme="dark"
-              mode="inline"
-              selectedKeys={[current]}
-              onClick={handleClick}
-              inlineCollapsed={collapsed}
-              style={{
-                fontFamily: "Raleway",
-                border: "none",
-                background: "transparent",
-              }}
-              items={items.map(({ key, icon, label, path, children }) => ({
-                key: path || key,
-                icon: React.createElement(icon, {
-                  style: {
-                    fontSize: collapsed ? "1.5rem" : "1.7rem",
-                    color: "whitesmoke",
-                    margin: "7px 0",
+            <ConfigProvider
+              theme={{
+                components: {
+                  Menu: {
+                    itemColor: "#fea549", // Default text color
+                    itemHoverColor: "#fea549", // Color when hovering
+                    itemSelectedColor: "#fea549", // Color when selected
+                    horizontalItemSelectedColor: "#fea549", // Underline color
+                    itemBg: "transparent", // Background color
                   },
-                }),
-                label: path ? (
-                  <Link
-                    to={path}
-                    style={{
-                      fontSize: "18px",
-                      color: "whitesmoke",
-                    }}
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <Text
-                    style={{
-                      fontSize: "18px",
-                      color: "whitesmoke",
-                      fontFamily: "Raleway",
-                    }}
-                  >
-                    {label}
-                  </Text>
-                ),
-                children: children?.map((child) => ({
-                  key: child.path || child.key,
-                  icon: React.createElement(child.icon, {
+                },
+              }}
+            >
+              <Menu
+                theme="dark"
+                mode="inline"
+                selectedKeys={[current]}
+                onClick={handleClick}
+                inlineCollapsed={collapsed}
+                style={{
+                  fontFamily: "Raleway",
+                  border: "none",
+                  background: "transparent",
+                }}
+                items={items.map(({ key, icon, label, path, children }) => ({
+                  key: path || key,
+                  icon: React.createElement(icon, {
                     style: {
-                      fontSize: collapsed ? "1.5rem" : "1.7rem",
+                      fontSize: collapsed ? "1.5rem" : "1.8rem",
                       color: "whitesmoke",
-                      margin: "7px 0px",
+                      margin: "4px 0",
                     },
                   }),
-                  label: (
+                  label: path ? (
                     <Link
-                      to={child.path}
+                      to={path}
                       style={{
-                        fontSize: "16px",
+                        fontSize: "18px",
                         color: "whitesmoke",
-                        background: "transparent",
+                      }}
+                    >
+                      {label}
+                    </Link>
+                  ) : (
+                    <Text
+                      style={{
+                        fontSize: "18px",
+                        color: "whitesmoke",
                         fontFamily: "Raleway",
                       }}
                     >
-                      {child.label}
-                    </Link>
+                      {label}
+                    </Text>
                   ),
-                })),
-                style: {
-                  textAlign: "left",
-                  margin: collapsed ? "14px 4.1px" : "19px 4.1px",
-                },
-              }))}
-            />
+                  children: children?.map((child) => ({
+                    key: child.path || child.key,
+                    icon: React.createElement(child.icon, {
+                      style: {
+                        fontSize: collapsed ? "1.5rem" : "1.7rem",
+                        color: "whitesmoke",
+                        margin: "4px 0px",
+                      },
+                    }),
+                    label: (
+                      <Link
+                        to={child.path}
+                        style={{
+                          fontSize: "16px",
+                          color: "whitesmoke",
+                          background: "transparent",
+                          fontFamily: "Raleway",
+                        }}
+                      >
+                        {child.label}
+                      </Link>
+                    ),
+                  })),
+                  style: {
+                    textAlign: "left",
+                    margin: collapsed ? "14px 4.1px" : "19px 4.1px",
+                  },
+                }))}
+              />
+            </ConfigProvider>
           </div>
         </Sider>{" "}
         <Layout>
