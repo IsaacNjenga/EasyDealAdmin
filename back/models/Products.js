@@ -20,6 +20,9 @@ const productSchema = new mongoose.Schema(
     careGuide: { type: [String] },
     tags: { type: [String], required: true },
     discount: { type: Number },
+    offerStartDate: { type: Date },
+    offerEndDate: { type: Date },
+    discountAvailable: { type: Boolean, required: true, default: false },
   },
   { collection: "products", timestamps: true }
 );

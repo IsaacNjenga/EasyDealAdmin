@@ -14,13 +14,11 @@ import {
 import {
   PlusOutlined,
   EyeOutlined,
-  CalendarOutlined,
   BarChartOutlined,
   FireFilled,
   ClockCircleFilled,
   LikeFilled,
   MailOutlined,
-  HomeOutlined,
   StarOutlined,
   AppstoreOutlined,
   TruckOutlined,
@@ -381,6 +379,7 @@ function Home() {
   const loading = false;
 
   const { productTypes, productsLoading } = DashUtils();
+  console.log("Product Types:", productTypes);
 
   if (loading) {
     return (
