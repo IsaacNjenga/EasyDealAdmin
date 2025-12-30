@@ -6,6 +6,7 @@ import { useNotification } from "../contexts/NotificationContext";
 function useFetchAllOrders() {
   const { token } = useAuth();
   const [orders, setOrders] = useState([]);
+  const [newOrders, setNewOrders] = useState([]);
   const openNotification = useNotification();
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -18,6 +19,9 @@ function useFetchAllOrders() {
       });
       if (res.data.success) {
         setOrders(res.data.orders);
+        setNewOrders(
+          res.data.orders.filter((o) => o.order_status === "pending")
+        );
       }
     } catch (error) {
       console.error(error);
@@ -39,6 +43,7 @@ function useFetchAllOrders() {
 
   return {
     orders,
+    newOrders,
     ordersLoading,
     ordersRefresh: () => setRefreshKey((prev) => prev + 1),
   };

@@ -3,6 +3,7 @@ import {
   EyeOutlined,
   LikeFilled,
   MailOutlined,
+  TruckOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import useFetchClients from "../hooks/fetchClients";
@@ -10,6 +11,7 @@ import useFetchAllProducts from "../hooks/fetchAllProducts";
 import useFetchAllEmails from "../hooks/fetchAllEmails";
 import useFetchAnalytics from "../hooks/fetchAnalytics";
 import useFetchActivity from "../hooks/fetchActivity";
+import useFetchAllOrders from "../hooks/fetchAllOrders";
 
 function DashUtils() {
   const { clients, clientsLoading } = useFetchClients();
@@ -17,6 +19,7 @@ function DashUtils() {
   const { emails, emailsLoading } = useFetchAllEmails();
   const { summary, topViewed, summaryLoading } = useFetchAnalytics();
   const { activities, activitiesLoading } = useFetchActivity();
+  const { newOrders, ordersLoading } = useFetchAllOrders();
 
   const unreadMessages = emails?.filter((email) => email.read === false);
 
@@ -68,7 +71,13 @@ function DashUtils() {
         trend: "down",
         loading: summaryLoading,
       },
-
+      {
+        title: "Pending Orders",
+        value: newOrders.length.toLocaleString(),
+        icon: <TruckOutlined />,
+        color: "#52c41a",
+        loading: ordersLoading,
+      },
       {
         title: "New Inquiries",
         value: unreadMessages.length.toLocaleString(),
