@@ -13,7 +13,7 @@ import {
 import { Link, Outlet, useLocation } from "react-router-dom";
 import logo from "../assets/icons/office-chair.png";
 import {
-  AppstoreAddOutlined,
+  //AppstoreAddOutlined,
   AppstoreOutlined,
   BellOutlined,
   HomeOutlined,
@@ -37,10 +37,11 @@ function getItem(label, path, key, icon, children) {
 
 const items = [
   getItem("Dashboard", "/", 1, HomeOutlined),
-  getItem("Products", "", 2, AppstoreOutlined, [
-    getItem("View products", "/products", 3, AppstoreOutlined),
-    getItem("Create a product", "/create-product", 4, AppstoreAddOutlined),
-  ]),
+  getItem("Products", "/products", 2, AppstoreOutlined),
+  // getItem("Products", "", 2, AppstoreOutlined, [
+  //   getItem("View products", "/products", 3, AppstoreOutlined),
+  //   getItem("Create a product", "/create-product", 4, AppstoreAddOutlined),
+  // ]),
   getItem("Emails", "/emails", 5, MailOutlined),
   getItem("Orders", "/orders", 6, TruckOutlined),
   getItem("Activity", "/activity", 7, BellOutlined),
@@ -97,9 +98,10 @@ function Navbar() {
           onBreakpoint={(broken) => setCollapsed(broken)}
           width={300}
           style={{
-            padding: 6,
+            padding: collapsed ? 5 : 10,
             background:
-              "linear-gradient(to bottom, #000000d6 0%, #232527ff 100%)",
+              "linear-gradient(to right, #232527ff 0%, #000000d6 100% )",
+            borderColor: "#fff",
           }}
         >
           <div style={{ margin: "4px 0px" }}>
@@ -183,11 +185,11 @@ function Navbar() {
               theme={{
                 components: {
                   Menu: {
-                    itemColor: "#fea549", // Default text color
-                    itemHoverColor: "#fea549", // Color when hovering
-                    itemSelectedColor: "#fea549", // Color when selected
-                    horizontalItemSelectedColor: "#fea549", // Underline color
-                    itemBg: "transparent", // Background color
+                    itemColor: "#fea549",
+                    itemHoverColor: "#fea549",
+                    itemSelectedColor: "#fea549",
+                    horizontalItemSelectedColor: "#fea549",
+                    itemBg: "transparent",
                   },
                 },
               }}
@@ -268,11 +270,11 @@ function Navbar() {
         <Layout>
           <Header
             style={{
-              padding: 0,
               background:
-                "linear-gradient(to left, #ffffffd6 0%, #ffffffff 100%)",
-              borderBottom: "1px solid #ccc",
-              height: 80,
+                "linear-gradient(to left, #232527ff 0%, #000000d6 100% )",
+              borderBottom: "1px solid #cccccc",
+              height: "auto",
+              padding: "0 20px",
             }}
           >
             <div
@@ -281,11 +283,10 @@ function Navbar() {
                 justifyContent: "space-between",
                 alignContent: "center",
                 alignItems: "center",
-                paddingBottom: 20,
               }}
             >
               <div style={{ marginLeft: 10 }}>
-                <Title style={{ fontFamily: "Raleway" }}>
+                <Title style={{ fontFamily: "Raleway", color: "#fff" }}>
                   {getTitleFromPath(current)}
                 </Title>
               </div>
@@ -294,7 +295,7 @@ function Navbar() {
                 <Tooltip title={user?.username}>
                   <Avatar
                     src={user?.avatar}
-                    size="medium"
+                    size={"medium"}
                     style={{ marginRight: 15 }}
                   />
                 </Tooltip>

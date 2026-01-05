@@ -56,7 +56,7 @@ function Products() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          padding: "0 23px",
+          padding: "0 20px",
         }}
       >
         <div>
@@ -67,7 +67,7 @@ function Products() {
             enterButton
             onChange={handleSearch}
             allowClear
-            style={{ width: 600, height: 50 }}
+            style={{ width: 500, height: 50 }}
           />
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>

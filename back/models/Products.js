@@ -9,8 +9,6 @@ const productSchema = new mongoose.Schema(
     colour: { type: [String], required: true },
     type: { type: String, required: true },
     category: { type: String, required: true },
-    freeShipping: { type: Boolean },
-    available: { type: Boolean, required: true },
     material: { type: String },
     dimensions: { type: String },
     rating: { type: Number },
@@ -18,7 +16,7 @@ const productSchema = new mongoose.Schema(
     shippingInformation: { type: [String] },
     careGuide: { type: [String] },
     tags: { type: [String], required: true },
-    discount: { type: Number },
+    discount: { type: Number, default: null },
     offerStartDate: { type: Date, default: null },
     offerEndDate: { type: Date, default: null },
     discountAvailable: { type: Boolean, required: true, default: false },
@@ -26,12 +24,7 @@ const productSchema = new mongoose.Schema(
   { collection: "products", timestamps: true }
 );
 
-
-const ProductsModel = mongoose.model("products", productSchema);
-/**
- * EXTRA HARDENING
- * Runs EVERY time a product is saved
- */
+// This pre-save hook is good for individual saves but won't affect updateMany
 productSchema.pre("save", function (next) {
   if (
     this.discountAvailable &&
@@ -45,5 +38,7 @@ productSchema.pre("save", function (next) {
   }
   next();
 });
+
+const ProductsModel = mongoose.model("products", productSchema);
 
 export default ProductsModel;

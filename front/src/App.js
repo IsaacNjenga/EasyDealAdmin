@@ -15,8 +15,8 @@ import Activity from "./pages/Activity";
 import Location from "./pages/Location";
 import Subscribers from "./pages/Subscribers";
 
-//axios.defaults.baseURL = process.env.REACT_APP_DEV_API_URL;
-axios.defaults.baseURL = process.env.REACT_APP_API_URL
+axios.defaults.baseURL = process.env.REACT_APP_DEV_API_URL;
+//axios.defaults.baseURL = process.env.REACT_APP_API_URL
 axios.defaults.withCredentials = true;
 
 function App() {

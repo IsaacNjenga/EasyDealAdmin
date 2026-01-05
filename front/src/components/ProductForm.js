@@ -294,11 +294,7 @@ function ProductForm({
                         placeholder="0.00"
                       />
                     </Form.Item>
-                  </Col>
-                </Row>
-
-                <Row gutter={16}>
-                  <Col xs={24} md={12}>
+                  </Col>  <Col xs={24} md={12}>
                     <Form.Item
                       name="discountAvailable"
                       label={
@@ -324,6 +320,10 @@ function ProductForm({
                       />
                     </Form.Item>
                   </Col>
+                </Row>
+
+                <Row gutter={16}>
+                
                 </Row>
 
                 {discountOffer && (
@@ -456,37 +456,11 @@ function ProductForm({
                 <Space style={{ marginBottom: 16 }}>
                   <CheckCircleOutlined style={{ color: PRIMARY_COLOR }} />
                   <Text strong style={{ color: PRIMARY_COLOR }}>
-                    Additional Settings
+                    Additional Details
                   </Text>
                 </Space>
 
-                <Row gutter={16}>
-                  <Col xs={24} md={12}>
-                    <Form.Item
-                      name="freeShipping"
-                      label={<span style={labelStyle}>Free Shipping?</span>}
-                      valuePropName="checked"
-                    >
-                      <Switch checkedChildren="Yes" unCheckedChildren="No" />
-                    </Form.Item>
-                  </Col>
-
-                  <Col xs={24} md={12}>
-                    <Form.Item
-                      name="available"
-                      label={<span style={labelStyle}>Product Available?</span>}
-                      valuePropName="checked"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Product availability is required",
-                        },
-                      ]}
-                    >
-                      <Switch checkedChildren="Yes" unCheckedChildren="No" />
-                    </Form.Item>
-                  </Col>
-                </Row>
+                
 
                 <Form.Item
                   name="shippingInformation"

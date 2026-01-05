@@ -39,14 +39,15 @@ function UpdateProduct() {
         ...productData[0],
       });
       setSelectedImages(productData[0]?.img || []);
-      setDiscountStartDate(productData[0]?.offerStartDate || []);
-      setDiscountEndDate(productData[0]?.offerEndDate || []);
-      setDiscountOffer(
-        productData[0]?.offerStartDate && productData[0]?.offerEndDate
-      );
+      setDiscountStartDate(productData[0]?.offerStartDate || null);
+      setDiscountEndDate(productData[0]?.offerEndDate || null);
+      if (productData[0]?.offerStartDate && productData[0]?.offerEndDate) {
+        setDiscountOffer(true);
+      }
       if (productData[0]?.discount && productData[0]?.discount > 0) {
         setDiscountedPrice(
-          productData[0]?.price - (productData[0]?.price * productData[0]?.discount) / 100
+          productData[0]?.price -
+            (productData[0]?.price * productData[0]?.discount) / 100
         );
       }
     }
@@ -99,24 +100,6 @@ function UpdateProduct() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <Button
-          danger
-          type="primary"
-          onClick={() => navigate("/products")}
-          style={{ marginBottom: 20, width: "20%" }}
-        >
-          Back
-        </Button>
-      </div>
-
       <Card
         style={{
           borderRadius: 12,
@@ -124,16 +107,36 @@ function UpdateProduct() {
           fontFamily: "Raleway",
         }}
       >
-        <div style={{ marginBottom: 24 }}>
-          <Title level={3} style={{ margin: 0, color: "#2c3e50" }}>
-            <ShoppingOutlined
-              style={{ color: PRIMARY_COLOR, marginRight: 12 }}
-            />
-            Update Product
-          </Title>
-          <Text type="secondary">
-            Fill in the details below to update your product.
-          </Text>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 24,
+          }}
+        >
+          <div style={{}}>
+            <Title level={3} style={{ margin: 0, color: "#2c3e50" }}>
+              <ShoppingOutlined
+                style={{ color: PRIMARY_COLOR, marginRight: 12 }}
+              />
+              Update Product
+            </Title>
+            <Text type="secondary">
+              Fill in the details below to update your product.
+            </Text>
+          </div>
+          <div>
+            <Button
+              danger
+              type="primary"
+              onClick={() => navigate("/products")}
+              style={{ borderRadius: 8 }}
+            >
+              Back
+            </Button>
+          </div>
         </div>
 
         <Divider style={{ borderColor: BORDER_COLOR }} />

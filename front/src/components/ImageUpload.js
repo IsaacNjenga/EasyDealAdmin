@@ -129,15 +129,11 @@ const ImageSection = ({
       onDragLeave={() => setDragActive(false)}
       onDrop={() => setDragActive(false)}
     >
-      <Form.Item
-        name="img"
-        label={
-          <Space>
-            <CloudUploadOutlined style={{ color: PRIMARY_COLOR }} />
-            <span style={labelStyle}>Product Images</span>
-          </Space>
-        }
-      >
+      <Space>
+        <CloudUploadOutlined style={{ color: PRIMARY_COLOR }} />
+        <span style={labelStyle}>Product Images</span>
+      </Space>
+      <Form.Item name="img" style={{ marginTop: 8 }}>
         <div
           style={{
             textAlign: "center",
@@ -189,10 +185,10 @@ const ImageSection = ({
           </div>
         )}
         {selectedImages.length > 0 ? (
-          <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+          <Row gutter={[24, 24]} style={{ marginTop: 16 }}>
             {selectedImages.map((item, index) => {
               return (
-                <Col span={16} key={index}>
+                <Col span={24} key={index}>
                   <div
                     style={{
                       position: "relative",
