@@ -16,12 +16,29 @@ function Products() {
   const [openModal, setOpenModal] = useState(false);
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const viewItem = (content) => {
     setLoading(true);
     setContent(content);
     setOpenModal(true);
     setTimeout(() => setLoading(false), 100);
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase().trim();
+    setSearchTerm(value);
+    if (!value) return;
+
+    const filteredSearchData = products.filter((item) => {
+      const values = Object.values(item);
+      return values.some(
+        (val) => typeof val === "string" && val.toLowerCase().includes(value)
+      );
+    });
+
+    setFilteredData(filteredSearchData);
   };
 
   if (loading) {
@@ -48,7 +65,7 @@ function Products() {
             size="large"
             loading={loading}
             enterButton
-            //onChange={onSearchChange}
+            onChange={handleSearch}
             allowClear
             style={{ width: 600, height: 50 }}
           />
@@ -59,15 +76,20 @@ function Products() {
               onClick={() => navigate("/create-product")}
               type="primary"
               icon={<PlusCircleOutlined />}
-              style={{ background: "green" }}
-            />
+              style={{ background: "green", height: 40 }}
+            >
+              Add Product
+            </Button>
           </Tooltip>
           <Tooltip title="Refresh">
             <Button
               onClick={productsRefresh}
               type="primary"
               icon={<ReloadOutlined />}
-            />
+              style={{ height: 40 }}
+            >
+              Refresh Products
+            </Button>
           </Tooltip>
         </div>
       </div>
@@ -79,7 +101,7 @@ function Products() {
           </div>
         ) : (
           <ItemCard
-            dataSource={products}
+            dataSource={searchTerm ? filteredData : products}
             isMobile={false}
             viewItem={viewItem}
             setLoading={setLoading}

@@ -95,15 +95,15 @@ function ItemCard({
                       {b.discount > 0 && (
                         <Button
                           style={{
-                            background: "#89cdbf",
+                            background: "#e11111ff",
                             color: "#fff",
                             border: "none",
                             boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
                             fontFamily: "DM Sans",
-                            borderRadius: 1,
+                            borderRadius: 0,
                           }}
                         >
-                          -{b.discount}%
+                          -{b.discount}% OFF
                         </Button>
                       )}
                     </div>
