@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import "./config/db.js";
 import { Router } from "./routes/routes.js";
+import "./config/cron.js";
 
 dotenv.config();
 

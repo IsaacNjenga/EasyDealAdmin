@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { cleanupExpiredOffers } from "../utils/expiredOffers.js";
+
 dotenv.config();
 
 const MONGODB_URI = process.env.URI;
@@ -26,5 +28,6 @@ export async function connectDB() {
 
   cached.conn = await cached.promise;
   console.log("Database Connected");
+  await cleanupExpiredOffers();
   return cached.conn;
 }

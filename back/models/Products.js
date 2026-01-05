@@ -26,5 +26,24 @@ const productSchema = new mongoose.Schema(
   { collection: "products", timestamps: true }
 );
 
+
 const ProductsModel = mongoose.model("products", productSchema);
+/**
+ * EXTRA HARDENING
+ * Runs EVERY time a product is saved
+ */
+productSchema.pre("save", function (next) {
+  if (
+    this.discountAvailable &&
+    this.offerEndDate &&
+    this.offerEndDate <= new Date()
+  ) {
+    this.discountAvailable = false;
+    this.discount = null;
+    this.offerStartDate = null;
+    this.offerEndDate = null;
+  }
+  next();
+});
+
 export default ProductsModel;
