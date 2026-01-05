@@ -16,13 +16,13 @@ import {
   Row,
   Tooltip,
   Typography,
-  Image,
   Card,
   Badge,
   Space,
   Tag,
 } from "antd";
 import React from "react";
+import { format } from "date-fns";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -64,7 +64,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
       }}
     >
       <Row gutter={[0, 0]} style={{ minHeight: 500 }}>
-        {/* LEFT: Carousel */}
+        {/* LEFT: Image Carousel */}
         <Col
           span={8}
           style={{
@@ -75,69 +75,31 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
             position: "relative",
           }}
         >
-          <Carousel autoplay autoplaySpeed={3500} dots style={{ height: 450 }}>
-            {(Array.isArray(content?.img) ? content?.img : [content?.img]).map(
-              (img, i) => (
+          <Carousel autoplay autoplaySpeed={4000}>
+            {content.img.map((img, i) => (
+              <div key={i}>
                 <div
-                  key={i}
                   style={{
-                    height: 450,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    height: 550,
+                    background: `url(${img}) center/cover`,
+                    position: "relative",
                   }}
                 >
-                  <Image
-                    src={img}
-                    alt="img"
-                    preview={{ mask: "View Full Image" }}
+                  <div
                     style={{
-                      height: 450,
-                      width: "100%",
-                      objectFit: "contain",
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: "50%",
+                      background:
+                        "linear-gradient(to top, #ffa4495e ,transparent)",
                     }}
                   />
                 </div>
-              )
-            )}
+              </div>
+            ))}
           </Carousel>
-
-          {/* Action Buttons */}
-          <div
-            style={{
-              display: "flex",
-              gap: 10,
-              padding: "10px 14px",
-              marginTop: "auto",
-            }}
-          >
-            <Tooltip title="Edit">
-              <Button
-                type="primary"
-                icon={<EditOutlined />}
-                block
-                style={{
-                  borderRadius: 10,
-                  border: "none",
-                  fontWeight: 600,
-                  background: "#ffa449",
-                }}
-              />
-            </Tooltip>
-
-            <Tooltip title="Delete">
-              <Button
-                danger
-                icon={<DeleteOutlined />}
-                block
-                style={{
-                  borderRadius: 10,
-                  border: "none",
-                  fontWeight: 600,
-                }}
-              />
-            </Tooltip>
-          </div>
         </Col>
 
         {/* MIDDLE: Product Details */}
@@ -179,32 +141,79 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
             </div>
 
             {/* Price Card */}
-            <Card
-              style={{
-                borderRadius: 14,
-                border: "none",
-                background: "linear-gradient(135deg,#ffa449,#ff8b1a)",
-                boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
-              }}
-              bodyStyle={{ padding: 20 }}
-            >
-              <Text style={{ color: "#fff", opacity: 0.9 }}>Price</Text>
-              <br />
-              {content?.discount > 0 ? (
-                <Space>
-                  <Title level={3} style={{ color: "#fff", margin: 0 }}>
-                    KES {discountedPrice.toLocaleString()}
-                  </Title>
-                  <Text delete style={{ color: "rgba(255,255,255,0.7)" }}>
-                    KES {content?.price.toLocaleString()}
-                  </Text>
-                </Space>
-              ) : (
-                <Title level={3} style={{ color: "#fff", margin: 0 }}>
-                  KES {content?.price.toLocaleString()}
-                </Title>
+
+            <div style={{ position: "sticky", top: 20 }}>
+              {content?.discount > 0 && (
+                <Badge.Ribbon
+                  text={`${content.discount}% OFF`}
+                  color="#ff4d4f"
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 700,
+                    fontFamily: "DM Sans",
+                    zIndex: 1000,
+                    padding: "7px 12px",
+                  }}
+                />
               )}
-            </Card>
+              <Card
+                style={{
+                  borderRadius: 12,
+                  border: "none",
+                  background: "linear-gradient(135deg, #ffa449, #ff8b1a)",
+                  boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+                }}
+                styles={{ body: { padding: "20px 24px" } }}
+              >
+                <Text style={{ color: "#fff", opacity: 0.9 }}>Price</Text>
+                <br />
+                {content?.discount > 0 ? (
+                  <Space>
+                    <Title
+                      level={3}
+                      style={{
+                        color: "#fff",
+                        margin: 0,
+                        fontFamily: "Raleway",
+                      }}
+                    >
+                      KES {discountedPrice.toLocaleString()}
+                    </Title>
+                    <Text
+                      delete
+                      style={{
+                        color: "rgba(255,255,255,0.7)",
+                        fontFamily: "Raleway",
+                      }}
+                    >
+                      KES {content?.price.toLocaleString()}
+                    </Text>
+                  </Space>
+                ) : (
+                  <Title
+                    level={3}
+                    style={{ color: "#fff", margin: 0, fontFamily: "Raleway" }}
+                  >
+                    KES {content?.price.toLocaleString()}
+                  </Title>
+                )}
+                {content?.discount > 0 && (
+                  <div>
+                    <Text
+                      type="secondary"
+                      style={{
+                        color: "#fff",
+                        fontSize: 12,
+                        fontFamily: "Raleway",
+                      }}
+                    >
+                      Offer valid until{" "}
+                      {format(new Date(content?.offerEndDate), "do MMM, yyyy")}
+                    </Text>
+                  </div>
+                )}
+              </Card>
+            </div>
 
             {/* Description */}
             <Paragraph
@@ -294,18 +303,16 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
             <Space direction="vertical">
               <div>
                 <Text strong style={{ color: "#777" }}>
-                  MATERIAL
-                </Text>
-                <br />
-                <Text>{content?.material}</Text>
+                  MATERIAL:
+                </Text>{" "}
+                <Text>{content?.material || "N/A"}</Text>
               </div>
 
               <div>
                 <Text strong style={{ color: "#777" }}>
-                  DIMENSIONS
-                </Text>
-                <br />
-                <Text>{content?.dimensions}</Text>
+                  DIMENSIONS:
+                </Text>{" "}
+                <Text>{content?.dimensions || "N/A"}</Text>
               </div>
             </Space>
           </Card>
@@ -383,6 +390,41 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
               )}
             </Space>
           )}
+
+          <div
+            style={{
+              display: "flex",
+              gap: 10,
+              padding: "10px 14px",
+            }}
+          >
+            <Tooltip title="Edit">
+              <Button
+                type="primary"
+                icon={<EditOutlined />}
+                block
+                style={{
+                  borderRadius: 10,
+                  border: "none",
+                  fontWeight: 600,
+                  background: "#ffa449",
+                }}
+              />
+            </Tooltip>
+
+            <Tooltip title="Delete">
+              <Button
+                danger
+                icon={<DeleteOutlined />}
+                block
+                style={{
+                  borderRadius: 10,
+                  border: "none",
+                  fontWeight: 600,
+                }}
+              />
+            </Tooltip>
+          </div>
         </Col>
       </Row>
     </Modal>
