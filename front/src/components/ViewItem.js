@@ -76,7 +76,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
           }}
         >
           <Carousel autoplay autoplaySpeed={4000}>
-            {content.img.map((img, i) => (
+            {content?.img.map((img, i) => (
               <div key={i}>
                 <div
                   style={{
