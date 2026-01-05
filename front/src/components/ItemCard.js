@@ -25,7 +25,6 @@ function ItemCard({
   const { token } = useAuth();
   const openNotification = useNotification();
 
-
   return (
     <div style={{ margin: 10, padding: 15 }}>
       <Row gutter={[24, 24]}>
@@ -232,10 +231,10 @@ function ItemCard({
                               borderRadius: 20,
                             }}
                           >
-                            20
+                            {b.analytics[0].likes || 0}
                           </Button>
                         </Tooltip>
-                        <Tooltip title="Clicks">
+                        <Tooltip title="Views">
                           <Button
                             type="primary"
                             icon={<EyeFilled />}
@@ -247,58 +246,10 @@ function ItemCard({
                               borderRadius: 20,
                             }}
                           >
-                            20
+                            {b.analytics[0].views || 0}
                           </Button>
                         </Tooltip>
                       </div>
-
-                      {/* Bottom Add to Cart Button */}
-                      {/* <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <motion.div
-                          variants={{
-                            rest: { y: 20, opacity: 0 },
-                            hover: { y: 0, opacity: 1 },
-                          }}
-                          transition={{
-                            duration: 0.3,
-                            ease: "easeOut",
-                          }}
-                        >
-                          <Button
-                            onClick={() => {
-                              if (isInCart(b)) {
-                                removeFromCart(b._id);
-                              } else {
-                                addToCart(b);
-                                openNotification(
-                                  "success",
-                                  "An item has been added to your cart",
-                                  "Success!"
-                                );
-                              }
-                            }}
-                            type="primary"
-                            style={{
-                              border: "1px solid black",
-                              borderRadius: 6,
-                              fontFamily: "DM Sans",
-                              letterSpacing: 2,
-                              padding: "20px 28px",
-                              fontWeight: "bold",
-                              background: "white",
-                              color: "#333",
-                            }}
-                          >
-                            {isInCart(b) ? "REMOVE FROM CART" : "ADD TO CART"}
-                          </Button>
-                        </motion.div>
-                      </div> */}
                     </motion.div>
                   </div>
                 }

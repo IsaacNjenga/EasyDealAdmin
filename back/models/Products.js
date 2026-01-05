@@ -20,8 +20,8 @@ const productSchema = new mongoose.Schema(
     careGuide: { type: [String] },
     tags: { type: [String], required: true },
     discount: { type: Number },
-    offerStartDate: { type: Date },
-    offerEndDate: { type: Date },
+    offerStartDate: { type: Date, default: null },
+    offerEndDate: { type: Date, default: null },
     discountAvailable: { type: Boolean, required: true, default: false },
   },
   { collection: "products", timestamps: true }
