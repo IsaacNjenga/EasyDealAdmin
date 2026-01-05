@@ -19,7 +19,6 @@ import {
   CheckCircleOutlined,
   GiftOutlined,
   CalendarOutlined,
-  InboxOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import useSavedOptions from "../hooks/savedOptions";
@@ -272,7 +271,7 @@ function ProductForm({
                 <Space style={{ marginBottom: 16 }}>
                   <DollarOutlined style={{ color: PRIMARY_COLOR }} />
                   <Text strong style={{ color: PRIMARY_COLOR }}>
-                    Pricing & Stock
+                    Pricing Details
                   </Text>
                 </Space>
 
@@ -293,28 +292,6 @@ function ProductForm({
                         style={inputStyle}
                         prefix="KES"
                         placeholder="0.00"
-                      />
-                    </Form.Item>
-                  </Col>
-
-                  <Col xs={24} md={12}>
-                    <Form.Item
-                      name="stockCount"
-                      label={<span style={labelStyle}>Stock Count</span>}
-                      rules={[
-                        {
-                          required: true,
-                          message: "A stock count is required",
-                        },
-                      ]}
-                    >
-                      <Input
-                        type="number"
-                        style={inputStyle}
-                        placeholder="0"
-                        prefix={
-                          <InboxOutlined style={{ color: PRIMARY_COLOR }} />
-                        }
                       />
                     </Form.Item>
                   </Col>
