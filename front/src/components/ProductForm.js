@@ -167,6 +167,7 @@ function ProductForm({
                       <Select style={inputStyle} placeholder="Select type">
                         <Option value="Office Desk">Office Desk</Option>
                         <Option value="Office Chair">Office Chair</Option>
+                        <Option value="Table">Table</Option>
                         <Option value="Bed">Bed</Option>
                         <Option value="Sofa">Sofa</Option>
                       </Select>
@@ -193,6 +194,15 @@ function ProductForm({
                         </Option>
                         <Option value="Office Furniture">
                           Office Furniture
+                        </Option>
+                        <Option value="Bedroom Furniture">
+                          Bedroom Furniture
+                        </Option>
+                        <Option value="Outdoor Furniture">
+                          Outdoor Furniture
+                        </Option>
+                        <Option value="Second-Hand Items">
+                          Second-Hand Items
                         </Option>
                       </Select>
                     </Form.Item>
