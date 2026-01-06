@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input, Spin, Tooltip } from "antd";
+import { Button, Col, Input, Row, Skeleton, Spin, Tooltip } from "antd";
 import { PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
 import ItemCard from "../components/ItemCard";
 import ViewItem from "../components/ViewItem";
@@ -97,8 +97,14 @@ function Products() {
 
       <div>
         {productsLoading ? (
-          <div style={{ textAlign: "center", marginTop: 50 }}>
-            <Spin size="large" />
+          <div style={{ margin: "0px 10px", padding: "10px 15px" }}>
+            <Row gutter={[32, 32]}>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Col key={i} xs={24} sm={12} md={8}>
+                  <Skeleton active avatar paragraph={{ rows: 3 }} />
+                </Col>
+              ))}
+            </Row>
           </div>
         ) : (
           <ItemCard
@@ -117,6 +123,7 @@ function Products() {
           type="primary"
           size="large"
           style={{ fontFamily: "Raleway" }}
+          loading={productsLoading}
         >
           Load More
         </Button>
