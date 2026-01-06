@@ -2,6 +2,7 @@ import { connectDB } from "../config/db.js";
 import ProductsModel from "../models/Products.js";
 import { logActivity } from "../utils/logActivity.js";
 import mongoose from "mongoose";
+import NodeCache from "node-cache";
 
 const createProduct = async (req, res) => {
   await connectDB();
@@ -61,57 +62,155 @@ const fetchProduct = async (req, res) => {
   }
 };
 
+// const fetchProducts = async (req, res) => {
+//   await connectDB();
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = parseInt(req.query.limit) || 12;
+//   const skip = (page - 1) * limit;
+
+//   try {
+//     const products = await ProductsModel.aggregate([
+//       { $sort: { createdAt: -1 } },
+//       { $skip: skip },
+//       { $limit: limit },
+
+//       {
+//         $lookup: {
+//           from: "reviews",
+//           localField: "_id",
+//           foreignField: "productId",
+//           as: "reviews",
+//         },
+//       },
+
+//       {
+//         $lookup: {
+//           from: "analytics",
+//           localField: "_id",
+//           foreignField: "productId",
+//           as: "analytics",
+//         },
+//       },
+
+//       // OPTIONAL: sort reviews newest first
+//       {
+//         $addFields: {
+//           reviews: { $reverseArray: "$reviews" },
+//         },
+//       },
+//     ]);
+
+//     const totalProducts = await ProductsModel.countDocuments();
+
+//     res.status(200).json({
+//       success: true,
+//       products,
+//       currentPage: page,
+//       totalProducts,
+//       totalPages: Math.ceil(totalProducts / limit),
+//     });
+//   } catch (error) {
+//     console.error("Error in fetching Products:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+// Cache for 5 minutes
+const productsCache = new NodeCache({ stdTTL: 300 });
+
 const fetchProducts = async (req, res) => {
   await connectDB();
+
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 12;
   const skip = (page - 1) * limit;
 
+  // Create cache key
+  const cacheKey = `products_page_${page}_limit_${limit}`;
+
+  // Check cache first
+  const cachedData = productsCache.get(cacheKey);
+  if (cachedData) {
+    return res.status(200).json(cachedData);
+  }
+
   try {
-    const products = await ProductsModel.aggregate([
-      { $sort: { createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
-
-      {
-        $lookup: {
-          from: "reviews",
-          localField: "_id",
-          foreignField: "productId",
-          as: "reviews",
+    // Run queries in parallel
+    const [products, totalProducts] = await Promise.all([
+      ProductsModel.aggregate([
+        { $sort: { createdAt: -1 } },
+        { $skip: skip },
+        { $limit: limit },
+        {
+          $lookup: {
+            from: "reviews",
+            localField: "_id",
+            foreignField: "productId",
+            as: "reviews",
+            pipeline: [
+              { $sort: { createdAt: -1 } }, // Sort in lookup instead of $reverseArray
+              { $limit: 10 }, // Limit reviews to prevent huge arrays
+            ],
+          },
         },
-      },
-
-      {
-        $lookup: {
-          from: "analytics",
-          localField: "_id",
-          foreignField: "productId",
-          as: "analytics",
+        {
+          $lookup: {
+            from: "analytics",
+            localField: "_id",
+            foreignField: "productId",
+            as: "analytics",
+          },
         },
-      },
-
-      // OPTIONAL: sort reviews newest first
-      {
-        $addFields: {
-          reviews: { $reverseArray: "$reviews" },
+        // Project only needed fields to reduce payload size
+        {
+          $project: {
+            name: 1,
+            description: 1,
+            price: 1,
+            img: 1,
+            colour: 1,
+            type: 1,
+            category: 1,
+            rating: 1,
+            discount: 1,
+            discountAvailable: 1,
+            offerEndDate: 1,
+            tags: 1,
+            createdAt: 1,
+            //reviews: { $slice: ["$reviews", 5] }, // Limit reviews in response
+            reviews: 1,
+            analytics: 1,
+          },
         },
-      },
+      ]),
+      // Use estimatedDocumentCount for better performance if exact count isn't critical
+      ProductsModel.estimatedDocumentCount(),
     ]);
 
-    const totalProducts = await ProductsModel.countDocuments();
-
-    res.status(200).json({
+    const responseData = {
       success: true,
       products,
       currentPage: page,
       totalProducts,
       totalPages: Math.ceil(totalProducts / limit),
-    });
+    };
+
+    // Cache the response
+    productsCache.set(cacheKey, responseData);
+
+    res.status(200).json(responseData);
   } catch (error) {
     console.error("Error in fetching Products:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
+};
+
+// Add cache invalidation when products are updated
+export const invalidateProductsCache = () => {
+  productsCache.flushAll();
 };
 
 const fetchAllProducts = async (req, res) => {

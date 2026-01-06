@@ -76,7 +76,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
           }}
         >
           <Carousel autoplay autoplaySpeed={4000}>
-            {content?.img.map((img, i) => (
+            {content?.img?.map((img, i) => (
               <div key={i}>
                 <div
                   style={{
@@ -232,7 +232,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
               <>
                 <Text strong>Available Colors</Text>
                 <Space>
-                  {content.colour.map((c, i) => (
+                  {content.colour?.map((c, i) => (
                     <div
                       key={i}
                       style={{
@@ -260,7 +260,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
             {content?.tags?.length > 0 && (
               <div>
                 <TagsOutlined style={{ color: "#ffa449", marginRight: 8 }} />
-                {content.tags.map((tag, i) => (
+                {content.tags?.map((tag, i) => (
                   <Tag
                     key={i}
                     style={{
@@ -332,7 +332,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
                 <Space direction="vertical">
                   <TruckOutlined style={{ fontSize: 24, color: "#1890ff" }} />
                   <Text strong>Shipping</Text>
-                  {content?.shippingInformation.map((info, i) => (
+                  {content?.shippingInformation?.map((info, i) => (
                     <Text key={i} style={{ fontSize: 12, color: "#555" }}>
                       {info}
                     </Text>
@@ -356,7 +356,7 @@ function ViewItem({ loading, openModal, setOpenModal, content }) {
                     style={{ fontSize: 24, color: "#ff922b" }}
                   />
                   <Text strong>Care Guide</Text>
-                  {content?.careGuide.map((info, i) => (
+                  {content?.careGuide?.map((info, i) => (
                     <Text key={i} style={{ fontSize: 12, color: "#555" }}>
                       {info}
                     </Text>

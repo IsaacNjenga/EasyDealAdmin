@@ -39,6 +39,16 @@ productSchema.pre("save", function (next) {
   next();
 });
 
+// Add to your Products model - CORRECTED VERSION
+productSchema.index({ createdAt: -1 }); // For sorting by creation date
+productSchema.index({ category: 1, createdAt: -1 }); // If filtering by category
+productSchema.index({ type: 1, createdAt: -1 }); // If filtering by type
+productSchema.index({ available: 1, createdAt: -1 }); // If filtering by availability
+productSchema.index({ discountAvailable: 1, offerEndDate: 1 }); // For your cleanup queries
+
+// _id is automatically indexed:
+// productSchema.index({ _id: 1 }); ❌ DON'T DO THIS
+
 const ProductsModel = mongoose.model("products", productSchema);
 
 export default ProductsModel;

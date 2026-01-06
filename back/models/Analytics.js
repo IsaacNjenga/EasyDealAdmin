@@ -24,5 +24,7 @@ const analyticsSchema = new mongoose.Schema(
   { collection: "analytics", timestamps: true }
 );
 
+analyticsSchema.index({ productId: 1 }); // For the $lookup
+
 const AnalyticsModel = mongoose.model("analytics", analyticsSchema);
 export default AnalyticsModel;

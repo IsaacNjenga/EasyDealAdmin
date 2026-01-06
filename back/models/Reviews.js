@@ -19,5 +19,7 @@ const reviewSchema = new mongoose.Schema(
 // Ensure each user can only leave one review per property
 reviewSchema.index({ email: 1, productId: 1 }, { unique: true });
 
+reviewSchema.index({ productId: 1, createdAt: -1 }); // For the $lookup
+
 const ReviewsModel = mongoose.model("reviews", reviewSchema);
 export default ReviewsModel;
