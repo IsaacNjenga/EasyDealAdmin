@@ -231,7 +231,7 @@ function ItemCard({
                               borderRadius: 20,
                             }}
                           >
-                            {b.analytics[0].likes || 0}
+                            {b?.analytics[0]?.likes || 0}
                           </Button>
                         </Tooltip>
                         <Tooltip title="Views">
@@ -246,7 +246,7 @@ function ItemCard({
                               borderRadius: 20,
                             }}
                           >
-                            {b.analytics[0].views || 0}
+                            {b?.analytics[0]?.views || 0}
                           </Button>
                         </Tooltip>
                       </div>
