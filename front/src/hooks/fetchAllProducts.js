@@ -61,6 +61,7 @@ function useFetchAllProducts() {
 
   useEffect(() => {
     fetchProducts();
+    //eslint-disable-next-line
   }, [refreshKey]);
 
   const handleLoadMore = async () => {

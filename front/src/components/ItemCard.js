@@ -66,6 +66,7 @@ function ItemCard({
                             <img
                               src={img}
                               alt={"img"}
+                              loading="lazy"
                               style={{
                                 width: "100%",
                                 height: "320px",
@@ -108,17 +109,8 @@ function ItemCard({
                       )}
                     </div>
 
-                    {/* Slide-up Overlay */}
-                    <motion.div
-                      variants={{
-                        rest: { y: "100%", opacity: 0 },
-                        hover: { y: "0%", opacity: 1 },
-                      }}
-                      transition={{
-                        duration: 0.45,
-                        ease: [0.25, 0.8, 0.25, 1],
-                      }}
-                      className="overlay-buttons"
+                    {/* Overlay */}
+                    <div
                       style={{
                         position: "absolute",
                         bottom: 0,
@@ -250,7 +242,7 @@ function ItemCard({
                           </Button>
                         </Tooltip>
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
                 }
               >

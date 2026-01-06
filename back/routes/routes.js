@@ -10,6 +10,7 @@ import protectRoute from "../middleware/auth.middleware.js";
 import {
   createProduct,
   deleteProduct,
+  fetchAllProducts,
   fetchAvailableProducts,
   fetchProduct,
   fetchProducts,
@@ -87,6 +88,7 @@ router.put("/delete-avatar", deleteAvatar);
 router.post("/create-product", protectRoute, createProduct);
 router.get("/fetch-product", fetchProduct);
 router.get("/fetch-all-products", fetchProducts);
+router.get("/fetch-products", fetchAllProducts);
 router.get("/fetch-available-products", protectRoute, fetchAvailableProducts);
 router.put("/update-product", protectRoute, updateProduct);
 router.delete("/delete-product", deleteProduct);

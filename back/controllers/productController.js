@@ -114,6 +114,49 @@ const fetchProducts = async (req, res) => {
   }
 };
 
+const fetchAllProducts = async (req, res) => {
+  await connectDB();
+  try {
+    const products = await ProductsModel.aggregate([
+      {
+        $lookup: {
+          from: "reviews",
+          localField: "_id",
+          foreignField: "productId",
+          as: "reviews",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "analytics",
+          localField: "_id",
+          foreignField: "productId",
+          as: "analytics",
+        },
+      },
+
+      // OPTIONAL: sort reviews newest first
+      {
+        $addFields: {
+          reviews: { $reverseArray: "$reviews" },
+        },
+      },
+    ]);
+
+    const totalProducts = await ProductsModel.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      products,
+      totalProducts,
+    });
+  } catch (error) {
+    console.error("Error in fetching Products:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const fetchAvailableProducts = async (req, res) => {
   await connectDB();
   try {
@@ -188,4 +231,5 @@ export {
   updateProduct,
   fetchAvailableProducts,
   deleteProduct,
+  fetchAllProducts,
 };

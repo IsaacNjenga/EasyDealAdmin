@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Button, Input, Spin, Tooltip } from "antd";
 import { PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
-//import { shopProducts } from "../assets/data/data";
 import ItemCard from "../components/ItemCard";
 import ViewItem from "../components/ViewItem";
-import useFetchAllProducts from "../hooks/fetchAllProducts";
+//import useFetchAllProducts from "../hooks/fetchAllProducts";
 import { useNavigate } from "react-router-dom";
+import useFetchProducts from "../hooks/fetchProducts";
 
 const { Search } = Input;
 
 function Products() {
-  const { products, productsLoading, productsRefresh, handleLoadMore } =
-    useFetchAllProducts();
+  // const { products, productsLoading, productsRefresh, handleLoadMore } =
+  //   useFetchAllProducts();
+  const { products, productsLoading, productsRefresh } = useFetchProducts();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [content, setContent] = useState(null);
@@ -109,7 +110,7 @@ function Products() {
           />
         )}
       </div>
-
+      {/* 
       <div style={{ marginTop: 20, marginBottom: 50, textAlign: "center" }}>
         <Button
           onClick={handleLoadMore}
@@ -119,7 +120,7 @@ function Products() {
         >
           Load More
         </Button>
-      </div>
+      </div> */}
 
       <ViewItem
         setOpenModal={setOpenModal}
