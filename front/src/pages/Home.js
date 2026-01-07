@@ -379,7 +379,6 @@ function Home() {
   const loading = false;
 
   const { productTypes, productsLoading } = DashUtils();
-  console.log("Product Types:", productTypes);
 
   if (loading) {
     return (

@@ -26,7 +26,7 @@ const generateDescription = async (req, res) => {
           "${name}"
 
           Guidelines:
-          - Length: 2 short and precise paragraphs (70-80 words total)
+          - Length: 2 short and precise paragraphs (50-70 words total)
           - Tone: professional, engaging, and persuasive
           - Clearly highlight key features and benefits
           - Explain how the product can be used and who it is ideal for
