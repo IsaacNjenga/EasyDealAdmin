@@ -6,20 +6,20 @@ import { useNotification } from "../contexts/NotificationContext";
 function useFetchProducts() {
   const { token } = useAuth();
   const openNotification = useNotification();
-  const [products, setProducts] = useState([]);
-  const [productsLoading, setProductsLoading] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
+  const [allProductsLoading, setAllProductsLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const fetchProducts = async () => {
-    setProductsLoading(true);
+    setAllProductsLoading(true);
     try {
       const res = await axios.get(`/fetch-products`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.data.success) {
-        setProducts(res.data.products);
+        setAllProducts(res.data.products);
         setErrorMessage(null);
       } else {
         setErrorMessage(res.data.message || "Failed to fetch Products.");
@@ -29,7 +29,7 @@ function useFetchProducts() {
       setErrorMessage("An unexpected error occurred. Please try again later.");
       openNotification("warning", errorMessage, "Error");
     } finally {
-      setProductsLoading(false);
+      setAllProductsLoading(false);
     }
   };
 
@@ -39,8 +39,8 @@ function useFetchProducts() {
   }, [refreshKey]);
 
   return {
-    products,
-    productsLoading,
+    allProducts,
+    allProductsLoading,
     errorMessage,
     productsRefresh: () => setRefreshKey((prev) => prev + 1),
   };

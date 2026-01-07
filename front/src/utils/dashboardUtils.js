@@ -7,15 +7,15 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import useFetchClients from "../hooks/fetchClients";
-import useFetchAllProducts from "../hooks/fetchAllProducts";
 import useFetchAllEmails from "../hooks/fetchAllEmails";
 import useFetchAnalytics from "../hooks/fetchAnalytics";
 import useFetchActivity from "../hooks/fetchActivity";
 import useFetchAllOrders from "../hooks/fetchAllOrders";
+import useFetchProducts from "../hooks/fetchProducts";
 
 function DashUtils() {
   const { clients, clientsLoading } = useFetchClients();
-  const { products, productsLoading } = useFetchAllProducts();
+  const { allProducts, allProductsLoading } = useFetchProducts();
   const { emails, emailsLoading } = useFetchAllEmails();
   const { summary, topViewed, summaryLoading } = useFetchAnalytics();
   const { activities, activitiesLoading } = useFetchActivity();
@@ -29,12 +29,12 @@ function DashUtils() {
     time: activity.createdAt,
   }));
 
-  const cleanedProductTypes = products.reduce((acc, product) => {
-    const existingType = acc.find((item) => item.type === product.productType);
+  const cleanedProductTypes = allProducts.reduce((acc, product) => {
+    const existingType = acc.find((item) => item.type === product.type);
     if (existingType) {
       existingType.value += 1;
     } else {
-      acc.push({ type: product.productType, value: 1 });
+      acc.push({ type: product.type, value: 1 });
     }
     return acc;
   }, []);
@@ -50,10 +50,10 @@ function DashUtils() {
       },
       {
         title: "All Products",
-        value: products.length.toLocaleString(),
+        value: allProducts.length.toLocaleString(),
         icon: <AppstoreOutlined />,
         color: "#1890ff",
-        loading: productsLoading,
+        loading: allProductsLoading,
       },
       {
         title: "Total Views",
@@ -91,7 +91,7 @@ function DashUtils() {
     activitiesLoading: activitiesLoading,
     productTypes: cleanedProductTypes,
     clientsLoading: clientsLoading,
-    productsLoading: productsLoading,
+    productsLoading: allProductsLoading,
     emailsLoading: emailsLoading,
     summaryLoading: summaryLoading,
   };

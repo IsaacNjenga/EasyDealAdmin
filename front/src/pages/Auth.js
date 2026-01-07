@@ -233,14 +233,16 @@ function Auth() {
                         },
                         {
                           validator: (_, value) =>
-                            new Promise((resolve, reject) => {
-                              if (!value) return resolve();
-                              checkEmailExists(value, resolve, reject);
-                            }),
+                            isSignIn
+                              ? Promise.resolve()
+                              : new Promise((resolve, reject) => {
+                                  if (!value) return resolve();
+                                  checkEmailExists(value, resolve, reject);
+                                }),
                         },
                       ]}
                       extra={
-                        emailError ? (
+                        isSignIn && emailError ? (
                           <span style={{ color: "red" }}>{emailError}</span>
                         ) : null
                       }
