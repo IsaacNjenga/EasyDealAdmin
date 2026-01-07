@@ -11,6 +11,7 @@ import {
   Space,
   Divider,
   Button,
+  Tooltip,
 } from "antd";
 import {
   DollarOutlined,
@@ -19,9 +20,13 @@ import {
   CheckCircleOutlined,
   GiftOutlined,
   CalendarOutlined,
+  RobotOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import useSavedOptions from "../hooks/savedOptions";
+import { useState } from "react";
+import { useNotification } from "../contexts/NotificationContext";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -63,6 +68,8 @@ function ProductForm({
   discountedPrice,
   setDiscountedPrice,
 }) {
+  const openNotification = useNotification();
+  const [isGenerating, setIsGenerating] = useState(false);
   const { savedOptions: careGuide, addOptions: addCareGuide } =
     useSavedOptions("care_guide_list");
   const { savedOptions: shippingInfo, addOptions: addShippingInfo } =
@@ -104,6 +111,32 @@ function ProductForm({
       return loading ? "Creating Product..." : "Create Product";
     }
     return loading ? "Updating Product..." : "Update Product";
+  };
+
+  const handleGenerateDescription = () => {
+    setIsGenerating(true);
+    try {
+      const newDescription =
+        "This is a high-quality product that meets all your needs and expectations. Crafted with precision and care, it offers exceptional durability and style. Perfect for enhancing your living or working space.";
+
+      const existing = form.getFieldValue("description") || "";
+
+      form.setFieldsValue({
+        description: existing
+          ? `${existing}\n\n${newDescription}`
+          : newDescription,
+      });
+      form.validateFields(["description"]);
+    } catch (error) {
+      console.error("Error generating description:", error);
+      openNotification(
+        "error",
+        "Description Generation Failed",
+        "There was an error generating the product description. Please try again."
+      );
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -211,19 +244,40 @@ function ProductForm({
 
                 <Form.Item
                   name="description"
-                  label={<span style={labelStyle}>Product Description</span>}
+                  label={
+                    <Space>
+                      <span style={labelStyle}>Product Description</span>
+                      <Tooltip title="Generate description with AI">
+                        <Button
+                          icon={
+                            isGenerating ? (
+                              <LoadingOutlined />
+                            ) : (
+                              <RobotOutlined />
+                            )
+                          }
+                          onClick={
+                            isGenerating ? null : handleGenerateDescription
+                          }
+                          style={{
+                            color: "#fca54b",
+                            cursor: isGenerating ? "not-allowed" : "pointer",
+                            opacity: isGenerating ? 0.5 : 1,
+                          }}
+                        ></Button>
+                      </Tooltip>
+                    </Space>
+                  }
                   rules={[
-                    {
-                      required: true,
-                      message: "A description is required",
-                    },
+                    { required: true, message: "A description is required" },
                   ]}
                 >
                   <TextArea
-                    rows={4}
+                    rows={5}
                     style={{
                       borderRadius: 12,
                       border: `1.5px solid ${BORDER_COLOR}`,
+                      fontFamily: "Raleway",
                     }}
                     placeholder="Describe your product in detail..."
                   />
@@ -304,7 +358,8 @@ function ProductForm({
                         placeholder="0.00"
                       />
                     </Form.Item>
-                  </Col>  <Col xs={24} md={12}>
+                  </Col>{" "}
+                  <Col xs={24} md={12}>
                     <Form.Item
                       name="discountAvailable"
                       label={
@@ -332,9 +387,7 @@ function ProductForm({
                   </Col>
                 </Row>
 
-                <Row gutter={16}>
-                
-                </Row>
+                <Row gutter={16}></Row>
 
                 {discountOffer && (
                   <div
@@ -469,8 +522,6 @@ function ProductForm({
                     Additional Details
                   </Text>
                 </Space>
-
-                
 
                 <Form.Item
                   name="shippingInformation"
