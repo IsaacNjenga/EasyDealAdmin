@@ -125,7 +125,7 @@ function Products() {
           style={{ fontFamily: "Raleway" }}
           loading={productsLoading}
         >
-          Load More
+          {productsLoading ? "Loading..." : "Load More"}
         </Button>
       </div>
 

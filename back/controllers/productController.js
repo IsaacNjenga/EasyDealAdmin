@@ -3,6 +3,52 @@ import ProductsModel from "../models/Products.js";
 import { logActivity } from "../utils/logActivity.js";
 import mongoose from "mongoose";
 import NodeCache from "node-cache";
+import { CohereClientV2 } from "cohere-ai";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+//const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
+
+const cohere = new CohereClientV2({ token: process.env.COHERE_API_KEY });
+
+const generateDescription = async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    const response = await cohere.chat({
+      model: "command-a-03-2025",
+      messages: [
+        {
+          role: "user",
+          content: `You are an expert e-commerce copywriter.
+          Generate a compelling, customer-focused product description for the product named:
+          "${name}"
+
+          Guidelines:
+          - Length: 2 short and precise paragraphs (70-80 words total)
+          - Tone: professional, engaging, and persuasive
+          - Clearly highlight key features and benefits
+          - Explain how the product can be used and who it is ideal for
+          - Focus on value and customer outcomes, not just features
+          - Avoid emojis, hashtags, and marketing clichés
+          - Do not include pricing, shipping, or warranty details
+
+          The description should make the product feel high-quality, trustworthy, and worth buying.
+          The description should be written in the first person. Use the pronouns "you" and "your".`,
+        },
+      ],
+    });
+
+    // console.log(response.message.content[0].text);
+    res
+      .status(200)
+      .json({ success: true, reply: response.message.content[0].text });
+  } catch (error) {
+    console.error("Error in generating description:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const createProduct = async (req, res) => {
   await connectDB();
@@ -331,4 +377,5 @@ export {
   fetchAvailableProducts,
   deleteProduct,
   fetchAllProducts,
+  generateDescription,
 };

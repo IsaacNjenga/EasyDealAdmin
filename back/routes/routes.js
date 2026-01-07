@@ -16,6 +16,7 @@ import {
   fetchAvailableProducts,
   fetchProduct,
   fetchProducts,
+  generateDescription,
   updateProduct,
 } from "../controllers/productController.js";
 import {
@@ -96,6 +97,7 @@ router.get("/fetch-products", fetchAllProducts);
 router.get("/fetch-available-products", protectRoute, fetchAvailableProducts);
 router.put("/update-product", protectRoute, updateProduct);
 router.delete("/delete-product", deleteProduct);
+router.post("/generate-description", generateDescription);
 
 //mail routes
 router.post("/create-mail", createMail);

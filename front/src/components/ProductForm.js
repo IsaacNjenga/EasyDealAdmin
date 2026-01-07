@@ -27,6 +27,7 @@ import { format } from "date-fns";
 import useSavedOptions from "../hooks/savedOptions";
 import { useState } from "react";
 import { useNotification } from "../contexts/NotificationContext";
+import axios from "axios";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -113,19 +114,22 @@ function ProductForm({
     return loading ? "Updating Product..." : "Update Product";
   };
 
-  const handleGenerateDescription = () => {
+  const handleGenerateDescription = async (name) => {
     setIsGenerating(true);
     try {
-      const newDescription =
-        "This is a high-quality product that meets all your needs and expectations. Crafted with precision and care, it offers exceptional durability and style. Perfect for enhancing your living or working space.";
-
       const existing = form.getFieldValue("description") || "";
 
-      form.setFieldsValue({
-        description: existing
-          ? `${existing}\n\n${newDescription}`
-          : newDescription,
-      });
+      const response = await axios.post("generate-description", { name });
+
+      if (response.data.success) {
+        const generatedDescription = response.data.reply;
+        form.setFieldsValue({
+          description: existing
+            ? `${existing}\n\n${generatedDescription}`
+            : generatedDescription,
+        });
+      }
+
       form.validateFields(["description"]);
     } catch (error) {
       console.error("Error generating description:", error);
@@ -257,7 +261,21 @@ function ProductForm({
                             )
                           }
                           onClick={
-                            isGenerating ? null : handleGenerateDescription
+                            isGenerating
+                              ? null
+                              : () => {
+                                  const productName =
+                                    form.getFieldValue("name");
+                                  if (!productName) {
+                                    openNotification(
+                                      "warning",
+                                      "Please enter a product name before generating a description",
+                                      "Missing Product Name"
+                                    );
+                                    return;
+                                  }
+                                  handleGenerateDescription(productName);
+                                }
                           }
                           style={{
                             color: "#fca54b",
