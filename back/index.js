@@ -4,10 +4,12 @@ import dotenv from "dotenv";
 import "./config/db.js";
 import { Router } from "./routes/routes.js";
 import "./config/cron.js";
+import { connectDB } from "./config/db.js";
 
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT;
 
 const corsOptions = {
   origin: [
@@ -21,12 +23,25 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+async function startServer() {
+  try {
+    await connectDB();
+    app.use(cors(corsOptions));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 
-app.use("/EasyAdmin", Router);
+    app.use("/EasyAdmin", Router);
 
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
+startServer();
+
+// Preflight requests
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     res.header("Access-Control-Allow-Origin", req.headers.origin);
@@ -37,6 +52,3 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

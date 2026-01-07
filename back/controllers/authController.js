@@ -114,6 +114,18 @@ const Login = async (req, res) => {
   }
 };
 
+const checkEmailExists = async (req, res) => {
+  const { email } = req.query;
+  const emailExists = await UserModel.findOne({ email });
+  res.json(emailExists);
+};
+
+const checkUserExists = async (req, res) => {
+  const { username } = req.query;
+  const usernameExists = await UserModel.findOne({ username });
+  res.json(usernameExists);
+};
+
 const refreshMyToken = async (req, res) => {
   await connectDB();
   const { refreshToken } = req.body;
@@ -166,4 +178,11 @@ const refreshMyToken = async (req, res) => {
 
 const ChangePassword = async (req, res) => {};
 
-export { Register, Login, ChangePassword, refreshMyToken };
+export {
+  Register,
+  Login,
+  ChangePassword,
+  refreshMyToken,
+  checkEmailExists,
+  checkUserExists,
+};

@@ -28,6 +28,5 @@ export async function connectDB() {
 
   cached.conn = await cached.promise;
   console.log("Database Connected");
-  await cleanupExpiredOffers();
   return cached.conn;
 }

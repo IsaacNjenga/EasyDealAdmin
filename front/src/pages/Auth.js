@@ -4,6 +4,10 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useNotification } from "../contexts/NotificationContext";
+import {
+  checkEmailExists,
+  checkUsernameExists,
+} from "../utils/debounceHelpers";
 
 const { Title, Text } = Typography;
 
@@ -45,12 +49,14 @@ function Auth() {
   const { login } = useAuth();
   const openNotification = useNotification();
   const [isSignIn, setIsSignIn] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
@@ -93,19 +99,21 @@ function Auth() {
         login(user, token, refreshToken);
       }
     } catch (error) {
-      console.log(error);
-      const errorMessage =
-        error.response &&
-        error.response.data &&
-        error.response.data.error &&
-        error.response.data.message
-          ? error.response.data.message
-          : "An unexpected error occurred. Please try again later.";
+      const emailErrorMessage = error.response?.data?.message;
+      if (emailErrorMessage === "Email address is invalid") {
+        setEmailError("Email address is invalid");
+      } else {
+        setEmailError("");
+      }
 
-      openNotification("warning", errorMessage, "Error");
+      const passwordErrorMessage = error.response?.data?.message;
+      if (passwordErrorMessage === "Password is invalid") {
+        setPasswordError("Password is invalid");
+      } else {
+        setPasswordError("");
+      }
     } finally {
       setLoading(false);
-      form.resetFields();
     }
   };
 
@@ -132,7 +140,7 @@ function Auth() {
           style={{
             margin: 0,
             border: "none",
-            background: "transparent",
+            background: 0,
             borderRadius: 20,
           }}
         >
@@ -143,15 +151,15 @@ function Auth() {
               padding: 0,
               margin: 0,
               border: "none",
-              background: "transparent",
-            borderRadius: 20,
+              background: 0,
+              borderRadius: 20,
             }}
           >
             <div
               style={{
                 background: `url(${"https://images.unsplash.com/photo-1633975846872-2bed7fd995f9?w=900"}) no-repeat center center/cover`,
                 width: 400,
-                height: 500,
+                height: isSignIn ? 500 : 600,
                 border: "none",
                 borderTopLeftRadius: 20,
                 borderBottomLeftRadius: 20,
@@ -162,7 +170,7 @@ function Auth() {
                 background:
                   "linear-gradient(to right, #011b22 0%, #18839b 100%)",
                 width: 500,
-                height: 500,
+                height: isSignIn ? 500 : 600,
                 border: "none",
                 borderTopRightRadius: 20,
                 borderBottomRightRadius: 20,
@@ -170,16 +178,35 @@ function Auth() {
             >
               <Card style={{ ...cardStyle, width: "auto" }}>
                 <Divider style={{ borderColor: "#fff" }}>
-                  <Title level={1} style={{ ...titleStyle, fontSize: 50 }}>
+                  <Title level={1} style={{ ...titleStyle, fontSize: 40 }}>
                     {isSignIn ? "Sign In" : "Sign Up"}
                   </Title>
                 </Divider>
                 <div>
-                  <Form layout="vertical" form={form} onFinish={handleSubmit}>
+                  <Form
+                    layout="vertical"
+                    form={form}
+                    onFinish={handleSubmit}
+                    requiredMark={false}
+                  >
                     {!isSignIn && (
                       <Form.Item
                         label={<span style={labelStyle}>Username</span>}
                         name={"username"}
+                        validateTrigger="onBlur"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input a username",
+                          },
+                          {
+                            validator: (_, value) =>
+                              new Promise((resolve, reject) => {
+                                if (!value) return resolve();
+                                checkUsernameExists(value, resolve, reject);
+                              }),
+                          },
+                        ]}
                       >
                         <Input
                           value={values.username}
@@ -194,6 +221,29 @@ function Auth() {
                     <Form.Item
                       label={<span style={labelStyle}>Email Address</span>}
                       name={"email"}
+                      validateTrigger="onBlur"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter a valid email address",
+                        },
+                        {
+                          type: "email",
+                          message: "Please enter a valid email address",
+                        },
+                        {
+                          validator: (_, value) =>
+                            new Promise((resolve, reject) => {
+                              if (!value) return resolve();
+                              checkEmailExists(value, resolve, reject);
+                            }),
+                        },
+                      ]}
+                      extra={
+                        emailError ? (
+                          <span style={{ color: "red" }}>{emailError}</span>
+                        ) : null
+                      }
                     >
                       <Input
                         value={values.email}
@@ -205,6 +255,18 @@ function Auth() {
                     <Form.Item
                       label={<span style={labelStyle}>Password</span>}
                       name={"password"}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your password",
+                          minLength: 8,
+                        },
+                      ]}
+                      extra={
+                        passwordError ? (
+                          <span style={{ color: "red" }}>{passwordError}</span>
+                        ) : null
+                      }
                     >
                       <Input.Password
                         iconRender={(visible) =>

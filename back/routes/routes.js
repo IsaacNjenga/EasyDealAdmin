@@ -1,6 +1,8 @@
 import express from "express";
 import {
   ChangePassword,
+  checkEmailExists,
+  checkUserExists,
   Login,
   refreshMyToken,
   Register,
@@ -71,6 +73,8 @@ router.post("/sign-up", Register);
 router.post("/sign-in", Login);
 router.post("/change-password", ChangePassword);
 router.post("/refresh-token", refreshMyToken);
+router.get("/check-email-exists", checkEmailExists);
+router.get("/check-username-exists", checkUserExists);
 
 //client auth routes
 router.post("/client-sign-up", clientRegister);
