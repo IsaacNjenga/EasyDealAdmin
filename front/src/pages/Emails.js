@@ -437,7 +437,6 @@ function Emails() {
           rowKey="_id"
           pagination={{ pageSize: 15 }}
           size="small"
-          loading={emailsLoading}
           style={{ fontFamily: "Raleway" }}
           onRow={(record) => ({
             onClick: () => {
@@ -452,8 +451,8 @@ function Emails() {
         />
       </div>
 
-      <div>
-        <Spin tip="Loading. Please wait..." size="large" spinning={loading} />
+      <div style={{ textAlign: "center", marginTop: 20 }}>
+        <Spin size="large" spinning={emailsLoading} />
       </div>
       <ViewMessage
         setOpenModal={setOpenModal}
