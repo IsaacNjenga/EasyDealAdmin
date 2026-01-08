@@ -22,14 +22,14 @@ function ItemCard({
   productsRefresh,
 }) {
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token, collapsed } = useAuth();
   const openNotification = useNotification();
 
   return (
-    <div style={{ margin: 10, padding: 15 }}>
-      <Row gutter={[24, 24]}>
+    <div style={{ margin: 10, padding: 12 }}>
+      <Row gutter={[32, 32]}>
         {dataSource.map((b) => (
-          <Col key={b._id} xs={24} sm={12} md={8}>
+          <Col key={b._id} lg={collapsed ? 6 : 8}>
             <motion.div
               whileHover="hover"
               initial="rest"
@@ -52,11 +52,10 @@ function ItemCard({
                     style={{
                       position: "relative",
                       width: "100%",
-                      height: 320, // Consistent image height
+                      height: 320,
                       overflow: "hidden",
                       borderRadius: 0,
                     }}
-                    className="card-image-container"
                   >
                     {/* Carousel */}
                     <Carousel autoplay autoplaySpeed={4000} dots={false}>
@@ -136,6 +135,7 @@ function ItemCard({
                         <Tooltip title={"Delete"} placement="right">
                           <Button
                             shape="circle"
+                            danger
                             onClick={async () => {
                               setLoading(true);
                               try {
@@ -177,6 +177,7 @@ function ItemCard({
                         </Tooltip>{" "}
                         <Tooltip title="Edit" placement="right">
                           <Button
+                            type="primary"
                             shape="circle"
                             icon={<EditFilled />}
                             onClick={() => navigate(`/update-product/${b._id}`)}

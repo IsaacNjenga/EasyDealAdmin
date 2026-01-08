@@ -322,7 +322,7 @@ const RecentActivity = () => {
           }}
         >
           <Timeline
-            items={recentActivities.slice(0, 10).map((activity, idx) => ({
+            items={recentActivities.slice(0, 6).map((activity, idx) => ({
               dot: (
                 <div
                   style={{

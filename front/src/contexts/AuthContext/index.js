@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     // Initialize from localStorage
@@ -69,6 +70,8 @@ export function AuthProvider({ children }) {
     login,
     logout,
     refreshToken,
+    collapsed,
+    setCollapsed,
   };
 
   return (
@@ -79,5 +82,3 @@ export function AuthProvider({ children }) {
 }
 
 export default AuthContext;
-
-

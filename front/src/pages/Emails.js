@@ -435,7 +435,7 @@ function Emails() {
           dataSource={searchValue ? mail : getFilteredData()}
           columns={selectedTab === 4 ? replyColumns : baseColumns}
           rowKey="_id"
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 15 }}
           size="small"
           loading={emailsLoading}
           style={{ fontFamily: "Raleway" }}
@@ -450,6 +450,10 @@ function Emails() {
             },
           })}
         />
+      </div>
+
+      <div>
+        <Spin tip="Loading. Please wait..." size="large" spinning={loading} />
       </div>
       <ViewMessage
         setOpenModal={setOpenModal}

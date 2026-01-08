@@ -64,8 +64,7 @@ const getTitleFromPath = (path) => {
 
 function Navbar() {
   const location = useLocation();
-  const { logout, user } = useAuth();
-  const [collapsed, setCollapsed] = useState(false);
+  const { logout, user,collapsed, setCollapsed } = useAuth();
   const [current, setCurrent] = useState(location.pathname);
 
   const handleClick = (e) => {
@@ -98,7 +97,8 @@ function Navbar() {
           onBreakpoint={(broken) => setCollapsed(broken)}
           width={300}
           style={{
-            padding: collapsed ? 5 : 10,
+            minHeight: "100vh",
+            padding: collapsed ? 6 : 12,
             background:
               "linear-gradient(to right, #232527ff 0%, #000000d6 100% )",
             borderColor: "#fff",
