@@ -3,16 +3,20 @@ import { Button, Col, Input, Row, Skeleton, Spin, Tooltip } from "antd";
 import { PlusCircleOutlined, ReloadOutlined } from "@ant-design/icons";
 import ItemCard from "../components/ItemCard";
 import ViewItem from "../components/ViewItem";
-import useFetchAllProducts from "../hooks/fetchAllProducts";
+//import useFetchAllProducts from "../hooks/fetchAllProducts";
 import { useNavigate } from "react-router-dom";
-//import useFetchProducts from "../hooks/fetchProducts";
+import useFetchProducts from "../hooks/fetchProducts";
 
 const { Search } = Input;
 
 function Products() {
-  const { products, productsLoading, productsRefresh, handleLoadMore } =
-    useFetchAllProducts();
-  //const { products, productsLoading, productsRefresh } = useFetchProducts();
+  // const { products, productsLoading, productsRefresh, handleLoadMore } =
+  //   useFetchAllProducts();
+  const {
+    allProducts: products,
+    allProductsLoading: productsLoading,
+    allProductsRefresh: productsRefresh,
+  } = useFetchProducts();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [content, setContent] = useState(null);
@@ -117,7 +121,7 @@ function Products() {
         )}
       </div>
 
-      <div style={{ marginTop: 20, marginBottom: 50, textAlign: "center" }}>
+      {/* <div style={{ marginTop: 20, marginBottom: 50, textAlign: "center" }}>
         <Button
           onClick={handleLoadMore}
           type="primary"
@@ -127,7 +131,7 @@ function Products() {
         >
           {productsLoading ? "Loading..." : "Load More"}
         </Button>
-      </div>
+      </div> */}
 
       <ViewItem
         setOpenModal={setOpenModal}

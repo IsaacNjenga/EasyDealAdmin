@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
 import { useNotification } from "../contexts/NotificationContext";
 
 function useFetchProducts() {
-  const { token } = useAuth();
   const openNotification = useNotification();
   const [allProducts, setAllProducts] = useState([]);
   const [allProductsLoading, setAllProductsLoading] = useState(false);
@@ -14,9 +12,7 @@ function useFetchProducts() {
   const fetchProducts = async () => {
     setAllProductsLoading(true);
     try {
-      const res = await axios.get(`/fetch-products`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(`/fetch-products`);
 
       if (res.data.success) {
         setAllProducts(res.data.products);
@@ -42,7 +38,7 @@ function useFetchProducts() {
     allProducts,
     allProductsLoading,
     errorMessage,
-    productsRefresh: () => setRefreshKey((prev) => prev + 1),
+    allProductsRefresh: () => setRefreshKey((prev) => prev + 1),
   };
 }
 

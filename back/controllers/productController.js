@@ -8,8 +8,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-//const cohere = new CohereClient({ token: process.env.COHERE_API_KEY });
-
 const cohere = new CohereClientV2({ token: process.env.COHERE_API_KEY });
 
 const generateDescription = async (req, res) => {
@@ -26,7 +24,7 @@ const generateDescription = async (req, res) => {
           "${name}"
 
           Guidelines:
-          - Length: 2 short and precise paragraphs (50-70 words total)
+          - Length: 2 short and precise paragraphs (30-50 words total)
           - Tone: professional, engaging, and persuasive
           - Clearly highlight key features and benefits
           - Explain how the product can be used and who it is ideal for
@@ -40,7 +38,6 @@ const generateDescription = async (req, res) => {
       ],
     });
 
-    // console.log(response.message.content[0].text);
     res
       .status(200)
       .json({ success: true, reply: response.message.content[0].text });
@@ -223,7 +220,6 @@ const fetchProducts = async (req, res) => {
             offerEndDate: 1,
             tags: 1,
             createdAt: 1,
-            //reviews: { $slice: ["$reviews", 5] }, // Limit reviews in response
             reviews: 1,
             analytics: 1,
           },

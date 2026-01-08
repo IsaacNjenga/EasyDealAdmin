@@ -36,7 +36,7 @@ function ItemCard({
               animate="rest"
               variants={{
                 rest: { scale: 1 },
-                hover: { scale: 1.02 },
+                hover: { scale: 1 },
               }}
               style={{ borderRadius: 0, overflow: "hidden" }}
             >

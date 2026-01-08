@@ -31,7 +31,7 @@ const { Title, Text } = Typography;
 
 const MiniBarChart = ({ data }) => {
   const max = Math.max(...data?.map((d) => d.value));
-  const colors = ["#1890ff", "#52c41a", "#faad14", "#722ed1"];
+  const colors = ["#1890ff", "#52c41a", "#faad14", "#722ed1", "#eb2f96"];
 
   return (
     <div
@@ -59,7 +59,7 @@ const MiniBarChart = ({ data }) => {
               width={`${barWidth}%`}
               height={height}
               fill={colors[i % colors.length]}
-              rx="4"
+              rx="5"
             />
           );
         })}
@@ -219,7 +219,7 @@ const TopProducts = () => {
     >
       <List
         itemLayout="horizontal"
-        dataSource={topViewed?.slice(0, 3)}
+        dataSource={topViewed?.slice(0, 4)}
         loading={summaryLoading}
         renderItem={(item) => (
           <List.Item
@@ -231,7 +231,7 @@ const TopProducts = () => {
             <List.Item.Meta
               avatar={
                 <Avatar
-                  size={70}
+                  size={75}
                   src={item.productId?.img[0]}
                   style={{ width: 58, height: 58, borderRadius: 8 }}
                 />
@@ -421,7 +421,7 @@ function Home() {
                     fontFamily: "Raleway",
                   }}
                 >
-                  Properties by Type
+                  Products By Category
                 </span>
               </div>
             }
@@ -451,7 +451,13 @@ function Home() {
                   }}
                 >
                   {productTypes?.map((item, i) => {
-                    const colors = ["#1890ff", "#52c41a", "#faad14", "#722ed1"];
+                    const colors = [
+                      "#1890ff",
+                      "#52c41a",
+                      "#faad14",
+                      "#722ed1",
+                      "#eb2f96",
+                    ];
                     return (
                       <div
                         key={i}
@@ -470,8 +476,8 @@ function Home() {
                         >
                           <div
                             style={{
-                              width: 16,
-                              height: 16,
+                              width: 18,
+                              height: 18,
                               borderRadius: "50%",
                               background: colors[i],
                             }}

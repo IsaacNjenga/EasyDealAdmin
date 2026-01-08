@@ -30,11 +30,11 @@ function DashUtils() {
   }));
 
   const cleanedProductTypes = allProducts.reduce((acc, product) => {
-    const existingType = acc.find((item) => item.type === product.type);
+    const existingType = acc.find((item) => item.type === product.category);
     if (existingType) {
       existingType.value += 1;
     } else {
-      acc.push({ type: product.type, value: 1 });
+      acc.push({ type: product.category, value: 1 });
     }
     return acc;
   }, []);
