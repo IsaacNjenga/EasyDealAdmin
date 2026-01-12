@@ -93,7 +93,7 @@ function Products() {
               icon={<ReloadOutlined />}
               style={{ height: 40 }}
             >
-              Refresh Products
+              Refresh 
             </Button>
           </Tooltip>
         </div>

@@ -379,21 +379,10 @@ function Emails() {
   return (
     <>
       <div style={{ margin: 5, padding: 5 }}>
-        <div style={{ margin: "10px 0" }}>
-          <Search
-            placeholder="Search..."
-            size="large"
-            loading={loading}
-            enterButton
-            onChange={handleSearch}
-            style={{ width: "100%", height: 50 }}
-          />
-        </div>
         <div
           style={{
             display: "flex",
             margin: "10px 0",
-            marginTop: 0,
             gap: 8,
             alignItems: "center",
           }}
@@ -421,7 +410,16 @@ function Emails() {
             </Tag>
           ))}
         </div>
-
+        <div style={{ margin: "10px 0" }}>
+          <Search
+            placeholder="Search..."
+            size="large"
+            loading={loading}
+            enterButton
+            onChange={handleSearch}
+            style={{ width: "100%", height: 50 }}
+          />
+        </div>
         <div>
           {searchValue && (
             <div style={{ marginBottom: 20, marginTop: 0 }}>

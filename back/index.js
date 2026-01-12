@@ -2,8 +2,8 @@ import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import "./config/db.js";
-import { Router } from "./routes/routes.js";
 import "./config/cron.js";
+import { Router } from "./routes/routes.js";
 import { connectDB } from "./config/db.js";
 
 dotenv.config();

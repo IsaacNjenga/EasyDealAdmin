@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { cleanupExpiredOffers } from "../utils/expiredOffers.js";
 
 dotenv.config();
 
