@@ -283,7 +283,6 @@ function Navbar() {
             style={{
               background:
                 "linear-gradient(to left, #232527ff 0%, #000000d6 100% )",
-              borderBottom: "1px solid #cccccc",
               height: "auto",
               padding: "0 20px",
             }}
@@ -341,10 +340,15 @@ function Navbar() {
 
           <Content
             style={{
-              margin: "0px",
-              padding: 20,
+              margin: getTitleFromPath(current) === "Customer Support" ? 0 : 10,
+              padding:
+                getTitleFromPath(current) === "Customer Support" ? 0 : 10,
               minHeight: "100vh",
               borderRadius: 0,
+              background:
+                getTitleFromPath(current) === "Customer Support"
+                  ? "#121212"
+                  : 0,
             }}
           >
             <Outlet />

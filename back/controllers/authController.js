@@ -2,13 +2,13 @@ import UserModel from "../models/User.js";
 import { connectDB } from "../config/db.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import { StreamChat } from "stream-chat";
 
 dotenv.config();
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "15m",
-  });
-};
+
+const api_key = process.env.STREAM_API_KEY;
+const api_secret = process.env.STREAM_API_SECRET;
 
 const generateTokens = (user) => {
   const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -57,6 +57,19 @@ const Register = async (req, res) => {
     const newUser = new UserModel({ ...req.body, avatar });
     await newUser.save();
 
+    const serverClient = StreamChat.getInstance(api_key, api_secret);
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await serverClient.upsertUser({
+      id: newUser._id,
+      username,
+      email,
+      hashedPassword,
+      image: avatar,
+    });
+
     res.status(201).json({
       success: true,
       user: {
@@ -94,7 +107,22 @@ const Login = async (req, res) => {
     user.refreshToken = refreshToken; // store in DB to track invalidations
     await user.save();
 
-    //const token = generateToken(user._id);
+    const client = StreamChat.getInstance(api_key, api_secret);
+
+    const { users } = await client.queryUsers({ id: user._id });
+
+    if (!users.length)
+      return res.status(400).json({ message: "User not found" });
+
+    const stream_user = users[0];
+
+    const success = await bcrypt.compare(password, stream_user.hashedPassword);
+
+    if (!success) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const stream_token = client.createToken(user.id);
 
     res.status(200).json({
       success: true,
@@ -106,6 +134,7 @@ const Login = async (req, res) => {
         avatar: user.avatar,
         email: user.email,
         createdAt: user.createdAt,
+        stream_token: stream_token,
       },
     });
   } catch (error) {

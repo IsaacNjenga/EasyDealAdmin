@@ -21,6 +21,8 @@
     "react-quill-new": "^3.6.0",
     "react-router-dom": "^7.9.4",
     "react-scripts": "5.0.1",
+    "stream-chat": "^9.28.0",
+    "stream-chat-react": "^13.13.3",
     "sweetalert2": "^11.26.3",
     "web-vitals": "^2.1.4"
   },

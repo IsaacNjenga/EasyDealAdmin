@@ -66,6 +66,7 @@ import {
   fetchReviews,
   updateReview,
 } from "../controllers/reviewsController.js";
+import { queryUsers } from "../controllers/chatController.js";
 
 const router = express.Router();
 
@@ -138,6 +139,9 @@ router.post("/analytics/remove-from-cart/:productId", decrementCart);
 router.get("/fetch-analytics", protectRoute, fetchAnalytics);
 router.put("/update-analytic", updateAnalytics);
 router.get("/top-analytics", protectRoute, topAnalytics);
+
+//chat route
+router.get("/query-users", protectRoute, queryUsers);
 
 //activities route
 router.get("/fetch-activities", protectRoute, fetchActivities);

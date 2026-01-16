@@ -39,8 +39,7 @@ export function AuthProvider({ children }) {
     setUser(null);
     setToken(null);
     setIsAuthenticated(false);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.clear();
   }
 
   const refreshToken = async () => {

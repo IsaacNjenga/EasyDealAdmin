@@ -1,0 +1,40 @@
+/* Message list background */
+.str-chat__message-list {
+  background: #121212;
+}
+
+/* Channel header */
+.str-chat__channel-header {
+  background: #171617;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+/* Message bubbles */
+.str-chat__message-simple-text-inner {
+  background: #1e1e1e;
+  color: #fff;
+  border-radius: 14px;
+}
+
+/* Own messages */
+.str-chat__message--me
+  .str-chat__message-simple-text-inner {
+  background: #2564eb00;
+}
+
+/* Message input */
+.str-chat__message-input {
+  background: #171617;
+  border-top: 1px solid #2a2a2a;
+}
+
+/* Input textarea */
+.str-chat__message-input textarea {
+  background: #0f0f0f;
+  color: #fff;
+}
+
+/* Thread */
+.str-chat__thread {
+  background: #111;
+}
