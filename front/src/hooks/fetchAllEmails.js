@@ -34,6 +34,7 @@ function useFetchAllEmails() {
 
   useEffect(() => {
     fetchEmails();
+    //eslint-disable-next-line
   }, [refreshKey]);
 
   return {

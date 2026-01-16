@@ -14,6 +14,7 @@ import Orders from "./pages/Orders";
 import Activity from "./pages/Activity";
 import Location from "./pages/Location";
 import Subscribers from "./pages/Subscribers";
+import CustomerSupport from "./pages/CustomerSupport";
 
 //axios.defaults.baseURL = process.env.REACT_APP_DEV_API_URL;
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
@@ -48,6 +49,7 @@ function App() {
             <Route path="activity" element={<Activity />} />
             <Route path="location" element={<Location />} />
             <Route path="newsletter" element={<Subscribers />} />
+            <Route path="customer-support" element={<CustomerSupport />} />
           </Route>
         </Routes>
       )}

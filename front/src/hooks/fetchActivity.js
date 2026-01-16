@@ -60,6 +60,8 @@ function useFetchActivity() {
       stopPolling();
       document.removeEventListener("visibilitychange", () => {});
     };
+
+    //eslint-disable-next-line
   }, [token]);
 
   return {

@@ -20,6 +20,7 @@ import {
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  MessageOutlined,
   PoweroffOutlined,
   PushpinOutlined,
   TruckOutlined,
@@ -46,6 +47,7 @@ const items = [
   getItem("Orders", "/orders", 6, TruckOutlined),
   getItem("Activity", "/activity", 7, BellOutlined),
   getItem("Newsletter", "/newsletter", 8, PushpinOutlined),
+  getItem("Customer Support", "/customer-support", 9, MessageOutlined),
 ];
 
 const flattenItems = (arr) =>
@@ -192,8 +194,11 @@ function Navbar() {
                 components: {
                   Menu: {
                     itemColor: "#fea549",
+                    darkItemColor: "#fea549",
                     itemHoverColor: "#fea549",
+                    darkItemHoverColor: "#fea549",
                     itemSelectedColor: "#fea549",
+                    darkItemSelectedColor: "#fea549",
                     horizontalItemSelectedColor: "#fea549",
                     itemBg: "transparent",
                   },
@@ -247,7 +252,7 @@ function Navbar() {
                       style: {
                         fontSize: collapsed ? "1.5rem" : "1.7rem",
                         color: "whitesmoke",
-                        margin: "4px 0px",
+                        margin: "3px 0px",
                       },
                     }),
                     label: (
@@ -266,7 +271,7 @@ function Navbar() {
                   })),
                   style: {
                     textAlign: "left",
-                    margin: collapsed ? "14px 4.1px" : "19px 4.1px",
+                    margin: collapsed ? "14px 4.1px" : "15px 4.1px",
                   },
                 }))}
               />

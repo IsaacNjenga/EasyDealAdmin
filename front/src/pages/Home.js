@@ -31,7 +31,14 @@ const { Title, Text } = Typography;
 
 const MiniBarChart = ({ data }) => {
   const max = Math.max(...data?.map((d) => d.value));
-  const colors = ["#1890ff", "#52c41a", "#faad14", "#722ed1", "#eb2f96"];
+  const colors = [
+    "#1890ff",
+    "#52c41a",
+    "#faad14",
+    "#722ed1",
+    "#eb2f96",
+    "#0da7ea",
+  ];
 
   return (
     <div
@@ -457,6 +464,7 @@ function Home() {
                       "#faad14",
                       "#722ed1",
                       "#eb2f96",
+                      "#0da7ea",
                     ];
                     return (
                       <div

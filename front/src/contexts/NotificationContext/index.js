@@ -11,7 +11,7 @@ export const NotificationProvider = ({ children }) => {
       message: <span style={{ fontFamily: "DM Sans" }}>{title}</span>,
       description: <span style={{ fontFamily: "DM Sans" }}>{message}</span>,
       placement: "topRight",
-      duration: 3,
+      duration: 2,
     });
   };
 
