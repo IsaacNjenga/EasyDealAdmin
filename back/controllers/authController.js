@@ -18,7 +18,7 @@ const generateTokens = (user) => {
   const refreshToken = jwt.sign(
     { userId: user._id },
     process.env.JWT_REFRESH_SECRET,
-    { expiresIn: "30m" }
+    { expiresIn: "30m" },
   );
 
   return { accessToken, refreshToken };
@@ -68,6 +68,7 @@ const Register = async (req, res) => {
       email,
       hashedPassword,
       image: avatar,
+      role: "admin",
     });
 
     res.status(201).json({
@@ -179,13 +180,13 @@ const refreshMyToken = async (req, res) => {
     const newAccessToken = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
 
     const newRefreshToken = jwt.sign(
       { userId: user._id },
       process.env.JWT_REFRESH_SECRET,
-      { expiresIn: "30m" }
+      { expiresIn: "30m" },
     );
 
     // Update stored refresh token

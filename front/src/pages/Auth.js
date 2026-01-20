@@ -67,17 +67,22 @@ function Auth() {
   };
 
   const handleSubmit = async () => {
+    console.log("submit clicked");
     setLoading(true);
     try {
       const allValues = await form.getFieldsValue();
 
       const payload = isSignIn
         ? { email: allValues.email, password: allValues.password }
-        : { ...allValues };
+        : {
+            email: allValues.email,
+            password: allValues.password,
+            username: allValues.username,
+          };
 
       const res = await axios.post(
         `${isSignIn ? "sign-in" : "sign-up"}`,
-        payload
+        payload,
       );
 
       const { success, token, user, refreshToken } = res.data;
@@ -88,7 +93,7 @@ function Auth() {
           !isSignIn
             ? "Your account has been created successfully. Proceed to login."
             : "Login successful",
-          "Success!"
+          "Success!",
         );
 
         if (!isSignIn) {
@@ -302,7 +307,7 @@ function Auth() {
                                 return Promise.resolve();
                               }
                               return Promise.reject(
-                                new Error("Passwords do not match")
+                                new Error("Passwords do not match"),
                               );
                             },
                           }),
@@ -340,13 +345,7 @@ function Auth() {
                           (e.currentTarget.style.transform = "scale(1)")
                         }
                       >
-                        {loading
-                          ? isSignIn
-                            ? "Signing in..."
-                            : "Signing up..."
-                          : isSignIn
-                          ? "Sign in"
-                          : "Sign up"}
+                        {loading ? "" : "Submit"}
                       </Button>
                     </Form.Item>
 
